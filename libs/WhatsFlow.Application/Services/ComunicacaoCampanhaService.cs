@@ -12,6 +12,18 @@ public interface IComunicacaoCampanhaService
     Task<ComunicacaoCampanhaDetalheDto?> GetByIdAsync(int id);
     Task<ComunicacaoCampanhaDetalheDto> CreateAsync(CriarComunicacaoCampanhaDto dto);
     Task<ComunicacaoCampanhaDetalheDto> UpdateAsync(int id, AtualizarComunicacaoCampanhaDto dto);
+
+    /// <summary>Valida, gera a fila de entregas (respeitando limite do plano) e coloca a campanha em execução/agendada.</summary>
+    Task<ComunicacaoCampanhaDetalheDto> IniciarAsync(int id);
+
+    /// <summary>Pausa a campanha (worker deve ignorar pendentes de campanhas pausadas).</summary>
+    Task<ComunicacaoCampanhaDetalheDto> PausarAsync(int id);
+
+    /// <summary>Cancela a campanha e marca as entregas ainda pendentes como Cancelado.</summary>
+    Task<ComunicacaoCampanhaDetalheDto> CancelarAsync(int id);
+
+    /// <summary>Retoma uma campanha pausada, voltando para Processando.</summary>
+    Task<ComunicacaoCampanhaDetalheDto> RetomarAsync(int id);
 }
 
 public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
@@ -21,6 +33,8 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
     private readonly IComunicacaoTemplateRepository _templateRepository;
     private readonly IComunicacaoPreferenciaService _preferenciaService;
     private readonly IComunicacaoAudienceResolver _audienceResolver;
+    private readonly IWhatsAppAccountRepository _whatsAppAccountRepository;
+    private readonly IPlanLimitService _planLimitService;
     private readonly ICurrentUserContext _currentUser;
     private readonly IAuditLogService _auditLogService;
     private readonly ILogger<ComunicacaoCampanhaService> _logger;
@@ -31,6 +45,8 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         IComunicacaoTemplateRepository templateRepository,
         IComunicacaoPreferenciaService preferenciaService,
         IComunicacaoAudienceResolver audienceResolver,
+        IWhatsAppAccountRepository whatsAppAccountRepository,
+        IPlanLimitService planLimitService,
         ICurrentUserContext currentUser,
         IAuditLogService auditLogService,
         ILogger<ComunicacaoCampanhaService> logger)
@@ -40,6 +56,8 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         _templateRepository = templateRepository;
         _preferenciaService = preferenciaService;
         _audienceResolver = audienceResolver;
+        _whatsAppAccountRepository = whatsAppAccountRepository;
+        _planLimitService = planLimitService;
         _currentUser = currentUser;
         _auditLogService = auditLogService;
         _logger = logger;
@@ -142,6 +160,145 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         return MapDetalhe(updated);
     }
 
+    public async Task<ComunicacaoCampanhaDetalheDto> IniciarAsync(int id)
+    {
+        var campanha = await _repository.GetByIdAsync(id)
+            ?? throw new ArgumentException("Campanha não encontrada");
+
+        if (campanha.Status == StatusComunicacaoCampanha.Cancelada)
+        {
+            throw new InvalidOperationException("Campanha cancelada não pode ser iniciada.");
+        }
+
+        // Pelo menos um canal precisa de um template Aprovado OU Ativo.
+        var canaisComTemplate = campanha.Canais.Where(c => c.TemplateId.HasValue).ToList();
+        var temTemplateValido = false;
+        foreach (var canal in canaisComTemplate)
+        {
+            var template = await _templateRepository.GetByIdAsync(canal.TemplateId!.Value);
+            if (template != null &&
+                (template.Status == StatusComunicacaoTemplate.Aprovado || template.Status == StatusComunicacaoTemplate.Ativo))
+            {
+                temTemplateValido = true;
+                break;
+            }
+        }
+
+        if (!temTemplateValido)
+        {
+            throw new InvalidOperationException(
+                "A campanha precisa de pelo menos um canal com template Aprovado ou Ativo para ser iniciada.");
+        }
+
+        // Precisa de uma conta de WhatsApp ativa no tenant.
+        var conta = await _whatsAppAccountRepository.GetAtivaAsync();
+        if (conta == null)
+        {
+            throw new InvalidOperationException(
+                "Nenhuma conta de WhatsApp ativa configurada para o tenant. Configure uma conta antes de iniciar a campanha.");
+        }
+
+        // Gera a fila (reutiliza GerarEntregasAsync). Só gera se ainda não houver entregas.
+        var entregasExistentes = await _entregaRepository.GetByCampanhaIdAsync(campanha.Id);
+        List<ComunicacaoEntrega> entregas;
+        if (entregasExistentes.Count > 0)
+        {
+            entregas = entregasExistentes.ToList();
+        }
+        else
+        {
+            entregas = await GerarEntregasAsync(campanha);
+
+            // Conta destinatários "enfileiráveis" (entregas Pendentes) para o limite do plano.
+            var enfileiraveis = entregas.Count(e => e.Status == StatusComunicacaoEntrega.Pendente);
+            await _planLimitService.EnsureCanEnqueueAsync(enfileiraveis);
+
+            if (entregas.Count > 0)
+            {
+                await _entregaRepository.CreateManyAsync(entregas);
+            }
+        }
+
+        var agendadaFuturo = campanha.DataAgendamento.HasValue && campanha.DataAgendamento.Value > DateTime.Now;
+        campanha.TotalDestinatarios = entregas.Count;
+        campanha.Status = agendadaFuturo ? StatusComunicacaoCampanha.Agendada : StatusComunicacaoCampanha.Processando;
+        campanha.DataAtualizacao = DateTime.UtcNow;
+        var updated = await _repository.UpdateAsync(campanha);
+
+        _logger.LogInformation(
+            "Campanha iniciada CampanhaId={CampanhaId} TotalDestinatarios={Total} Status={Status}",
+            campanha.Id, campanha.TotalDestinatarios, campanha.Status);
+        await _auditLogService.RecordAsync("ComunicacaoCampanha", campanha.Id.ToString(), "IniciarCampanha", new
+        {
+            campanha.TotalDestinatarios,
+            Status = campanha.Status.ToString()
+        });
+
+        var reloaded = await _repository.GetByIdAsync(updated.Id) ?? updated;
+        return MapDetalhe(reloaded);
+    }
+
+    public async Task<ComunicacaoCampanhaDetalheDto> PausarAsync(int id)
+    {
+        var campanha = await _repository.GetByIdAsync(id)
+            ?? throw new ArgumentException("Campanha não encontrada");
+
+        if (campanha.Status == StatusComunicacaoCampanha.Cancelada)
+        {
+            throw new InvalidOperationException("Campanha cancelada não pode ser pausada.");
+        }
+
+        campanha.Status = StatusComunicacaoCampanha.Pausada;
+        campanha.DataAtualizacao = DateTime.UtcNow;
+        var updated = await _repository.UpdateAsync(campanha);
+
+        await _auditLogService.RecordAsync("ComunicacaoCampanha", campanha.Id.ToString(), "PausarCampanha", null);
+        var reloaded = await _repository.GetByIdAsync(updated.Id) ?? updated;
+        return MapDetalhe(reloaded);
+    }
+
+    public async Task<ComunicacaoCampanhaDetalheDto> CancelarAsync(int id)
+    {
+        var campanha = await _repository.GetByIdAsync(id)
+            ?? throw new ArgumentException("Campanha não encontrada");
+
+        campanha.Status = StatusComunicacaoCampanha.Cancelada;
+        campanha.DataAtualizacao = DateTime.UtcNow;
+        var updated = await _repository.UpdateAsync(campanha);
+
+        var canceladas = await _entregaRepository.CancelarPendentesPorCampanhaAsync(campanha.Id);
+
+        _logger.LogInformation(
+            "Campanha cancelada CampanhaId={CampanhaId} EntregasCanceladas={Canceladas}",
+            campanha.Id, canceladas);
+        await _auditLogService.RecordAsync("ComunicacaoCampanha", campanha.Id.ToString(), "CancelarCampanha", new
+        {
+            EntregasCanceladas = canceladas
+        });
+
+        var reloaded = await _repository.GetByIdAsync(updated.Id) ?? updated;
+        return MapDetalhe(reloaded);
+    }
+
+    public async Task<ComunicacaoCampanhaDetalheDto> RetomarAsync(int id)
+    {
+        var campanha = await _repository.GetByIdAsync(id)
+            ?? throw new ArgumentException("Campanha não encontrada");
+
+        if (campanha.Status != StatusComunicacaoCampanha.Pausada)
+        {
+            throw new InvalidOperationException("Somente campanhas pausadas podem ser retomadas.");
+        }
+
+        campanha.Status = StatusComunicacaoCampanha.Processando;
+        campanha.DataAtualizacao = DateTime.UtcNow;
+        var updated = await _repository.UpdateAsync(campanha);
+
+        await _auditLogService.RecordAsync("ComunicacaoCampanha", campanha.Id.ToString(), "RetomarCampanha", null);
+        var reloaded = await _repository.GetByIdAsync(updated.Id) ?? updated;
+        return MapDetalhe(reloaded);
+    }
+
     private static ComunicacaoCampanhaResumoDto MapResumo(ComunicacaoCampanha campanha)
     {
         return new ComunicacaoCampanhaResumoDto
@@ -194,6 +351,12 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         if (campanha.Status == StatusComunicacaoCampanha.Cancelada)
         {
             return StatusComunicacaoCampanha.Cancelada;
+        }
+
+        // Pausada é um estado explícito controlado pelo operador; não recalcular por entregas.
+        if (campanha.Status == StatusComunicacaoCampanha.Pausada)
+        {
+            return StatusComunicacaoCampanha.Pausada;
         }
 
         if (entregas.Count == 0)

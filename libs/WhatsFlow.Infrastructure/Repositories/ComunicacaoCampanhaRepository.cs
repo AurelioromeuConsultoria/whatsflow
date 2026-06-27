@@ -131,6 +131,12 @@ public class ComunicacaoCampanhaRepository : IComunicacaoCampanhaRepository
             return StatusComunicacaoCampanha.Cancelada;
         }
 
+        // Pausada é um estado explícito controlado pelo operador; não recalcular por entregas.
+        if (campanha.Status == StatusComunicacaoCampanha.Pausada)
+        {
+            return StatusComunicacaoCampanha.Pausada;
+        }
+
         if (entregas.Count == 0)
         {
             return campanha.DataAgendamento.HasValue

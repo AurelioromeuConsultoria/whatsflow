@@ -69,6 +69,35 @@ public class ComunicacaoEntregaRepository : IComunicacaoEntregaRepository
         return await _context.ComunicacaoEntregas.FirstOrDefaultAsync(e => e.Id == id);
     }
 
+    public async Task<ComunicacaoEntrega?> GetByProviderMessageIdAsync(string providerMessageId)
+    {
+        if (string.IsNullOrWhiteSpace(providerMessageId))
+        {
+            return null;
+        }
+
+        return await _context.ComunicacaoEntregas
+            .FirstOrDefaultAsync(e => e.ProviderMessageId == providerMessageId);
+    }
+
+    public async Task<int> CountCriadasNoMesAsync(DateTime referencia)
+    {
+        var inicio = new DateTime(referencia.Year, referencia.Month, 1, 0, 0, 0, referencia.Kind);
+        var fim = inicio.AddMonths(1);
+        return await _context.ComunicacaoEntregas
+            .CountAsync(e => e.DataCriacao >= inicio && e.DataCriacao < fim);
+    }
+
+    public async Task<int> CancelarPendentesPorCampanhaAsync(int campanhaId)
+    {
+        var now = DateTime.UtcNow;
+        return await _context.ComunicacaoEntregas
+            .Where(e => e.ComunicacaoCampanhaId == campanhaId && e.Status == StatusComunicacaoEntrega.Pendente)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(e => e.Status, StatusComunicacaoEntrega.Cancelado)
+                .SetProperty(e => e.AtualizadoEm, now));
+    }
+
     public async Task<ComunicacaoEntrega> CreateAsync(ComunicacaoEntrega entrega)
     {
         _context.ComunicacaoEntregas.Add(entrega);
@@ -101,9 +130,13 @@ public class ComunicacaoEntregaRepository : IComunicacaoEntregaRepository
             await using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
+                // Pendentes de campanhas Pausadas/Canceladas não são reservadas (Feature 3: pausa honrada).
                 ids = await _context.ComunicacaoEntregas
                     .Where(e => e.Status == StatusComunicacaoEntrega.Pendente)
                     .Where(e => e.ComunicacaoCampanha == null || !e.ComunicacaoCampanha.DataAgendamento.HasValue || e.ComunicacaoCampanha.DataAgendamento.Value <= DateTime.Now)
+                    .Where(e => e.ComunicacaoCampanha == null ||
+                        (e.ComunicacaoCampanha.Status != StatusComunicacaoCampanha.Pausada &&
+                         e.ComunicacaoCampanha.Status != StatusComunicacaoCampanha.Cancelada))
                     .OrderBy(e => e.DataCriacao)
                     .Take(limit)
                     .Select(e => e.Id)

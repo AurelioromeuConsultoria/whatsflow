@@ -99,6 +99,7 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IWhatsAppAccountRepository, WhatsAppAccountRepository>();
 builder.Services.AddScoped<IWebhookEventRepository, WebhookEventRepository>();
 builder.Services.AddScoped<IMessageLogRepository, MessageLogRepository>();
+builder.Services.AddScoped<ITenantLookupRepository, TenantLookupRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<INotificacaoUsuarioRepository, NotificacaoUsuarioRepository>();
 builder.Services.AddScoped<IPerfilAcessoRepository, PerfilAcessoRepository>();
@@ -115,6 +116,8 @@ builder.Services.AddScoped<IComunicacaoSegmentoService, ComunicacaoSegmentoServi
 builder.Services.AddScoped<IComunicacaoAudienceResolver, ComunicacaoAudienceResolver>();
 builder.Services.AddScoped<IComunicacaoProcessamentoService, ComunicacaoProcessamentoService>();
 builder.Services.AddScoped<IComunicacaoAutomacaoService, ComunicacaoAutomacaoService>();
+builder.Services.AddScoped<IPlanLimitService, PlanLimitService>();
+builder.Services.AddScoped<IWhatsAppWebhookProcessingService, WhatsAppWebhookProcessingService>();
 // Providers de WhatsApp (abstração IWhatsAppProvider) + resolver por conta/tenant
 builder.Services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProvider, WhatsFlow.Application.Services.WhatsApp.FakeWhatsAppProvider>();
 builder.Services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProvider, WhatsFlow.Application.Services.WhatsApp.EvolutionWhatsAppProvider>();

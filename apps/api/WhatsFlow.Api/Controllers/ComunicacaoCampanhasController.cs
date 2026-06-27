@@ -61,4 +61,38 @@ public class ComunicacaoCampanhasController : ControllerBase
             return NotFound();
         }
     }
+
+    [HttpPost("{id}/iniciar")]
+    public Task<ActionResult<ComunicacaoCampanhaDetalheDto>> Iniciar(int id)
+        => ExecutarTransicao(() => _service.IniciarAsync(id));
+
+    [HttpPost("{id}/pausar")]
+    public Task<ActionResult<ComunicacaoCampanhaDetalheDto>> Pausar(int id)
+        => ExecutarTransicao(() => _service.PausarAsync(id));
+
+    [HttpPost("{id}/cancelar")]
+    public Task<ActionResult<ComunicacaoCampanhaDetalheDto>> Cancelar(int id)
+        => ExecutarTransicao(() => _service.CancelarAsync(id));
+
+    [HttpPost("{id}/retomar")]
+    public Task<ActionResult<ComunicacaoCampanhaDetalheDto>> Retomar(int id)
+        => ExecutarTransicao(() => _service.RetomarAsync(id));
+
+    private async Task<ActionResult<ComunicacaoCampanhaDetalheDto>> ExecutarTransicao(
+        Func<Task<ComunicacaoCampanhaDetalheDto>> acao)
+    {
+        try
+        {
+            return Ok(await acao());
+        }
+        catch (ArgumentException)
+        {
+            return NotFound();
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Cobre regras de negócio (template inválido, sem conta ativa, limite de plano, transição inválida).
+            return BadRequest(new { erro = ex.Message });
+        }
+    }
 }

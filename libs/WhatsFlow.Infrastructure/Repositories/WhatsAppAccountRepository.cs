@@ -34,6 +34,14 @@ public class WhatsAppAccountRepository : IWhatsAppAccountRepository
         return await _context.WhatsAppAccounts.FirstOrDefaultAsync(a => a.Id == id);
     }
 
+    public async Task<WhatsAppAccount?> GetAtivaAsync()
+    {
+        return await _context.WhatsAppAccounts
+            .Where(a => a.Status == WhatsAppAccountStatus.Ativa)
+            .OrderBy(a => a.Id)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<WhatsAppAccount> CreateAsync(WhatsAppAccount account)
     {
         account.TenantId = _tenantContext.TenantId ?? Tenant.InitialTenantId;

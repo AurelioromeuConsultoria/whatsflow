@@ -17,16 +17,18 @@ public interface IContatoService
 public class ContatoService : IContatoService
 {
     private readonly IContatoRepository _repository;
+    private readonly IPlanLimitService _planLimitService;
     private readonly ITenantContext _tenantContext;
 
-    public ContatoService(IContatoRepository repository)
-        : this(repository, new DefaultTenantContext())
+    public ContatoService(IContatoRepository repository, IPlanLimitService planLimitService)
+        : this(repository, planLimitService, new DefaultTenantContext())
     {
     }
 
-    public ContatoService(IContatoRepository repository, ITenantContext tenantContext)
+    public ContatoService(IContatoRepository repository, IPlanLimitService planLimitService, ITenantContext tenantContext)
     {
         _repository = repository;
+        _planLimitService = planLimitService;
         _tenantContext = tenantContext;
     }
 
@@ -68,6 +70,12 @@ public class ContatoService : IContatoService
         if (string.IsNullOrWhiteSpace(telefone))
         {
             throw new ArgumentException("Telefone WhatsApp é obrigatório.");
+        }
+
+        if (!await _planLimitService.PodeCriarContatoAsync())
+        {
+            throw new PlanLimitExceededException(
+                "Limite de contatos do plano atingido. Faça upgrade do plano para cadastrar mais contatos.");
         }
 
         var duplicado = await _repository.GetByTelefoneWhatsAppAsync(telefone);

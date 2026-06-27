@@ -84,6 +84,11 @@ public class ContatoRepository : IContatoRepository
         return (items, total);
     }
 
+    public async Task<int> CountAsync()
+    {
+        return await _context.Contatos.CountAsync();
+    }
+
     public async Task<Contato?> GetByIdAsync(int id)
     {
         return await _context.Contatos
