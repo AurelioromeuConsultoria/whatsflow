@@ -51,7 +51,6 @@ public class UsuarioDto
     public string? TenantCorSecundaria { get; set; }
     public bool IsRootTenant { get; set; }
     public bool IsPlatformAdmin { get; set; }
-    public int PessoaId { get; set; }
     public string Nome { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string EmailLogin { get; set; } = string.Empty;
@@ -68,7 +67,6 @@ public class UsuarioDto
 public class CriarUsuarioDto
 {
     public string? TenantSlug { get; set; }
-    public int? PessoaId { get; set; }
     public string Nome { get; set; } = string.Empty;
     public string? Email { get; set; }
     public string? Telefone { get; set; }
@@ -154,7 +152,6 @@ public class ProvisionTenantResultDto
 {
     public TenantDto Tenant { get; set; } = null!;
     public int PerfilAcessoId { get; set; }
-    public int PessoaId { get; set; }
     public int UsuarioId { get; set; }
 }
 

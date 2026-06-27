@@ -58,10 +58,10 @@ public class MensagensAgendadasController : ControllerBase
         return Ok(mensagens);
     }
 
-    [HttpGet("visitante/{visitanteId}")]
-    public async Task<ActionResult<IEnumerable<MensagemAgendadaDto>>> GetPorVisitante(int visitanteId)
+    [HttpGet("contato/{contatoId}")]
+    public async Task<ActionResult<IEnumerable<MensagemAgendadaDto>>> GetPorContato(int contatoId)
     {
-        var mensagens = await _mensagemService.GetMensagensPorVisitanteAsync(visitanteId);
+        var mensagens = await _mensagemService.GetMensagensPorContatoAsync(contatoId);
         return Ok(mensagens);
     }
 

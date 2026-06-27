@@ -26,10 +26,9 @@ public class UsuarioRepository : IUsuarioRepository
     {
         return await _context.Set<Usuario>()
             .Include(u => u.Tenant)
-            .Include(u => u.Pessoa)
             .Include(u => u.PerfilAcesso)
                 .ThenInclude(p => p!.Permissoes)
-            .OrderBy(u => u.Pessoa != null ? u.Pessoa.Nome : string.Empty)
+            .OrderBy(u => u.Nome)
             .ToListAsync();
     }
 
@@ -37,7 +36,6 @@ public class UsuarioRepository : IUsuarioRepository
     {
         return await _context.Set<Usuario>()
             .Include(u => u.Tenant)
-            .Include(u => u.Pessoa)
             .Include(u => u.PerfilAcesso)
                 .ThenInclude(p => p!.Permissoes)
             .FirstOrDefaultAsync(u => u.Id == id);
@@ -53,7 +51,6 @@ public class UsuarioRepository : IUsuarioRepository
         {
             var query = _context.Set<Usuario>()
                 .Include(u => u.Tenant)
-                .Include(u => u.Pessoa)
                 .Include(u => u.PerfilAcesso)
                     .ThenInclude(p => p!.Permissoes)
                 .Where(u => u.EmailLogin.ToLower() == email.ToLower());
@@ -70,16 +67,6 @@ public class UsuarioRepository : IUsuarioRepository
         {
             _context.IgnoreTenantFilters = previous;
         }
-    }
-
-    public async Task<Usuario?> GetByPessoaIdAsync(int pessoaId)
-    {
-        return await _context.Set<Usuario>()
-            .Include(u => u.Tenant)
-            .Include(u => u.Pessoa)
-            .Include(u => u.PerfilAcesso)
-                .ThenInclude(p => p!.Permissoes)
-            .FirstOrDefaultAsync(u => u.PessoaId == pessoaId);
     }
 
     public async Task<Usuario> CreateAsync(Usuario usuario)
@@ -124,5 +111,33 @@ public class UsuarioRepository : IUsuarioRepository
         }
 
         return await query.AnyAsync();
+    }
+
+    public async Task<int> ResolveTenantIdAsync(string? tenantSlug = null)
+    {
+        if (_tenantContext.TenantId.HasValue && _tenantContext.TenantId.Value > 0)
+        {
+            return _tenantContext.TenantId.Value;
+        }
+
+        var normalizedSlug = string.IsNullOrWhiteSpace(tenantSlug)
+            ? Tenant.InitialTenantSlug
+            : tenantSlug.Trim().ToLowerInvariant();
+
+        var previous = _context.IgnoreTenantFilters;
+        _context.IgnoreTenantFilters = true;
+        try
+        {
+            var tenantId = await _context.Tenants
+                .Where(t => t.Slug.ToLower() == normalizedSlug)
+                .Select(t => t.Id)
+                .FirstOrDefaultAsync();
+
+            return tenantId == 0 ? Tenant.InitialTenantId : tenantId;
+        }
+        finally
+        {
+            _context.IgnoreTenantFilters = previous;
+        }
     }
 }

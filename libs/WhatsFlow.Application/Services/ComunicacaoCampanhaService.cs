@@ -267,7 +267,7 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
                     ? RenderConteudo(template?.Assunto, campanha, destinatario) ?? campanha.Nome
                     : campanha.Nome;
 
-                if (await _preferenciaService.EstaBloqueadoAsync(destinatario.PessoaId, canal.Canal))
+                if (await _preferenciaService.EstaBloqueadoAsync(destinatario.ContatoId, canal.Canal))
                 {
                     entregas.Add(CriarEntregaIgnoradaPorPreferencia(campanha, canal.Canal, destinatario, assunto));
                     continue;
@@ -282,15 +282,15 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
                 entregas.Add(new ComunicacaoEntrega
                 {
                     ComunicacaoCampanhaId = campanha.Id,
-                    DestinatarioPessoaId = destinatario.PessoaId,
-                    DestinatarioVisitanteId = destinatario.VisitanteId,
+                    ContatoId = destinatario.ContatoId,
+                    TemplateId = template?.Id,
                     Canal = canal.Canal,
                     DestinoResolvido = destino,
                     RemetenteResolvido = assunto,
                     ConteudoFinal = string.IsNullOrWhiteSpace(conteudoFinal) ? campanha.Nome : conteudoFinal,
                     ConteudoHtmlFinal = conteudoHtmlFinal,
                     Status = StatusComunicacaoEntrega.Pendente,
-                    ChaveDedupe = $"{campanha.Id}:{canal.Canal}:{destinatario.PessoaId ?? 0}:{destinatario.VisitanteId ?? 0}",
+                    ChaveDedupe = $"{campanha.Id}:{canal.Canal}:{destinatario.ContatoId ?? 0}",
                     DataCriacao = DateTime.UtcNow
                 });
             }
@@ -308,15 +308,14 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         return new ComunicacaoEntrega
         {
             ComunicacaoCampanhaId = campanha.Id,
-            DestinatarioPessoaId = destinatario.PessoaId,
-            DestinatarioVisitanteId = destinatario.VisitanteId,
+            ContatoId = destinatario.ContatoId,
             Canal = canal,
             DestinoResolvido = ResolveDestinoFallback(canal, destinatario),
             RemetenteResolvido = assunto,
             ConteudoFinal = campanha.Nome,
             Status = StatusComunicacaoEntrega.Falhou,
             Erro = BuildDestinoInvalidoErro(canal, destinatario),
-            ChaveDedupe = $"{campanha.Id}:{canal}:{destinatario.PessoaId ?? 0}:{destinatario.VisitanteId ?? 0}",
+            ChaveDedupe = $"{campanha.Id}:{canal}:{destinatario.ContatoId ?? 0}",
             DataCriacao = DateTime.UtcNow
         };
     }
@@ -330,15 +329,14 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         return new ComunicacaoEntrega
         {
             ComunicacaoCampanhaId = campanha.Id,
-            DestinatarioPessoaId = destinatario.PessoaId,
-            DestinatarioVisitanteId = destinatario.VisitanteId,
+            ContatoId = destinatario.ContatoId,
             Canal = canal,
             DestinoResolvido = ResolveDestinoFallback(canal, destinatario),
             RemetenteResolvido = assunto,
             ConteudoFinal = campanha.Nome,
             Status = StatusComunicacaoEntrega.IgnoradoPorPreferencia,
             Erro = BuildPreferenciaBloqueadaErro(canal, destinatario),
-            ChaveDedupe = $"{campanha.Id}:{canal}:{destinatario.PessoaId ?? 0}:{destinatario.VisitanteId ?? 0}:preferencia",
+            ChaveDedupe = $"{campanha.Id}:{canal}:{destinatario.ContatoId ?? 0}:preferencia",
             DataCriacao = DateTime.UtcNow
         };
     }
@@ -349,22 +347,17 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         {
             CanalComunicacao.WhatsApp => destinatario.WhatsApp,
             CanalComunicacao.Email => destinatario.Email,
-            CanalComunicacao.Push => destinatario.PessoaId.HasValue ? $"pessoa:{destinatario.PessoaId.Value}" : null,
-            CanalComunicacao.NotificacaoInterna => destinatario.PessoaId.HasValue ? $"pessoa:{destinatario.PessoaId.Value}" : null,
+            CanalComunicacao.Push => destinatario.ContatoId.HasValue ? $"contato:{destinatario.ContatoId.Value}" : null,
+            CanalComunicacao.NotificacaoInterna => destinatario.ContatoId.HasValue ? $"contato:{destinatario.ContatoId.Value}" : null,
             _ => null
         };
     }
 
     private static string ResolveDestinoFallback(CanalComunicacao canal, ComunicacaoDestinatario destinatario)
     {
-        if (destinatario.PessoaId.HasValue)
+        if (destinatario.ContatoId.HasValue)
         {
-            return $"pessoa:{destinatario.PessoaId.Value}";
-        }
-
-        if (destinatario.VisitanteId.HasValue)
-        {
-            return $"visitante:{destinatario.VisitanteId.Value}";
+            return $"contato:{destinatario.ContatoId.Value}";
         }
 
         return $"{canal}:destino-nao-resolvido";

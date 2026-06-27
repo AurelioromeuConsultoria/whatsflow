@@ -10,7 +10,7 @@ public class MensagemAgendadaPagedQuery
     public string? Direction { get; init; }
 
     public string? Texto { get; init; }
-    public int? VisitanteId { get; init; }
+    public int? ContatoId { get; init; }
     public StatusMensagem? Status { get; init; }
     public DateTime? DataEnvioFrom { get; init; }
     public DateTime? DataEnvioTo { get; init; }

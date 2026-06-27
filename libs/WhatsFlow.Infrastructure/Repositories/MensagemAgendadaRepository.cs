@@ -26,8 +26,7 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
     public async Task<IEnumerable<MensagemAgendada>> GetAllAsync()
     {
         return await _context.MensagensAgendadas
-            .Include(m => m.Visitante)
-                .ThenInclude(v => v.Pessoa)
+            .Include(m => m.Contato)
             .Include(m => m.ConfiguracaoMensagem)
             .OrderByDescending(m => m.DataCriacao)
             .ToListAsync();
@@ -40,8 +39,7 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
 
         var q = _context.MensagensAgendadas
             .AsNoTracking()
-            .Include(m => m.Visitante)
-                .ThenInclude(v => v.Pessoa)
+            .Include(m => m.Contato)
             .Include(m => m.ConfiguracaoMensagem)
             .AsQueryable();
 
@@ -51,10 +49,10 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
             q = q.Where(m => m.Status == status);
         }
 
-        if (query.VisitanteId.HasValue)
+        if (query.ContatoId.HasValue)
         {
-            var visitanteId = query.VisitanteId.Value;
-            q = q.Where(m => m.VisitanteId == visitanteId);
+            var contatoId = query.ContatoId.Value;
+            q = q.Where(m => m.ContatoId == contatoId);
         }
 
         if (query.DataEnvioFrom.HasValue)
@@ -75,7 +73,7 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
             q = q.Where(m =>
                 (m.TextoFinal != null && m.TextoFinal.ToLower().Contains(t)) ||
                 (m.ConfiguracaoMensagem != null && m.ConfiguracaoMensagem.Nome != null && m.ConfiguracaoMensagem.Nome.ToLower().Contains(t)) ||
-                (m.Visitante != null && m.Visitante.Pessoa != null && m.Visitante.Pessoa.Nome.ToLower().Contains(t)));
+                (m.Contato != null && m.Contato.Nome.ToLower().Contains(t)));
         }
 
         var sort = (query.Sort ?? "dataenvio").Trim().ToLowerInvariant();
@@ -114,8 +112,7 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
     public async Task<MensagemAgendada?> GetByIdAsync(int id)
     {
         return await _context.MensagensAgendadas
-            .Include(m => m.Visitante)
-                .ThenInclude(v => v.Pessoa)
+            .Include(m => m.Contato)
             .Include(m => m.ConfiguracaoMensagem)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
@@ -149,8 +146,7 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
     {
         var agora = DateTime.Now;
         return await _context.MensagensAgendadas
-            .Include(m => m.Visitante)
-                .ThenInclude(v => v.Pessoa)
+            .Include(m => m.Contato)
             .Include(m => m.ConfiguracaoMensagem)
             .Where(m => m.Status == StatusMensagem.Agendada && m.DataEnvio <= agora)
             .OrderBy(m => m.DataEnvio)
@@ -219,21 +215,19 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
         });
 
         return await _context.MensagensAgendadas
-            .Include(m => m.Visitante!)
-                .ThenInclude(v => v.Pessoa)
+            .Include(m => m.Contato!)
             .Include(m => m.ConfiguracaoMensagem!)
             .Where(m => ids.Contains(m.Id))
             .OrderBy(m => m.DataEnvio)
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<MensagemAgendada>> GetMensagensPorVisitanteAsync(int visitanteId)
+    public async Task<IEnumerable<MensagemAgendada>> GetMensagensPorContatoAsync(int contatoId)
     {
         return await _context.MensagensAgendadas
-            .Include(m => m.Visitante)
-                .ThenInclude(v => v.Pessoa)
+            .Include(m => m.Contato)
             .Include(m => m.ConfiguracaoMensagem)
-            .Where(m => m.VisitanteId == visitanteId)
+            .Where(m => m.ContatoId == contatoId)
             .OrderBy(m => m.DataEnvio)
             .ToListAsync();
     }
@@ -241,15 +235,14 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
     public async Task<IEnumerable<MensagemAgendada>> GetMensagensPorStatusAsync(StatusMensagem status)
     {
         return await _context.MensagensAgendadas
-            .Include(m => m.Visitante)
-                .ThenInclude(v => v.Pessoa)
+            .Include(m => m.Contato)
             .Include(m => m.ConfiguracaoMensagem)
             .Where(m => m.Status == status)
             .OrderByDescending(m => m.DataCriacao)
             .ToListAsync();
     }
 
-    public async Task<int> CancelarPendentesPorVisitanteAsync(int visitanteId, string motivo)
+    public async Task<int> CancelarPendentesPorContatoAsync(int contatoId, string motivo)
     {
         var now = DateTime.Now;
         var motivoFinal = string.IsNullOrWhiteSpace(motivo)
@@ -257,7 +250,7 @@ public class MensagemAgendadaRepository : IMensagemAgendadaRepository
             : motivo;
 
         return await _context.MensagensAgendadas
-            .Where(m => m.VisitanteId == visitanteId && m.Status != StatusMensagem.Enviada)
+            .Where(m => m.ContatoId == contatoId && m.Status != StatusMensagem.Enviada)
             .ExecuteUpdateAsync(s => s
                 .SetProperty(m => m.Status, StatusMensagem.Cancelada)
                 .SetProperty(m => m.DataProcessamento, now)

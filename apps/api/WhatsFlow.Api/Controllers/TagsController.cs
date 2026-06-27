@@ -8,31 +8,24 @@ namespace WhatsFlow.API.Controllers;
 [ApiController]
 [Authorize]
 [Route("api/[controller]")]
-public class ContatosController : ControllerBase
+public class TagsController : ControllerBase
 {
-    private readonly IContatoService _service;
+    private readonly ITagService _service;
 
-    public ContatosController(IContatoService service)
+    public TagsController(ITagService service)
     {
         _service = service;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ContatoDto>>> GetAll()
+    public async Task<ActionResult<IReadOnlyList<TagDto>>> GetAll()
     {
         var items = await _service.GetAllAsync();
         return Ok(items);
     }
 
-    [HttpGet("paged")]
-    public async Task<ActionResult<PagedResultDto<ContatoDto>>> GetPaged([FromQuery] ContatoPagedQueryDto query)
-    {
-        var result = await _service.GetPagedAsync(query);
-        return Ok(result);
-    }
-
     [HttpGet("{id}")]
-    public async Task<ActionResult<ContatoDto>> GetById(int id)
+    public async Task<ActionResult<TagDto>> GetById(int id)
     {
         var item = await _service.GetByIdAsync(id);
         if (item == null) return NotFound();
@@ -40,7 +33,7 @@ public class ContatosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ContatoDto>> Create(CriarContatoDto dto)
+    public async Task<ActionResult<TagDto>> Create(CriarTagDto dto)
     {
         try
         {
@@ -54,14 +47,14 @@ public class ContatosController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<ContatoDto>> Update(int id, AtualizarContatoDto dto)
+    public async Task<ActionResult<TagDto>> Update(int id, AtualizarTagDto dto)
     {
         try
         {
             var updated = await _service.UpdateAsync(id, dto);
             return Ok(updated);
         }
-        catch (ArgumentException ex) when (ex.Message == "Contato não encontrado")
+        catch (ArgumentException ex) when (ex.Message == "Tag não encontrada")
         {
             return NotFound();
         }

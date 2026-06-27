@@ -51,8 +51,6 @@ public class WhatsFlowDbContext : DbContext
 
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantDomain> TenantDomains { get; set; }
-    public DbSet<Pessoa> Pessoas { get; set; }
-    public DbSet<Visitante> Visitantes { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<ConfiguracaoMensagem> ConfiguracoesMensagens { get; set; }
     public DbSet<MensagemAgendada> MensagensAgendadas { get; set; }
@@ -64,6 +62,11 @@ public class WhatsFlowDbContext : DbContext
     public DbSet<ComunicacaoPreferencia> ComunicacaoPreferencias { get; set; }
     public DbSet<ComunicacaoSegmento> ComunicacaoSegmentos { get; set; }
     public DbSet<Contato> Contatos { get; set; }
+    public DbSet<Tag> Tags { get; set; }
+    public DbSet<ContatoTag> ContatoTags { get; set; }
+    public DbSet<WhatsAppAccount> WhatsAppAccounts { get; set; }
+    public DbSet<WebhookEvent> WebhookEvents { get; set; }
+    public DbSet<MessageLog> MessageLogs { get; set; }
     public DbSet<Plano> Planos { get; set; }
     public DbSet<Assinatura> Assinaturas { get; set; }
     public DbSet<Fatura> Faturas { get; set; }
@@ -123,48 +126,6 @@ public class WhatsFlowDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // Configuração da entidade Pessoa
-        modelBuilder.Entity<Pessoa>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.TenantId).IsRequired();
-            entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.Telefone).HasMaxLength(20);
-            entity.Property(e => e.WhatsApp).HasMaxLength(20);
-            entity.Property(e => e.TipoPessoa).IsRequired();
-            entity.Property(e => e.Ativo).IsRequired();
-            entity.Property(e => e.DataCriacao).IsRequired();
-            entity.HasIndex(e => new { e.TenantId, e.Email }).IsUnique();
-
-            entity.HasOne(e => e.Tenant)
-                .WithMany()
-                .HasForeignKey(e => e.TenantId)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
-        // Configuração da entidade PessoaPerfil
-        // Configuração da entidade Visitante
-        modelBuilder.Entity<Visitante>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.TenantId).IsRequired();
-            entity.Property(e => e.PessoaId).IsRequired();
-            entity.Property(e => e.Observacoes).HasMaxLength(500);
-            entity.Property(e => e.DataVisita).IsRequired();
-            entity.Property(e => e.DataCadastro).IsRequired();
-
-            entity.HasOne(v => v.Pessoa)
-                  .WithMany(p => p.Visitantes)
-                  .HasForeignKey(v => v.PessoaId)
-                  .OnDelete(DeleteBehavior.Restrict);
-
-            entity.HasOne(v => v.Tenant)
-                .WithMany()
-                .HasForeignKey(v => v.TenantId)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
         modelBuilder.Entity<AuditLog>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -218,9 +179,9 @@ public class WhatsFlowDbContext : DbContext
             entity.Property(e => e.DataCriacao).IsRequired();
 
             // Relacionamentos
-            entity.HasOne(e => e.Visitante)
-                  .WithMany(v => v.MensagensAgendadas)
-                  .HasForeignKey(e => e.VisitanteId)
+            entity.HasOne(e => e.Contato)
+                  .WithMany()
+                  .HasForeignKey(e => e.ContatoId)
                   .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(e => e.ConfiguracaoMensagem)
@@ -229,7 +190,7 @@ public class WhatsFlowDbContext : DbContext
                   .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasIndex(e => new { e.TenantId, e.Status, e.DataEnvio });
-            entity.HasIndex(e => new { e.TenantId, e.VisitanteId, e.DataEnvio });
+            entity.HasIndex(e => new { e.TenantId, e.ContatoId, e.DataEnvio });
 
             entity.HasOne(e => e.Tenant)
                   .WithMany()
@@ -266,6 +227,16 @@ public class WhatsFlowDbContext : DbContext
             entity.HasOne(e => e.CriadoPorUsuario)
                 .WithMany()
                 .HasForeignKey(e => e.CriadoPorUsuarioId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(e => e.Template)
+                .WithMany()
+                .HasForeignKey(e => e.TemplateId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(e => e.Segmento)
+                .WithMany()
+                .HasForeignKey(e => e.SegmentoId)
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
@@ -305,14 +276,14 @@ public class WhatsFlowDbContext : DbContext
                 .HasForeignKey(e => e.ComunicacaoCampanhaId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasOne(e => e.DestinatarioPessoa)
+            entity.HasOne(e => e.Contato)
                 .WithMany()
-                .HasForeignKey(e => e.DestinatarioPessoaId)
+                .HasForeignKey(e => e.ContatoId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            entity.HasOne(e => e.DestinatarioVisitante)
+            entity.HasOne(e => e.Template)
                 .WithMany()
-                .HasForeignKey(e => e.DestinatarioVisitanteId)
+                .HasForeignKey(e => e.TemplateId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasIndex(e => new { e.Status, e.Canal, e.DataCriacao });
@@ -344,11 +315,11 @@ public class WhatsFlowDbContext : DbContext
             entity.Property(e => e.OrigemConsentimento).HasMaxLength(60);
             entity.Property(e => e.DataCriacao).IsRequired();
 
-            entity.HasIndex(e => new { e.PessoaId, e.Canal }).IsUnique();
+            entity.HasIndex(e => new { e.ContatoId, e.Canal }).IsUnique();
 
-            entity.HasOne(e => e.Pessoa)
+            entity.HasOne(e => e.Contato)
                 .WithMany()
-                .HasForeignKey(e => e.PessoaId)
+                .HasForeignKey(e => e.ContatoId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -431,22 +402,127 @@ public class WhatsFlowDbContext : DbContext
         // Configuração da entidade ConfiguracaoPortal (singleton)
         // Configuração da entidade CategoriaNoticia
         // Configuração da entidade Noticia
-        // Configuração da entidade Contato
+        // Configuração da entidade Contato (modelo rico — substitui Pessoa/Visitante)
         modelBuilder.Entity<Contato>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.TenantId).IsRequired();
-            entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.WhatsApp).IsRequired().HasMaxLength(20);
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.Membro).IsRequired();
-            entity.Property(e => e.Mensagem).IsRequired().HasMaxLength(2000);
-            entity.Property(e => e.DataCriacao).IsRequired();
+            entity.Property(e => e.Nome).IsRequired().HasMaxLength(150);
+            entity.Property(e => e.TelefoneWhatsApp).IsRequired().HasMaxLength(20);
+            entity.Property(e => e.Email).HasMaxLength(150);
+            entity.Property(e => e.Documento).HasMaxLength(30);
+            entity.Property(e => e.Organizacao).HasMaxLength(150);
+            entity.Property(e => e.Observacoes).HasMaxLength(2000);
+            entity.Property(e => e.Origem).HasMaxLength(60);
+            entity.Property(e => e.Status).IsRequired();
+            entity.Property(e => e.OptIn).IsRequired();
+            entity.Property(e => e.CriadoEm).IsRequired();
+
+            entity.HasIndex(e => new { e.TenantId, e.TelefoneWhatsApp }).IsUnique();
 
             entity.HasOne(e => e.Tenant)
                 .WithMany()
                 .HasForeignKey(e => e.TenantId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Configuração da entidade Tag
+        modelBuilder.Entity<Tag>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TenantId).IsRequired();
+            entity.Property(e => e.Nome).IsRequired().HasMaxLength(80);
+            entity.Property(e => e.Cor).HasMaxLength(9);
+            entity.Property(e => e.CriadoEm).IsRequired();
+
+            entity.HasIndex(e => new { e.TenantId, e.Nome }).IsUnique();
+
+            entity.HasOne(e => e.Tenant)
+                .WithMany()
+                .HasForeignKey(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Configuração da entidade ContatoTag (N:N Contato <-> Tag)
+        modelBuilder.Entity<ContatoTag>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TenantId).IsRequired();
+
+            entity.HasIndex(e => new { e.ContatoId, e.TagId }).IsUnique();
+
+            entity.HasOne(e => e.Contato)
+                .WithMany(c => c.ContatoTags)
+                .HasForeignKey(e => e.ContatoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(e => e.Tag)
+                .WithMany(t => t.ContatoTags)
+                .HasForeignKey(e => e.TagId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Configuração da entidade WhatsAppAccount
+        modelBuilder.Entity<WhatsAppAccount>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TenantId).IsRequired();
+            entity.Property(e => e.Nome).IsRequired().HasMaxLength(80);
+            entity.Property(e => e.Provider).IsRequired();
+            entity.Property(e => e.PhoneNumberId).HasMaxLength(120);
+            entity.Property(e => e.BusinessAccountId).HasMaxLength(120);
+            entity.Property(e => e.AccessTokenProtegido).HasMaxLength(2000);
+            entity.Property(e => e.WebhookSecret).HasMaxLength(200);
+            entity.Property(e => e.Status).IsRequired();
+            entity.Property(e => e.CriadoEm).IsRequired();
+
+            entity.HasIndex(e => new { e.TenantId, e.Nome });
+
+            entity.HasOne(e => e.Tenant)
+                .WithMany()
+                .HasForeignKey(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Configuração da entidade WebhookEvent (log bruto de webhooks)
+        modelBuilder.Entity<WebhookEvent>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TenantId).IsRequired();
+            entity.Property(e => e.Provider).IsRequired();
+            entity.Property(e => e.EventType).HasMaxLength(60);
+            entity.Property(e => e.ProviderMessageId).HasMaxLength(150);
+            entity.Property(e => e.RawPayload).IsRequired();
+            entity.Property(e => e.Status).IsRequired();
+            entity.Property(e => e.Erro).HasMaxLength(1000);
+            entity.Property(e => e.CriadoEm).IsRequired();
+
+            entity.HasIndex(e => new { e.Provider, e.ProviderMessageId });
+            entity.HasIndex(e => new { e.TenantId, e.Status, e.CriadoEm });
+
+            entity.HasOne(e => e.WhatsAppAccount)
+                .WithMany()
+                .HasForeignKey(e => e.WhatsAppAccountId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // Configuração da entidade MessageLog (histórico append-only de entregas)
+        modelBuilder.Entity<MessageLog>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TenantId).IsRequired();
+            entity.Property(e => e.Status).IsRequired();
+            entity.Property(e => e.ProviderMessageId).HasMaxLength(150);
+            entity.Property(e => e.ErrorCode).HasMaxLength(60);
+            entity.Property(e => e.Detalhe).HasMaxLength(1000);
+            entity.Property(e => e.CriadoEm).IsRequired();
+
+            entity.HasIndex(e => e.ComunicacaoEntregaId);
+
+            entity.HasOne(e => e.ComunicacaoEntrega)
+                .WithMany(ce => ce.Logs)
+                .HasForeignKey(e => e.ComunicacaoEntregaId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // Configuração da entidade ConsentimentoRegistro (trilha de consentimento LGPD)
@@ -545,18 +621,16 @@ public class WhatsFlowDbContext : DbContext
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.TenantId).IsRequired();
-            entity.Property(e => e.PessoaId).IsRequired();
+            entity.Property(e => e.Nome).IsRequired().HasMaxLength(150);
+            entity.Property(e => e.Email).HasMaxLength(150);
+            entity.Property(e => e.Telefone).HasMaxLength(20);
+            entity.Property(e => e.WhatsApp).HasMaxLength(20);
             entity.Property(e => e.EmailLogin).IsRequired().HasMaxLength(100);
             entity.Property(e => e.SenhaHash).IsRequired().HasMaxLength(255);
             entity.Property(e => e.TipoUsuario).IsRequired();
             entity.Property(e => e.Ativo).IsRequired();
             entity.Property(e => e.IsPlatformAdmin).IsRequired();
             entity.Property(e => e.DataCriacao).IsRequired();
-
-            entity.HasOne(u => u.Pessoa)
-                  .WithOne(p => p.Usuario)
-                  .HasForeignKey<Usuario>(u => u.PessoaId)
-                  .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(u => u.Tenant)
                 .WithMany()

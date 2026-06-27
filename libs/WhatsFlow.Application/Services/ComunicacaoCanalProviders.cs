@@ -162,14 +162,11 @@ public class ComunicacaoEmailCanalProvider : IComunicacaoCanalProvider
 
 public class ComunicacaoNotificacaoInternaCanalProvider : IComunicacaoCanalProvider
 {
-    private readonly IUsuarioRepository _usuarioRepository;
     private readonly INotificacaoUsuarioRepository _notificacaoUsuarioRepository;
 
     public ComunicacaoNotificacaoInternaCanalProvider(
-        IUsuarioRepository usuarioRepository,
         INotificacaoUsuarioRepository notificacaoUsuarioRepository)
     {
-        _usuarioRepository = usuarioRepository;
         _notificacaoUsuarioRepository = notificacaoUsuarioRepository;
     }
 
@@ -181,36 +178,16 @@ public class ComunicacaoNotificacaoInternaCanalProvider : IComunicacaoCanalProvi
         return Task.FromResult(new ComunicacaoCanalDiagnostico { Configurado = true });
     }
 
-    public async Task<ComunicacaoCanalEnvioResultado> EnviarAsync(ComunicacaoEntrega entrega, CancellationToken cancellationToken = default)
+    public Task<ComunicacaoCanalEnvioResultado> EnviarAsync(ComunicacaoEntrega entrega, CancellationToken cancellationToken = default)
     {
-        if (!entrega.DestinatarioPessoaId.HasValue || entrega.DestinatarioPessoaId.Value <= 0)
+        // TODO(WhatsFlow Etapa 4C): redefinir notificação interna no modelo Contato.
+        // Antes, a entrega resolvia um Usuario a partir de Pessoa; com o fim de Pessoa,
+        // não há mais vínculo Contato->Usuario, então este canal fica desabilitado por ora.
+        _ = _notificacaoUsuarioRepository; // mantém a dependência registrada para uso futuro
+        return Task.FromResult(new ComunicacaoCanalEnvioResultado
         {
-            return new ComunicacaoCanalEnvioResultado
-            {
-                Sucesso = false,
-                Mensagem = "Destinatário pessoa não resolvido para notificação interna."
-            };
-        }
-
-        var usuario = await _usuarioRepository.GetByPessoaIdAsync(entrega.DestinatarioPessoaId.Value);
-        if (usuario == null || !usuario.Ativo)
-        {
-            return new ComunicacaoCanalEnvioResultado
-            {
-                Sucesso = false,
-                Mensagem = $"Nenhum usuário ativo encontrado para a pessoa {entrega.DestinatarioPessoaId.Value}."
-            };
-        }
-
-        await _notificacaoUsuarioRepository.CreateAsync(new NotificacaoUsuario
-        {
-            UsuarioId = usuario.Id,
-            Tipo = TipoNotificacaoUsuario.Geral,
-            Titulo = string.IsNullOrWhiteSpace(entrega.RemetenteResolvido) ? "Comunicacao AppIgreja" : entrega.RemetenteResolvido!,
-            Mensagem = entrega.ConteudoFinal,
-            DataCriacao = DateTime.Now
+            Sucesso = false,
+            Mensagem = "Canal de notificação interna indisponível no modelo Contato (Etapa 4C)."
         });
-
-        return new ComunicacaoCanalEnvioResultado { Sucesso = true };
     }
 }

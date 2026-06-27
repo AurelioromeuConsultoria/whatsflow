@@ -10,7 +10,6 @@ public interface IUsuarioService
 {
     Task<IEnumerable<UsuarioDto>> GetAllAsync();
     Task<UsuarioDto?> GetByIdAsync(int id);
-    Task<UsuarioDto?> GetByPessoaIdAsync(int pessoaId);
     Task<UsuarioDto> CreateAsync(CriarUsuarioDto dto);
     Task<UsuarioDto> UpdateAsync(int id, AtualizarUsuarioDto dto);
     Task DeleteAsync(int id);
@@ -19,20 +18,18 @@ public interface IUsuarioService
 public class UsuarioService : IUsuarioService
 {
     private readonly IUsuarioRepository _repository;
-    private readonly IPessoaRepository _pessoaRepository;
     private readonly IPerfilAcessoRepository _perfilAcessoRepository;
     private readonly ITenantContext _tenantContext;
     private readonly ILogger<UsuarioService> _logger;
 
-    public UsuarioService(IUsuarioRepository repository, IPessoaRepository pessoaRepository, IPerfilAcessoRepository perfilAcessoRepository, ILogger<UsuarioService> logger)
-        : this(repository, pessoaRepository, perfilAcessoRepository, new DefaultTenantContext(), logger)
+    public UsuarioService(IUsuarioRepository repository, IPerfilAcessoRepository perfilAcessoRepository, ILogger<UsuarioService> logger)
+        : this(repository, perfilAcessoRepository, new DefaultTenantContext(), logger)
     {
     }
 
-    public UsuarioService(IUsuarioRepository repository, IPessoaRepository pessoaRepository, IPerfilAcessoRepository perfilAcessoRepository, ITenantContext tenantContext, ILogger<UsuarioService> logger)
+    public UsuarioService(IUsuarioRepository repository, IPerfilAcessoRepository perfilAcessoRepository, ITenantContext tenantContext, ILogger<UsuarioService> logger)
     {
         _repository = repository;
-        _pessoaRepository = pessoaRepository;
         _perfilAcessoRepository = perfilAcessoRepository;
         _tenantContext = tenantContext;
         _logger = logger;
@@ -50,64 +47,19 @@ public class UsuarioService : IUsuarioService
         return entity != null ? MapToDto(entity) : null;
     }
 
-    public async Task<UsuarioDto?> GetByPessoaIdAsync(int pessoaId)
-    {
-        var entity = await _repository.GetByPessoaIdAsync(pessoaId);
-        return entity != null ? MapToDto(entity) : null;
-    }
-
     public async Task<UsuarioDto> CreateAsync(CriarUsuarioDto dto)
     {
         var targetTenantSlug = string.IsNullOrWhiteSpace(dto.TenantSlug) ? null : dto.TenantSlug;
-        var resolvedTenantId = await _pessoaRepository.ResolveTenantIdAsync(targetTenantSlug);
+        var resolvedTenantId = await _repository.ResolveTenantIdAsync(targetTenantSlug);
         var targetTenantId = resolvedTenantId == 0 ? Tenant.InitialTenantId : resolvedTenantId;
 
         // Verificar se EmailLogin já existe
         var existeUsuario = await _repository.GetByEmailAsync(dto.EmailLogin, targetTenantSlug);
         if (existeUsuario != null) throw new ArgumentException("Email de login já cadastrado");
 
-        Pessoa? pessoa;
-        if (dto.PessoaId.HasValue)
+        if (string.IsNullOrWhiteSpace(dto.Nome))
         {
-            pessoa = await _pessoaRepository.GetByIdAsync(dto.PessoaId.Value)
-                ?? throw new ArgumentException("Pessoa não encontrada");
-        }
-        else
-        {
-            // Compatibilidade: sem PessoaId, tenta reaproveitar por email (se informado), senão cria nova pessoa.
-            pessoa = null;
-            if (!string.IsNullOrWhiteSpace(dto.Email))
-            {
-                pessoa = await _pessoaRepository.GetByEmailAsync(dto.Email);
-            }
-
-            if (pessoa == null)
-            {
-                if (string.IsNullOrWhiteSpace(dto.Nome))
-                {
-                    throw new ArgumentException("Nome é obrigatório ao criar usuário sem pessoa vinculada");
-                }
-
-                pessoa = new Pessoa
-                {
-                    TenantId = targetTenantId,
-                    Nome = dto.Nome,
-                    Email = dto.Email,
-                    Telefone = dto.Telefone,
-                    WhatsApp = dto.WhatsApp,
-                    DataNascimento = dto.DataNascimento,
-                    TipoPessoa = TipoPessoa.Adulto,
-                    Ativo = true,
-                    DataCriacao = DateTime.Now
-                };
-                pessoa = await _pessoaRepository.CreateAsync(pessoa);
-            }
-        }
-
-        var usuarioDaPessoa = await _repository.GetByPessoaIdAsync(pessoa.Id);
-        if (usuarioDaPessoa != null)
-        {
-            throw new ArgumentException("Esta pessoa já possui usuário");
+            throw new ArgumentException("Nome é obrigatório");
         }
 
         if (dto.PerfilAcessoId == null)
@@ -121,11 +73,14 @@ public class UsuarioService : IUsuarioService
 
         PasswordPolicy.Validar(dto.Senha);
 
-        // Criar usuário
         var entity = new Usuario
         {
             TenantId = targetTenantId,
-            PessoaId = pessoa.Id,
+            Nome = dto.Nome.Trim(),
+            Email = dto.Email,
+            Telefone = dto.Telefone,
+            WhatsApp = dto.WhatsApp,
+            DataNascimento = dto.DataNascimento,
             EmailLogin = dto.EmailLogin,
             SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha),
             TipoUsuario = dto.TipoUsuario,
@@ -137,9 +92,8 @@ public class UsuarioService : IUsuarioService
 
         var created = await _repository.CreateAsync(entity);
         _logger.LogInformation(
-            "Usuário criado. UsuarioId={UsuarioId} PessoaId={PessoaId} PerfilAcessoId={PerfilAcessoId} TipoUsuario={TipoUsuario}",
+            "Usuário criado. UsuarioId={UsuarioId} PerfilAcessoId={PerfilAcessoId} TipoUsuario={TipoUsuario}",
             created.Id,
-            created.PessoaId,
             created.PerfilAcessoId,
             created.TipoUsuario);
         return MapToDto(created);
@@ -154,23 +108,10 @@ public class UsuarioService : IUsuarioService
         var existeUsuario = await _repository.GetByEmailAsync(dto.EmailLogin, entity.Tenant?.Slug);
         if (existeUsuario != null && existeUsuario.Id != id) throw new ArgumentException("Email de login já cadastrado");
 
-        // Atualizar pessoa
-        var pessoa = await _pessoaRepository.GetByIdAsync(entity.PessoaId);
-        if (pessoa == null) throw new ArgumentException("Pessoa não encontrada");
-
-        // Verificar se email da pessoa já existe em outra pessoa (se fornecido)
-        if (!string.IsNullOrEmpty(dto.Email) && dto.Email != pessoa.Email)
+        if (string.IsNullOrWhiteSpace(dto.Nome))
         {
-            var existePessoa = await _pessoaRepository.GetByEmailAsync(dto.Email);
-            if (existePessoa != null && existePessoa.Id != pessoa.Id) throw new ArgumentException("Email já cadastrado para outra pessoa");
+            throw new ArgumentException("Nome é obrigatório");
         }
-
-        pessoa.Nome = dto.Nome;
-        pessoa.Email = dto.Email;
-        pessoa.Telefone = dto.Telefone;
-        pessoa.WhatsApp = dto.WhatsApp;
-        pessoa.DataNascimento = dto.DataNascimento;
-        await _pessoaRepository.UpdateAsync(pessoa);
 
         if (dto.PerfilAcessoId == null)
             throw new ArgumentException("Perfil de acesso é obrigatório");
@@ -181,7 +122,11 @@ public class UsuarioService : IUsuarioService
         if (perfilTenantId != entity.TenantId)
             throw new ArgumentException("Perfil de acesso não pertence ao tenant do usuário");
 
-        // Atualizar usuário
+        entity.Nome = dto.Nome.Trim();
+        entity.Email = dto.Email;
+        entity.Telefone = dto.Telefone;
+        entity.WhatsApp = dto.WhatsApp;
+        entity.DataNascimento = dto.DataNascimento;
         entity.EmailLogin = dto.EmailLogin;
         entity.TipoUsuario = dto.TipoUsuario;
         entity.Ativo = dto.Ativo;
@@ -189,9 +134,8 @@ public class UsuarioService : IUsuarioService
 
         var updated = await _repository.UpdateAsync(entity);
         _logger.LogInformation(
-            "Usuário atualizado. UsuarioId={UsuarioId} PessoaId={PessoaId} PerfilAcessoId={PerfilAcessoId} TipoUsuario={TipoUsuario} Ativo={Ativo}",
+            "Usuário atualizado. UsuarioId={UsuarioId} PerfilAcessoId={PerfilAcessoId} TipoUsuario={TipoUsuario} Ativo={Ativo}",
             updated.Id,
-            updated.PessoaId,
             updated.PerfilAcessoId,
             updated.TipoUsuario,
             updated.Ativo);
@@ -230,9 +174,8 @@ public class UsuarioService : IUsuarioService
             TenantCorSecundaria = u.Tenant?.CorSecundaria,
             IsRootTenant = u.Tenant?.IsRootTenant ?? false,
             IsPlatformAdmin = u.IsPlatformAdmin,
-            PessoaId = u.PessoaId,
-            Nome = u.Pessoa?.Nome ?? string.Empty,
-            Email = u.Pessoa?.Email ?? string.Empty,
+            Nome = u.Nome,
+            Email = u.Email ?? string.Empty,
             EmailLogin = u.EmailLogin,
             TipoUsuario = u.TipoUsuario,
             TipoUsuarioDescricao = GetTipoUsuarioDescricao(u.TipoUsuario),

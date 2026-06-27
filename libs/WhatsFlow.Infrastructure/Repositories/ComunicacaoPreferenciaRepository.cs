@@ -14,18 +14,18 @@ public class ComunicacaoPreferenciaRepository : IComunicacaoPreferenciaRepositor
         _context = context;
     }
 
-    public async Task<IReadOnlyList<ComunicacaoPreferencia>> GetByPessoaIdAsync(int pessoaId)
+    public async Task<IReadOnlyList<ComunicacaoPreferencia>> GetByContatoIdAsync(int contatoId)
     {
         return await _context.ComunicacaoPreferencias
-            .Where(x => x.PessoaId == pessoaId)
+            .Where(x => x.ContatoId == contatoId)
             .OrderBy(x => x.Canal)
             .ToListAsync();
     }
 
-    public Task<ComunicacaoPreferencia?> GetByPessoaCanalAsync(int pessoaId, CanalComunicacao canal)
+    public Task<ComunicacaoPreferencia?> GetByContatoCanalAsync(int contatoId, CanalComunicacao canal)
     {
         return _context.ComunicacaoPreferencias
-            .FirstOrDefaultAsync(x => x.PessoaId == pessoaId && x.Canal == canal);
+            .FirstOrDefaultAsync(x => x.ContatoId == contatoId && x.Canal == canal);
     }
 
     public async Task<ComunicacaoPreferencia> CreateAsync(ComunicacaoPreferencia preferencia)

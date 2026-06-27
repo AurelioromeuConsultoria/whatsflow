@@ -97,16 +97,15 @@ public class AuthService : IAuthService
         _refreshTokens[refreshToken] = usuario.Id.ToString();
 
         _logger.LogInformation(
-            "Login realizado com sucesso. TenantId={TenantId} UsuarioId={UsuarioId} PessoaId={PessoaId} TipoUsuario={TipoUsuario}",
+            "Login realizado com sucesso. TenantId={TenantId} UsuarioId={UsuarioId} TipoUsuario={TipoUsuario}",
             usuario.TenantId,
             usuario.Id,
-            usuario.PessoaId,
             usuario.TipoUsuario);
         await _auditLogService.RecordAsync(
             "Auth",
             usuario.Id.ToString(),
             "Login",
-            new { usuario.Id, usuario.PessoaId, usuario.TipoUsuario });
+            new { usuario.Id, usuario.TipoUsuario });
 
         return new LoginResponseDto
         {
@@ -219,8 +218,8 @@ public class AuthService : IAuthService
         var issuer = _configuration["Jwt:Issuer"] ?? "WhatsFlow";
         var audience = _configuration["Jwt:Audience"] ?? "WhatsFlow";
 
-        var nome = usuario.Pessoa?.Nome ?? string.Empty;
-        var email = usuario.Pessoa?.Email ?? usuario.EmailLogin;
+        var nome = usuario.Nome ?? string.Empty;
+        var email = usuario.Email ?? usuario.EmailLogin;
 
         var claims = new List<Claim>
         {
@@ -280,9 +279,8 @@ public class AuthService : IAuthService
             TenantCorSecundaria = u.Tenant?.CorSecundaria,
             IsRootTenant = u.Tenant?.IsRootTenant ?? false,
             IsPlatformAdmin = IsPlatformAdmin(u),
-            PessoaId = u.PessoaId,
-            Nome = u.Pessoa?.Nome ?? string.Empty,
-            Email = u.Pessoa?.Email ?? string.Empty,
+            Nome = u.Nome,
+            Email = u.Email ?? string.Empty,
             EmailLogin = u.EmailLogin,
             TipoUsuario = u.TipoUsuario,
             TipoUsuarioDescricao = GetTipoUsuarioDescricao(u.TipoUsuario),

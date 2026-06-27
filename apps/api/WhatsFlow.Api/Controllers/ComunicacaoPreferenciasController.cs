@@ -16,15 +16,15 @@ public class ComunicacaoPreferenciasController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("pessoa/{pessoaId:int}")]
-    public async Task<ActionResult<IReadOnlyList<ComunicacaoPreferenciaResumoDto>>> GetByPessoaId(int pessoaId)
+    [HttpGet("contato/{contatoId:int}")]
+    public async Task<ActionResult<IReadOnlyList<ComunicacaoPreferenciaResumoDto>>> GetByContatoId(int contatoId)
     {
-        return Ok(await _service.GetByPessoaIdAsync(pessoaId));
+        return Ok(await _service.GetByContatoIdAsync(contatoId));
     }
 
-    [HttpPut("pessoa/{pessoaId:int}/canal/{canal}")]
-    public async Task<ActionResult<ComunicacaoPreferenciaResumoDto>> Upsert(int pessoaId, CanalComunicacao canal, [FromBody] AtualizarComunicacaoPreferenciaDto dto)
+    [HttpPut("contato/{contatoId:int}/canal/{canal}")]
+    public async Task<ActionResult<ComunicacaoPreferenciaResumoDto>> Upsert(int contatoId, CanalComunicacao canal, [FromBody] AtualizarComunicacaoPreferenciaDto dto)
     {
-        return Ok(await _service.UpsertAsync(pessoaId, canal, dto));
+        return Ok(await _service.UpsertAsync(contatoId, canal, dto));
     }
 }

@@ -18,7 +18,6 @@ public class NotificacaoUsuarioRepository : INotificacaoUsuarioRepository
     {
         return await _context.NotificacoesUsuarios
             .Include(x => x.Usuario)
-                .ThenInclude(u => u.Pessoa)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 

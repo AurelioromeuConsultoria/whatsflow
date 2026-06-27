@@ -82,13 +82,10 @@ builder.Services
 // DEPENDENCY INJECTION
 // ==========================
 
-// TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 // Repositories
-builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<IBillingCycleService, BillingCycleService>();
 builder.Services.AddScoped<ISignupService, SignupService>();
-builder.Services.AddScoped<IVisitanteRepository, VisitanteRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IConfiguracaoMensagemRepository, ConfiguracaoMensagemRepository>();
 builder.Services.AddScoped<IMensagemAgendadaRepository, MensagemAgendadaRepository>();
@@ -98,14 +95,16 @@ builder.Services.AddScoped<IComunicacaoEntregaRepository, ComunicacaoEntregaRepo
 builder.Services.AddScoped<IComunicacaoPreferenciaRepository, ComunicacaoPreferenciaRepository>();
 builder.Services.AddScoped<IComunicacaoSegmentoRepository, ComunicacaoSegmentoRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IWhatsAppAccountRepository, WhatsAppAccountRepository>();
+builder.Services.AddScoped<IWebhookEventRepository, WebhookEventRepository>();
+builder.Services.AddScoped<IMessageLogRepository, MessageLogRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<INotificacaoUsuarioRepository, NotificacaoUsuarioRepository>();
 builder.Services.AddScoped<IPerfilAcessoRepository, PerfilAcessoRepository>();
 builder.Services.AddScoped<ISecretProtector, DataProtectionSecretProtector>();
 
 // Services
-builder.Services.AddScoped<IPessoaService, PessoaService>();
-builder.Services.AddScoped<IVisitanteService, VisitanteService>();
 builder.Services.AddScoped<IConfiguracaoMensagemService, ConfiguracaoMensagemService>();
 builder.Services.AddScoped<IMensagemAgendadaService, MensagemAgendadaService>();
 builder.Services.AddScoped<IComunicacaoTemplateService, ComunicacaoTemplateService>();
@@ -127,6 +126,8 @@ builder.Services.AddScoped<AuditSaveChangesInterceptor>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 builder.Services.AddHttpClient<IAsaasBillingClient, AsaasBillingClient>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<IWhatsAppAccountService, WhatsAppAccountService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<INotificacaoUsuarioService, NotificacaoUsuarioService>();
 builder.Services.AddScoped<IAuthService, AuthService>();

@@ -24,6 +24,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Nome = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
                     Descricao = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
                     PublicoAlvo = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    FiltrosJson = table.Column<string>(type: "text", nullable: true),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
                     Padrao = table.Column<bool>(type: "boolean", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -43,12 +44,14 @@ namespace WhatsFlow.Infrastructure.Migrations
                     TenantId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Objetivo = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Categoria = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
                     Canal = table.Column<int>(type: "integer", nullable: false),
                     Assunto = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     Corpo = table.Column<string>(type: "character varying(4000)", maxLength: 4000, nullable: false),
                     CorpoHtml = table.Column<string>(type: "character varying(12000)", maxLength: 12000, nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     VariaveisPermitidas = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    ProviderTemplateId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
                     Versao = table.Column<int>(type: "integer", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -102,28 +105,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tenants",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    NomeExibicao = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
-                    Slug = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    LogoUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    FaviconUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    CorPrimaria = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    CorSecundaria = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    IsRootTenant = table.Column<bool>(type: "boolean", nullable: false),
-                    Ativo = table.Column<bool>(type: "boolean", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tenants", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "VerificacoesEmail",
                 columns: table => new
                 {
@@ -166,6 +147,42 @@ namespace WhatsFlow.Infrastructure.Migrations
                         principalTable: "ComunicacaoTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tenants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nome = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    NomeExibicao = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    Slug = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    LogoUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    FaviconUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    CorPrimaria = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    CorSecundaria = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Documento = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
+                    Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    Telefone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    PlanoId = table.Column<int>(type: "integer", nullable: true),
+                    LimiteMensalMensagens = table.Column<int>(type: "integer", nullable: false),
+                    LimiteContatos = table.Column<int>(type: "integer", nullable: false),
+                    FusoHorario = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
+                    IsRootTenant = table.Column<bool>(type: "boolean", nullable: false),
+                    Ativo = table.Column<bool>(type: "boolean", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tenants_Planos_PlanoId",
+                        column: x => x.PlanoId,
+                        principalTable: "Planos",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -269,12 +286,19 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenantId = table.Column<int>(type: "integer", nullable: false),
-                    Nome = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    WhatsApp = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Membro = table.Column<bool>(type: "boolean", nullable: false),
-                    Mensagem = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Nome = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TelefoneWhatsApp = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    Documento = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
+                    Organizacao = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    Observacoes = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    Origem = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    OptIn = table.Column<bool>(type: "boolean", nullable: false),
+                    DataOptIn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataOptOut = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -310,27 +334,21 @@ namespace WhatsFlow.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pessoas",
+                name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenantId = table.Column<int>(type: "integer", nullable: false),
-                    Nome = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Telefone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    WhatsApp = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    FotoUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    DataNascimento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    TipoPessoa = table.Column<int>(type: "integer", nullable: false),
-                    Ativo = table.Column<bool>(type: "boolean", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Nome = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    Cor = table.Column<string>(type: "character varying(9)", maxLength: 9, nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pessoas", x => x.Id);
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pessoas_Tenants_TenantId",
+                        name: "FK_Tags_Tenants_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenants",
                         principalColumn: "Id",
@@ -357,6 +375,35 @@ namespace WhatsFlow.Infrastructure.Migrations
                         principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WhatsAppAccounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TenantId = table.Column<int>(type: "integer", nullable: false),
+                    Nome = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    Provider = table.Column<int>(type: "integer", nullable: false),
+                    PhoneNumberId = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    BusinessAccountId = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    AccessTokenProtegido = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    WebhookSecret = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    ConfiguracoesJson = table.Column<string>(type: "text", nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WhatsAppAccounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WhatsAppAccounts_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -394,6 +441,71 @@ namespace WhatsFlow.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ComunicacaoPreferencias",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TenantId = table.Column<int>(type: "integer", nullable: false),
+                    ContatoId = table.Column<int>(type: "integer", nullable: false),
+                    Canal = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    OrigemConsentimento = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComunicacaoPreferencias", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ComunicacaoPreferencias_Contatos_ContatoId",
+                        column: x => x.ContatoId,
+                        principalTable: "Contatos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MensagensAgendadas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TenantId = table.Column<int>(type: "integer", nullable: false),
+                    ContatoId = table.Column<int>(type: "integer", nullable: false),
+                    ConfiguracaoMensagemId = table.Column<int>(type: "integer", nullable: false),
+                    DataAgendamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DataEnvio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    TextoFinal = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    DataProcessamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LogErro = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MensagensAgendadas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MensagensAgendadas_ConfiguracoesMensagens_ConfiguracaoMensa~",
+                        column: x => x.ConfiguracaoMensagemId,
+                        principalTable: "ConfiguracoesMensagens",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MensagensAgendadas_Contatos_ContatoId",
+                        column: x => x.ContatoId,
+                        principalTable: "Contatos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MensagensAgendadas_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PerfisAcessoPermissoes",
                 columns: table => new
                 {
@@ -424,38 +536,17 @@ namespace WhatsFlow.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ComunicacaoPreferencias",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TenantId = table.Column<int>(type: "integer", nullable: false),
-                    PessoaId = table.Column<int>(type: "integer", nullable: false),
-                    Canal = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false),
-                    OrigemConsentimento = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ComunicacaoPreferencias", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ComunicacaoPreferencias_Pessoas_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenantId = table.Column<int>(type: "integer", nullable: false),
-                    PessoaId = table.Column<int>(type: "integer", nullable: false),
+                    Nome = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    Telefone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    WhatsApp = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    DataNascimento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     EmailLogin = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     SenhaHash = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     TipoUsuario = table.Column<int>(type: "integer", nullable: false),
@@ -477,12 +568,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Pessoas_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Usuarios_Tenants_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenants",
@@ -491,32 +576,58 @@ namespace WhatsFlow.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Visitantes",
+                name: "ContatoTags",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenantId = table.Column<int>(type: "integer", nullable: false),
-                    PessoaId = table.Column<int>(type: "integer", nullable: false),
-                    DataVisita = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Observacoes = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    DataCadastro = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    ContatoId = table.Column<int>(type: "integer", nullable: false),
+                    TagId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Visitantes", x => x.Id);
+                    table.PrimaryKey("PK_ContatoTags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Visitantes_Pessoas_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoas",
+                        name: "FK_ContatoTags_Contatos_ContatoId",
+                        column: x => x.ContatoId,
+                        principalTable: "Contatos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Visitantes_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tenants",
+                        name: "FK_ContatoTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WebhookEvents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TenantId = table.Column<int>(type: "integer", nullable: false),
+                    WhatsAppAccountId = table.Column<int>(type: "integer", nullable: true),
+                    Provider = table.Column<int>(type: "integer", nullable: false),
+                    EventType = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    ProviderMessageId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    RawPayload = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Erro = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ProcessadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebhookEvents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WebhookEvents_WhatsAppAccounts_WhatsAppAccountId",
+                        column: x => x.WhatsAppAccountId,
+                        principalTable: "WhatsAppAccounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -529,16 +640,35 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Nome = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Objetivo = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     PublicoAlvo = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    TemplateId = table.Column<int>(type: "integer", nullable: true),
+                    SegmentoId = table.Column<int>(type: "integer", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     Origem = table.Column<int>(type: "integer", nullable: false),
                     DataAgendamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CriadoPorUsuarioId = table.Column<int>(type: "integer", nullable: true)
+                    CriadoPorUsuarioId = table.Column<int>(type: "integer", nullable: true),
+                    TotalDestinatarios = table.Column<int>(type: "integer", nullable: false),
+                    TotalEnviadas = table.Column<int>(type: "integer", nullable: false),
+                    TotalFalhas = table.Column<int>(type: "integer", nullable: false),
+                    TotalEntregues = table.Column<int>(type: "integer", nullable: false),
+                    TotalLidas = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ComunicacaoCampanhas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ComunicacaoCampanhas_ComunicacaoSegmentos_SegmentoId",
+                        column: x => x.SegmentoId,
+                        principalTable: "ComunicacaoSegmentos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_ComunicacaoCampanhas_ComunicacaoTemplates_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "ComunicacaoTemplates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_ComunicacaoCampanhas_Usuarios_CriadoPorUsuarioId",
                         column: x => x.CriadoPorUsuarioId,
@@ -569,46 +699,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                         name: "FK_NotificacoesUsuarios_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MensagensAgendadas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TenantId = table.Column<int>(type: "integer", nullable: false),
-                    VisitanteId = table.Column<int>(type: "integer", nullable: false),
-                    ConfiguracaoMensagemId = table.Column<int>(type: "integer", nullable: false),
-                    DataAgendamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataEnvio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false),
-                    TextoFinal = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    DataProcessamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LogErro = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MensagensAgendadas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MensagensAgendadas_ConfiguracoesMensagens_ConfiguracaoMensa~",
-                        column: x => x.ConfiguracaoMensagemId,
-                        principalTable: "ConfiguracoesMensagens",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MensagensAgendadas_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tenants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MensagensAgendadas_Visitantes_VisitanteId",
-                        column: x => x.VisitanteId,
-                        principalTable: "Visitantes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -650,8 +740,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenantId = table.Column<int>(type: "integer", nullable: false),
                     ComunicacaoCampanhaId = table.Column<int>(type: "integer", nullable: true),
-                    DestinatarioPessoaId = table.Column<int>(type: "integer", nullable: true),
-                    DestinatarioVisitanteId = table.Column<int>(type: "integer", nullable: true),
+                    ContatoId = table.Column<int>(type: "integer", nullable: true),
+                    TemplateId = table.Column<int>(type: "integer", nullable: true),
                     Canal = table.Column<int>(type: "integer", nullable: false),
                     DestinoResolvido = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     RemetenteResolvido = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
@@ -660,11 +750,16 @@ namespace WhatsFlow.Infrastructure.Migrations
                     MidiaUrl = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     Tentativas = table.Column<int>(type: "integer", nullable: false),
-                    ProcessadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    EntregueEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ProviderMessageId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    ErrorCode = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
                     Erro = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     ChaveDedupe = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    AgendadoPara = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ProcessadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EntregueEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LidoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -676,17 +771,42 @@ namespace WhatsFlow.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ComunicacaoEntregas_Pessoas_DestinatarioPessoaId",
-                        column: x => x.DestinatarioPessoaId,
-                        principalTable: "Pessoas",
+                        name: "FK_ComunicacaoEntregas_ComunicacaoTemplates_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "ComunicacaoTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_ComunicacaoEntregas_Visitantes_DestinatarioVisitanteId",
-                        column: x => x.DestinatarioVisitanteId,
-                        principalTable: "Visitantes",
+                        name: "FK_ComunicacaoEntregas_Contatos_ContatoId",
+                        column: x => x.ContatoId,
+                        principalTable: "Contatos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessageLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TenantId = table.Column<int>(type: "integer", nullable: false),
+                    ComunicacaoEntregaId = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    ProviderMessageId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    ErrorCode = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    Detalhe = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessageLogs_ComunicacaoEntregas_ComunicacaoEntregaId",
+                        column: x => x.ComunicacaoEntregaId,
+                        principalTable: "ComunicacaoEntregas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -701,8 +821,8 @@ namespace WhatsFlow.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tenants",
-                columns: new[] { "Id", "Ativo", "CorPrimaria", "CorSecundaria", "DataCriacao", "FaviconUrl", "IsRootTenant", "LogoUrl", "Nome", "NomeExibicao", "Slug" },
-                values: new object[] { 1, true, "#111827", "#374151", new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Utc), null, true, null, "Mang Guarulhos", "Mang Guarulhos", "mang-guarulhos" });
+                columns: new[] { "Id", "Ativo", "CorPrimaria", "CorSecundaria", "DataAtualizacao", "DataCriacao", "Documento", "Email", "FaviconUrl", "FusoHorario", "IsRootTenant", "LimiteContatos", "LimiteMensalMensagens", "LogoUrl", "Nome", "NomeExibicao", "PlanoId", "Slug", "Status", "Telefone" },
+                values: new object[] { 1, true, "#111827", "#374151", null, new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Utc), null, null, null, "America/Sao_Paulo", true, 0, 0, null, "Mang Guarulhos", "Mang Guarulhos", null, "mang-guarulhos", 1, null });
 
             migrationBuilder.InsertData(
                 table: "ConfiguracoesMensagens",
@@ -759,6 +879,16 @@ namespace WhatsFlow.Infrastructure.Migrations
                 column: "CriadoPorUsuarioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ComunicacaoCampanhas_SegmentoId",
+                table: "ComunicacaoCampanhas",
+                column: "SegmentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComunicacaoCampanhas_TemplateId",
+                table: "ComunicacaoCampanhas",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ComunicacaoEntregas_ChaveDedupe",
                 table: "ComunicacaoEntregas",
                 column: "ChaveDedupe");
@@ -769,14 +899,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                 column: "ComunicacaoCampanhaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ComunicacaoEntregas_DestinatarioPessoaId",
+                name: "IX_ComunicacaoEntregas_ContatoId",
                 table: "ComunicacaoEntregas",
-                column: "DestinatarioPessoaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ComunicacaoEntregas_DestinatarioVisitanteId",
-                table: "ComunicacaoEntregas",
-                column: "DestinatarioVisitanteId");
+                column: "ContatoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ComunicacaoEntregas_Status_Canal_DataCriacao",
@@ -784,9 +909,14 @@ namespace WhatsFlow.Infrastructure.Migrations
                 columns: new[] { "Status", "Canal", "DataCriacao" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ComunicacaoPreferencias_PessoaId_Canal",
+                name: "IX_ComunicacaoEntregas_TemplateId",
+                table: "ComunicacaoEntregas",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComunicacaoPreferencias_ContatoId_Canal",
                 table: "ComunicacaoPreferencias",
-                columns: new[] { "PessoaId", "Canal" },
+                columns: new[] { "ContatoId", "Canal" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -795,9 +925,21 @@ namespace WhatsFlow.Infrastructure.Migrations
                 columns: new[] { "TenantId", "Nome" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contatos_TenantId",
+                name: "IX_Contatos_TenantId_TelefoneWhatsApp",
                 table: "Contatos",
-                column: "TenantId");
+                columns: new[] { "TenantId", "TelefoneWhatsApp" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContatoTags_ContatoId_TagId",
+                table: "ContatoTags",
+                columns: new[] { "ContatoId", "TagId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContatoTags_TagId",
+                table: "ContatoTags",
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventosWebhookBilling_GatewayEventId",
@@ -825,19 +967,24 @@ namespace WhatsFlow.Infrastructure.Migrations
                 column: "ConfiguracaoMensagemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MensagensAgendadas_ContatoId",
+                table: "MensagensAgendadas",
+                column: "ContatoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MensagensAgendadas_TenantId_ContatoId_DataEnvio",
+                table: "MensagensAgendadas",
+                columns: new[] { "TenantId", "ContatoId", "DataEnvio" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MensagensAgendadas_TenantId_Status_DataEnvio",
                 table: "MensagensAgendadas",
                 columns: new[] { "TenantId", "Status", "DataEnvio" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MensagensAgendadas_TenantId_VisitanteId_DataEnvio",
-                table: "MensagensAgendadas",
-                columns: new[] { "TenantId", "VisitanteId", "DataEnvio" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MensagensAgendadas_VisitanteId",
-                table: "MensagensAgendadas",
-                column: "VisitanteId");
+                name: "IX_MessageLogs_ComunicacaoEntregaId",
+                table: "MessageLogs",
+                column: "ComunicacaoEntregaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NotificacoesUsuarios_UsuarioId_DataLeitura_DataCriacao",
@@ -862,15 +1009,15 @@ namespace WhatsFlow.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pessoas_TenantId_Email",
-                table: "Pessoas",
-                columns: new[] { "TenantId", "Email" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Planos_Slug",
                 table: "Planos",
                 column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_TenantId_Nome",
+                table: "Tags",
+                columns: new[] { "TenantId", "Nome" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -883,6 +1030,11 @@ namespace WhatsFlow.Infrastructure.Migrations
                 name: "IX_TenantDomains_TenantId",
                 table: "TenantDomains",
                 column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tenants_PlanoId",
+                table: "Tenants",
+                column: "PlanoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tenants_Slug",
@@ -902,12 +1054,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                 column: "PerfilAcessoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_PessoaId",
-                table: "Usuarios",
-                column: "PessoaId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_TenantId",
                 table: "Usuarios",
                 column: "TenantId");
@@ -919,14 +1065,24 @@ namespace WhatsFlow.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Visitantes_PessoaId",
-                table: "Visitantes",
-                column: "PessoaId");
+                name: "IX_WebhookEvents_Provider_ProviderMessageId",
+                table: "WebhookEvents",
+                columns: new[] { "Provider", "ProviderMessageId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Visitantes_TenantId",
-                table: "Visitantes",
-                column: "TenantId");
+                name: "IX_WebhookEvents_TenantId_Status_CriadoEm",
+                table: "WebhookEvents",
+                columns: new[] { "TenantId", "Status", "CriadoEm" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WebhookEvents_WhatsAppAccountId",
+                table: "WebhookEvents",
+                column: "WhatsAppAccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WhatsAppAccounts_TenantId_Nome",
+                table: "WhatsAppAccounts",
+                columns: new[] { "TenantId", "Nome" });
         }
 
         /// <inheritdoc />
@@ -942,16 +1098,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                 name: "ComunicacaoCampanhaCanais");
 
             migrationBuilder.DropTable(
-                name: "ComunicacaoEntregas");
-
-            migrationBuilder.DropTable(
                 name: "ComunicacaoPreferencias");
 
             migrationBuilder.DropTable(
-                name: "ComunicacaoSegmentos");
-
-            migrationBuilder.DropTable(
-                name: "Contatos");
+                name: "ContatoTags");
 
             migrationBuilder.DropTable(
                 name: "EventosWebhookBilling");
@@ -961,6 +1111,9 @@ namespace WhatsFlow.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "MensagensAgendadas");
+
+            migrationBuilder.DropTable(
+                name: "MessageLogs");
 
             migrationBuilder.DropTable(
                 name: "NotificacoesUsuarios");
@@ -975,10 +1128,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                 name: "VerificacoesEmail");
 
             migrationBuilder.DropTable(
-                name: "ComunicacaoTemplates");
+                name: "WebhookEvents");
 
             migrationBuilder.DropTable(
-                name: "ComunicacaoCampanhas");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Assinaturas");
@@ -987,22 +1140,34 @@ namespace WhatsFlow.Infrastructure.Migrations
                 name: "ConfiguracoesMensagens");
 
             migrationBuilder.DropTable(
-                name: "Visitantes");
+                name: "ComunicacaoEntregas");
+
+            migrationBuilder.DropTable(
+                name: "WhatsAppAccounts");
+
+            migrationBuilder.DropTable(
+                name: "ComunicacaoCampanhas");
+
+            migrationBuilder.DropTable(
+                name: "Contatos");
+
+            migrationBuilder.DropTable(
+                name: "ComunicacaoSegmentos");
+
+            migrationBuilder.DropTable(
+                name: "ComunicacaoTemplates");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Planos");
-
-            migrationBuilder.DropTable(
                 name: "PerfisAcesso");
 
             migrationBuilder.DropTable(
-                name: "Pessoas");
+                name: "Tenants");
 
             migrationBuilder.DropTable(
-                name: "Tenants");
+                name: "Planos");
         }
     }
 }

@@ -82,11 +82,11 @@ public class TenantManagementService : ITenantManagementService
             })
             .ToListAsync();
 
-        var pessoaCounts = await _context.Pessoas
+        var pessoaCounts = await _context.Contatos
             .IgnoreQueryFilters()
             .AsNoTracking()
-            .Where(p => tenantIds.Contains(p.TenantId))
-            .GroupBy(p => p.TenantId)
+            .Where(c => tenantIds.Contains(c.TenantId))
+            .GroupBy(c => c.TenantId)
             .Select(g => new { TenantId = g.Key, TotalPessoas = g.Count() })
             .ToListAsync();
 
@@ -209,26 +209,15 @@ public class TenantManagementService : ITenantManagementService
             };
 
             _context.PerfisAcesso.Add(perfilAdmin);
+            await _context.SaveChangesAsync();
 
-            var pessoaAdmin = new Pessoa
+            var usuarioAdmin = new Usuario
             {
                 TenantId = tenant.Id,
                 Nome = dto.AdminNome.Trim(),
                 Email = dto.AdminEmail.Trim(),
                 Telefone = string.IsNullOrWhiteSpace(dto.AdminTelefone) ? null : dto.AdminTelefone.Trim(),
                 WhatsApp = string.IsNullOrWhiteSpace(dto.AdminWhatsApp) ? null : dto.AdminWhatsApp.Trim(),
-                TipoPessoa = TipoPessoa.Adulto,
-                Ativo = true,
-                DataCriacao = DateTime.Now
-            };
-
-            _context.Pessoas.Add(pessoaAdmin);
-            await _context.SaveChangesAsync();
-
-            var usuarioAdmin = new Usuario
-            {
-                TenantId = tenant.Id,
-                PessoaId = pessoaAdmin.Id,
                 EmailLogin = dto.AdminEmailLogin.Trim(),
                 SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.AdminSenha),
                 TipoUsuario = TipoUsuario.Admin,
@@ -259,7 +248,6 @@ public class TenantManagementService : ITenantManagementService
                     DominioPrimario = normalizedDomain,
                     tenant.Ativo,
                     UsuarioAdminId = usuarioAdmin.Id,
-                    PessoaAdminId = pessoaAdmin.Id,
                     PerfilAcessoId = perfilAdmin.Id
                 });
 
@@ -267,7 +255,6 @@ public class TenantManagementService : ITenantManagementService
             {
                 Tenant = MapToDto(tenant, normalizedDomain),
                 PerfilAcessoId = perfilAdmin.Id,
-                PessoaId = pessoaAdmin.Id,
                 UsuarioId = usuarioAdmin.Id
             };
         });
@@ -461,7 +448,7 @@ public class TenantManagementService : ITenantManagementService
                     .Include(x => x.Permissoes)
                     .Where(x => x.TenantId == id)
                     .ToListAsync();
-                var pessoas = await _context.Pessoas.Where(x => x.TenantId == id).ToListAsync();
+                var contatos = await _context.Contatos.Where(x => x.TenantId == id).ToListAsync();
                 var domains = await _context.TenantDomains.Where(x => x.TenantId == id).ToListAsync();
 
                 if (auditLogs.Count > 0) _context.AuditLogs.RemoveRange(auditLogs);
@@ -473,7 +460,7 @@ public class TenantManagementService : ITenantManagementService
                 if (perfis.Count > 0) _context.PerfisAcesso.RemoveRange(perfis);
                 await _context.SaveChangesAsync();
 
-                if (pessoas.Count > 0) _context.Pessoas.RemoveRange(pessoas);
+                if (contatos.Count > 0) _context.Contatos.RemoveRange(contatos);
                 if (domains.Count > 0) _context.TenantDomains.RemoveRange(domains);
                 await _context.SaveChangesAsync();
 
@@ -575,11 +562,9 @@ public class TenantManagementService : ITenantManagementService
 
     private async Task<bool> HasOperationalDataAsync(int tenantId)
     {
-        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
-        return await _context.Visitantes.AnyAsync(x => x.TenantId == tenantId)
+        return await _context.Contatos.AnyAsync(x => x.TenantId == tenantId)
             || await _context.ConfiguracoesMensagens.AnyAsync(x => x.TenantId == tenantId)
-            || await _context.MensagensAgendadas.AnyAsync(x => x.TenantId == tenantId)
-            || await _context.Contatos.AnyAsync(x => x.TenantId == tenantId);
+            || await _context.MensagensAgendadas.AnyAsync(x => x.TenantId == tenantId);
     }
 
     private static void ValidateBranding(string? corPrimaria, string? corSecundaria)
@@ -625,10 +610,10 @@ public class TenantManagementService : ITenantManagementService
             })
             .FirstOrDefaultAsync();
 
-        var totalPessoas = await _context.Pessoas
+        var totalPessoas = await _context.Contatos
             .IgnoreQueryFilters()
             .AsNoTracking()
-            .Where(p => p.TenantId == tenantId)
+            .Where(c => c.TenantId == tenantId)
             .CountAsync();
 
         var ultimaAtividadeEm = await _context.AuditLogs

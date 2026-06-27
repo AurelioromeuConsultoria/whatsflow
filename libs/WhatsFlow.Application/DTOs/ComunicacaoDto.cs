@@ -78,7 +78,7 @@ public class ComunicacaoAutomacaoExecucaoResumoDto
 public class ComunicacaoLembreteOperacionalRequest
 {
     public string ChaveEvento { get; set; } = string.Empty;
-    public int PessoaId { get; set; }
+    public int ContatoId { get; set; }
     public string Titulo { get; set; } = string.Empty;
     public string Mensagem { get; set; } = string.Empty;
     public string? Objetivo { get; set; }
@@ -87,8 +87,8 @@ public class ComunicacaoLembreteOperacionalRequest
 public class ComunicacaoAvisoContextualKidsRequest
 {
     public string ChaveEvento { get; set; } = string.Empty;
-    public int? CriancaPessoaId { get; set; }
-    public IReadOnlyList<int> ResponsavelPessoaIds { get; set; } = [];
+    public int? CriancaContatoId { get; set; }
+    public IReadOnlyList<int> ResponsavelContatoIds { get; set; } = [];
     public string Titulo { get; set; } = string.Empty;
     public string Mensagem { get; set; } = string.Empty;
     public string Tipo { get; set; } = string.Empty;
@@ -185,7 +185,7 @@ public class ComunicacaoEstimativaAudienciaDto
 public class ComunicacaoPreferenciaResumoDto
 {
     public int Id { get; set; }
-    public int PessoaId { get; set; }
+    public int ContatoId { get; set; }
     public CanalComunicacao Canal { get; set; }
     public StatusPreferenciaCanal Status { get; set; }
     public string? OrigemConsentimento { get; set; }

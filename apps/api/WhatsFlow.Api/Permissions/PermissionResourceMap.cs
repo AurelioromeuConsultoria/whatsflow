@@ -4,11 +4,8 @@ public static class PermissionResourceMap
 {
     private static readonly Dictionary<string, string> ResourceByPath = new()
     {
-        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
         ["/api/dashboard"] = "dashboard",
         ["/api/usuarios"] = "usuarios",
-        ["/api/pessoas"] = "pessoas",
-        ["/api/visitantes"] = "visitantes",
         ["/api/configuracoesmensagens"] = "configuracoes-mensagens",
         ["/api/mensagensagendadas"] = "mensagens-agendadas",
         ["/api/comunicacao"] = "comunicacao",
@@ -19,6 +16,8 @@ public static class PermissionResourceMap
         ["/api/comunicacaopreferencias"] = "comunicacao",
         ["/api/comunicacaosegmentos"] = "comunicacao",
         ["/api/contatos"] = "contatos",
+        ["/api/tags"] = "contatos",
+        ["/api/whatsappaccounts"] = "comunicacao",
         ["/api/perfis-acesso"] = "perfis-acesso",
         ["/api/auditlogs"] = "usuarios"
     };

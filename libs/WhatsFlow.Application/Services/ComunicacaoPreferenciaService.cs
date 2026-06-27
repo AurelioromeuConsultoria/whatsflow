@@ -7,9 +7,9 @@ namespace WhatsFlow.Application.Services;
 
 public interface IComunicacaoPreferenciaService
 {
-    Task<IReadOnlyList<ComunicacaoPreferenciaResumoDto>> GetByPessoaIdAsync(int pessoaId);
-    Task<ComunicacaoPreferenciaResumoDto> UpsertAsync(int pessoaId, CanalComunicacao canal, AtualizarComunicacaoPreferenciaDto dto);
-    Task<bool> EstaBloqueadoAsync(int? pessoaId, CanalComunicacao canal);
+    Task<IReadOnlyList<ComunicacaoPreferenciaResumoDto>> GetByContatoIdAsync(int contatoId);
+    Task<ComunicacaoPreferenciaResumoDto> UpsertAsync(int contatoId, CanalComunicacao canal, AtualizarComunicacaoPreferenciaDto dto);
+    Task<bool> EstaBloqueadoAsync(int? contatoId, CanalComunicacao canal);
 }
 
 public class ComunicacaoPreferenciaService : IComunicacaoPreferenciaService
@@ -28,22 +28,22 @@ public class ComunicacaoPreferenciaService : IComunicacaoPreferenciaService
         _logger = logger;
     }
 
-    public async Task<IReadOnlyList<ComunicacaoPreferenciaResumoDto>> GetByPessoaIdAsync(int pessoaId)
+    public async Task<IReadOnlyList<ComunicacaoPreferenciaResumoDto>> GetByContatoIdAsync(int contatoId)
     {
-        var items = await _repository.GetByPessoaIdAsync(pessoaId);
+        var items = await _repository.GetByContatoIdAsync(contatoId);
         return items.Select(MapResumo).ToList();
     }
 
-    public async Task<ComunicacaoPreferenciaResumoDto> UpsertAsync(int pessoaId, CanalComunicacao canal, AtualizarComunicacaoPreferenciaDto dto)
+    public async Task<ComunicacaoPreferenciaResumoDto> UpsertAsync(int contatoId, CanalComunicacao canal, AtualizarComunicacaoPreferenciaDto dto)
     {
-        var entity = await _repository.GetByPessoaCanalAsync(pessoaId, canal);
+        var entity = await _repository.GetByContatoCanalAsync(contatoId, canal);
         var statusAnterior = entity?.Status;
 
         if (entity == null)
         {
             entity = await _repository.CreateAsync(new ComunicacaoPreferencia
             {
-                PessoaId = pessoaId,
+                ContatoId = contatoId,
                 Canal = canal,
                 Status = dto.Status,
                 OrigemConsentimento = string.IsNullOrWhiteSpace(dto.OrigemConsentimento) ? null : dto.OrigemConsentimento.Trim(),
@@ -59,14 +59,14 @@ public class ComunicacaoPreferenciaService : IComunicacaoPreferenciaService
         }
 
         _logger.LogInformation(
-            "{EventName} PessoaId={PessoaId} Canal={Canal} Status={Status}",
+            "{EventName} ContatoId={ContatoId} Canal={Canal} Status={Status}",
             ComunicacaoObservability.Events.PreferenciaAtualizada,
-            pessoaId,
+            contatoId,
             canal,
             entity.Status);
-        await _auditLogService.RecordAsync("ComunicacaoPreferencia", $"{pessoaId}:{canal}", "AtualizarPreferenciaCanal", new
+        await _auditLogService.RecordAsync("ComunicacaoPreferencia", $"{contatoId}:{canal}", "AtualizarPreferenciaCanal", new
         {
-            PessoaId = pessoaId,
+            ContatoId = contatoId,
             Canal = canal.ToString(),
             StatusAnterior = statusAnterior?.ToString(),
             StatusAtual = entity.Status.ToString(),
@@ -76,14 +76,14 @@ public class ComunicacaoPreferenciaService : IComunicacaoPreferenciaService
         return MapResumo(entity);
     }
 
-    public async Task<bool> EstaBloqueadoAsync(int? pessoaId, CanalComunicacao canal)
+    public async Task<bool> EstaBloqueadoAsync(int? contatoId, CanalComunicacao canal)
     {
-        if (!pessoaId.HasValue || pessoaId.Value <= 0)
+        if (!contatoId.HasValue || contatoId.Value <= 0)
         {
             return false;
         }
 
-        var item = await _repository.GetByPessoaCanalAsync(pessoaId.Value, canal);
+        var item = await _repository.GetByContatoCanalAsync(contatoId.Value, canal);
         return item?.Status == StatusPreferenciaCanal.Bloqueado;
     }
 
@@ -92,7 +92,7 @@ public class ComunicacaoPreferenciaService : IComunicacaoPreferenciaService
         return new ComunicacaoPreferenciaResumoDto
         {
             Id = item.Id,
-            PessoaId = item.PessoaId,
+            ContatoId = item.ContatoId,
             Canal = item.Canal,
             Status = item.Status,
             OrigemConsentimento = item.OrigemConsentimento,

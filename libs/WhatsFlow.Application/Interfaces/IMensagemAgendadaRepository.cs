@@ -15,13 +15,13 @@ public interface IMensagemAgendadaRepository
     Task<IEnumerable<MensagemAgendada>> GetMensagensProntasParaEnvioAsync();
     /// <summary>Reserva transacionalmente mensagens Agendada com DataEnvio &lt;= agora (status → EmProcessamento). Evita dupla execução.</summary>
     Task<IEnumerable<MensagemAgendada>> ReservarProntasParaEnvioAsync(int limit);
-    Task<IEnumerable<MensagemAgendada>> GetMensagensPorVisitanteAsync(int visitanteId);
+    Task<IEnumerable<MensagemAgendada>> GetMensagensPorContatoAsync(int contatoId);
     Task<IEnumerable<MensagemAgendada>> GetMensagensPorStatusAsync(StatusMensagem status);
 
     /// <summary>
-    /// Cancela mensagens do visitante que ainda não foram enviadas (Status != Enviada).
+    /// Cancela mensagens do contato que ainda não foram enviadas (Status != Enviada).
     /// Retorna a quantidade afetada.
     /// </summary>
-    Task<int> CancelarPendentesPorVisitanteAsync(int visitanteId, string motivo);
+    Task<int> CancelarPendentesPorContatoAsync(int contatoId, string motivo);
 }
 

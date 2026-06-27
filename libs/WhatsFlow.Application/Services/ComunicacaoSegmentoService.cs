@@ -78,8 +78,8 @@ public class ComunicacaoSegmentoService : IComunicacaoSegmentoService
             TotalDestinatarios = destinatarios.Count,
             ComWhatsApp = destinatarios.Count(x => !string.IsNullOrWhiteSpace(x.WhatsApp)),
             ComEmail = destinatarios.Count(x => !string.IsNullOrWhiteSpace(x.Email)),
-            ComPush = destinatarios.Count(x => x.PessoaId.HasValue),
-            ComNotificacaoInterna = destinatarios.Count(x => x.PessoaId.HasValue)
+            ComPush = destinatarios.Count(x => x.ContatoId.HasValue),
+            ComNotificacaoInterna = destinatarios.Count(x => x.ContatoId.HasValue)
         };
     }
 

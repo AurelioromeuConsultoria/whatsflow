@@ -10,9 +10,22 @@ public class Usuario : ITenantEntity
     public int TenantId { get; set; } = Tenant.InitialTenantId;
     public virtual Tenant Tenant { get; set; } = null!;
 
+    // Identidade do usuário (antes vinha da entidade Pessoa, agora inline).
+    // TODO(WhatsFlow Etapa 4C): avaliar vincular Usuario a um Contato (ContatoId) quando fizer sentido de negócio.
     [Required]
-    public int PessoaId { get; set; }
-    public virtual Pessoa Pessoa { get; set; } = null!;
+    [MaxLength(150)]
+    public string Nome { get; set; } = string.Empty;
+
+    [MaxLength(150)]
+    public string? Email { get; set; }
+
+    [MaxLength(20)]
+    public string? Telefone { get; set; }
+
+    [MaxLength(20)]
+    public string? WhatsApp { get; set; }
+
+    public DateTime? DataNascimento { get; set; }
 
     [Required]
     [MaxLength(100)]

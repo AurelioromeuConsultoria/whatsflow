@@ -5,9 +5,9 @@ namespace WhatsFlow.Application.DTOs;
 public class MensagemAgendadaDto
 {
     public int Id { get; set; }
-    public int VisitanteId { get; set; }
-    public string NomeVisitante { get; set; } = string.Empty;
-    public string TelefoneVisitante { get; set; } = string.Empty;
+    public int ContatoId { get; set; }
+    public string NomeContato { get; set; } = string.Empty;
+    public string TelefoneContato { get; set; } = string.Empty;
     public int ConfiguracaoMensagemId { get; set; }
     public string NomeConfiguracao { get; set; } = string.Empty;
     public DateTime DataAgendamento { get; set; }
@@ -18,4 +18,3 @@ public class MensagemAgendadaDto
     public string? LogErro { get; set; }
     public DateTime DataCriacao { get; set; }
 }
-

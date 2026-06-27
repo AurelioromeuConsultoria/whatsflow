@@ -129,11 +129,11 @@ public class MessageSchedulerService : BackgroundService
                 try
                 {
                     _logger.LogInformation(
-                        "Processando mensagem ID {MensagemId} do tenant {TenantSlug} para visitante {VisitanteNome} ({Telefone})",
+                        "Processando mensagem ID {MensagemId} do tenant {TenantSlug} para contato {ContatoNome} ({Telefone})",
                         mensagem.Id,
                         tenant.Slug,
-                        mensagem.NomeVisitante,
-                        mensagem.TelefoneVisitante);
+                        mensagem.NomeContato,
+                        mensagem.TelefoneContato);
 
                     await EnviarViaEvolutionApi(mensagem);
 
@@ -143,7 +143,7 @@ public class MessageSchedulerService : BackgroundService
                         "Mensagem ID {MensagemId} do tenant {TenantSlug} enviada com sucesso para {Telefone}",
                         mensagem.Id,
                         tenant.Slug,
-                        mensagem.TelefoneVisitante);
+                        mensagem.TelefoneContato);
                 }
                 catch (Exception ex)
                 {
@@ -151,7 +151,7 @@ public class MessageSchedulerService : BackgroundService
                         "Erro ao enviar mensagem ID {MensagemId} do tenant {TenantSlug} para {Telefone}",
                         mensagem.Id,
                         tenant.Slug,
-                        mensagem.TelefoneVisitante);
+                        mensagem.TelefoneContato);
 
                     await mensagemService.MarcarComoErroAsync(mensagem.Id, ex.Message);
                 }
@@ -200,20 +200,20 @@ public class MessageSchedulerService : BackgroundService
         using var scope = _serviceProvider.CreateScope();
         var evolutionService = scope.ServiceProvider.GetRequiredService<IEvolutionApiService>();
 
-        if (string.IsNullOrWhiteSpace(mensagem.TelefoneVisitante))
+        if (string.IsNullOrWhiteSpace(mensagem.TelefoneContato))
         {
             throw new InvalidOperationException(
                 $"Mensagem ID {mensagem.Id} não possui número de telefone/WhatsApp para envio");
         }
 
         _logger.LogInformation(
-            "Enviando mensagem via Evolution API - ID: {MensagemId}, Número: {Telefone}, Visitante: {Nome}",
+            "Enviando mensagem via Evolution API - ID: {MensagemId}, Número: {Telefone}, Contato: {Nome}",
             mensagem.Id,
-            mensagem.TelefoneVisitante,
-            mensagem.NomeVisitante);
+            mensagem.TelefoneContato,
+            mensagem.NomeContato);
 
         var resultado = await evolutionService.EnviarMensagemTextoAsync(
-            mensagem.TelefoneVisitante,
+            mensagem.TelefoneContato,
             mensagem.TextoFinal);
 
         if (!resultado.Sucesso)

@@ -26,69 +26,43 @@ public class SearchService : ISearchService
         var digits = new string(q.Where(char.IsDigit).ToArray());
         var hasDigits = digits.Length >= 3;
 
-        var pessoasTask = _db.Pessoas
+        var contatosTask = _db.Contatos
             .AsNoTracking()
-            .Where(p =>
-                p.Nome.ToLower().Contains(qLower) ||
-                (p.Email != null && p.Email.ToLower().Contains(qLower)) ||
-                (hasDigits && (
-                    (p.Telefone != null && p.Telefone.Contains(digits)) ||
-                    (p.WhatsApp != null && p.WhatsApp.Contains(digits))
-                )))
-            .OrderBy(p => p.Nome)
+            .Where(c =>
+                c.Nome.ToLower().Contains(qLower) ||
+                (c.Email != null && c.Email.ToLower().Contains(qLower)) ||
+                (hasDigits && c.TelefoneWhatsApp.Contains(digits)))
+            .OrderBy(c => c.Nome)
             .Take(perType)
-            .Select(p => new GlobalSearchItemDto
+            .Select(c => new GlobalSearchItemDto
             {
-                Type = "Pessoa",
-                Id = p.Id,
-                Title = p.Nome,
-                Subtitle = p.Email ?? p.WhatsApp ?? p.Telefone
+                Type = "Contato",
+                Id = c.Id,
+                Title = c.Nome,
+                Subtitle = c.Email ?? c.TelefoneWhatsApp
             })
             .ToListAsync();
-
-        var visitantesTask = _db.Visitantes
-            .AsNoTracking()
-            .Where(v =>
-                v.Pessoa.Nome.ToLower().Contains(qLower) ||
-                (v.Pessoa.Email != null && v.Pessoa.Email.ToLower().Contains(qLower)) ||
-                (hasDigits && (
-                    (v.Pessoa.Telefone != null && v.Pessoa.Telefone.Contains(digits)) ||
-                    (v.Pessoa.WhatsApp != null && v.Pessoa.WhatsApp.Contains(digits))
-                )))
-            .OrderByDescending(v => v.DataVisita)
-            .Take(perType)
-            .Select(v => new GlobalSearchItemDto
-            {
-                Type = "Visitante",
-                Id = v.Id,
-                Title = v.Pessoa.Nome,
-                Subtitle = $"Visita: {v.DataVisita:yyyy-MM-dd}"
-            })
-            .ToListAsync();
-
-        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
         var usuariosTask = _db.Usuarios
             .AsNoTracking()
             .Where(u =>
                 u.EmailLogin.ToLower().Contains(qLower) ||
-                u.Pessoa.Nome.ToLower().Contains(qLower))
-            .OrderBy(u => u.Pessoa.Nome)
+                u.Nome.ToLower().Contains(qLower))
+            .OrderBy(u => u.Nome)
             .Take(perType)
             .Select(u => new GlobalSearchItemDto
             {
                 Type = "Usuario",
                 Id = u.Id,
-                Title = u.Pessoa.Nome,
+                Title = u.Nome,
                 Subtitle = u.EmailLogin
             })
             .ToListAsync();
 
-        await Task.WhenAll(pessoasTask, visitantesTask, usuariosTask);
+        await Task.WhenAll(contatosTask, usuariosTask);
 
         var all = new List<GlobalSearchItemDto>(takeTotal);
-        all.AddRange(pessoasTask.Result);
-        all.AddRange(visitantesTask.Result);
+        all.AddRange(contatosTask.Result);
         all.AddRange(usuariosTask.Result);
 
         return all.Take(takeTotal).ToList();

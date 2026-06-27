@@ -12,7 +12,7 @@ using WhatsFlow.Infrastructure.Data;
 namespace WhatsFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(WhatsFlowDbContext))]
-    [Migration("20260627174409_InitialCreate")]
+    [Migration("20260627182715_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -238,15 +238,40 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
+                    b.Property<int?>("SegmentoId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TemplateId")
                         .HasColumnType("integer");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("TotalDestinatarios")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalEntregues")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalEnviadas")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalFalhas")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalLidas")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CriadoPorUsuarioId");
+
+                    b.HasIndex("SegmentoId");
+
+                    b.HasIndex("TemplateId");
 
                     b.ToTable("ComunicacaoCampanhas");
                 });
@@ -291,6 +316,12 @@ namespace WhatsFlow.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("AgendadoPara")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("Canal")
                         .HasColumnType("integer");
 
@@ -299,6 +330,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<int?>("ComunicacaoCampanhaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ContatoId")
                         .HasColumnType("integer");
 
                     b.Property<string>("ConteudoFinal")
@@ -313,12 +347,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("DestinatarioPessoaId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("DestinatarioVisitanteId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("DestinoResolvido")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -331,6 +359,13 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+                    b.Property<string>("ErrorCode")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.Property<DateTime?>("LidoEm")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("MidiaUrl")
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
@@ -338,11 +373,18 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<DateTime?>("ProcessadoEm")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ProviderMessageId")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
                     b.Property<string>("RemetenteResolvido")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
                     b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TemplateId")
                         .HasColumnType("integer");
 
                     b.Property<int>("TenantId")
@@ -357,9 +399,9 @@ namespace WhatsFlow.Infrastructure.Migrations
 
                     b.HasIndex("ComunicacaoCampanhaId");
 
-                    b.HasIndex("DestinatarioPessoaId");
+                    b.HasIndex("ContatoId");
 
-                    b.HasIndex("DestinatarioVisitanteId");
+                    b.HasIndex("TemplateId");
 
                     b.HasIndex("Status", "Canal", "DataCriacao");
 
@@ -377,6 +419,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<int>("Canal")
                         .HasColumnType("integer");
 
+                    b.Property<int>("ContatoId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("timestamp with time zone");
 
@@ -387,9 +432,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
-                    b.Property<int>("PessoaId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -398,7 +440,7 @@ namespace WhatsFlow.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PessoaId", "Canal")
+                    b.HasIndex("ContatoId", "Canal")
                         .IsUnique();
 
                     b.ToTable("ComunicacaoPreferencias");
@@ -424,6 +466,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<string>("Descricao")
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
+
+                    b.Property<string>("FiltrosJson")
+                        .HasColumnType("text");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -461,6 +506,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<int>("Canal")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Categoria")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
                     b.Property<string>("Corpo")
                         .IsRequired()
                         .HasMaxLength(4000)
@@ -485,6 +534,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
+
+                    b.Property<string>("ProviderTemplateId")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -577,39 +630,90 @@ namespace WhatsFlow.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataCriacao")
+                    b.Property<DateTime?>("AtualizadoEm")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DataOptIn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DataOptOut")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Documento")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("Membro")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Mensagem")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
-                    b.Property<int>("TenantId")
+                    b.Property<string>("Observacoes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<bool>("OptIn")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Organizacao")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Origem")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<string>("WhatsApp")
+                    b.Property<string>("TelefoneWhatsApp")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<int>("TenantId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("TenantId", "TelefoneWhatsApp")
+                        .IsUnique();
 
                     b.ToTable("Contatos");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.ContatoTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ContatoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TagId");
+
+                    b.HasIndex("ContatoId", "TagId")
+                        .IsUnique();
+
+                    b.ToTable("ContatoTags");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.EventoWebhookBilling", b =>
@@ -723,6 +827,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<int>("ConfiguracaoMensagemId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("ContatoId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DataAgendamento")
                         .HasColumnType("timestamp with time zone");
 
@@ -750,20 +857,56 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
-                    b.Property<int>("VisitanteId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ConfiguracaoMensagemId");
 
-                    b.HasIndex("VisitanteId");
+                    b.HasIndex("ContatoId");
+
+                    b.HasIndex("TenantId", "ContatoId", "DataEnvio");
 
                     b.HasIndex("TenantId", "Status", "DataEnvio");
 
-                    b.HasIndex("TenantId", "VisitanteId", "DataEnvio");
-
                     b.ToTable("MensagensAgendadas");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.MessageLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ComunicacaoEntregaId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Detalhe")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ErrorCode")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.Property<string>("ProviderMessageId")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComunicacaoEntregaId");
+
+                    b.ToTable("MessageLogs");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.NotificacaoUsuario", b =>
@@ -879,58 +1022,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.ToTable("PerfisAcessoPermissoes");
                 });
 
-            modelBuilder.Entity("WhatsFlow.Domain.Entities.Pessoa", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DataNascimento")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("FotoUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Telefone")
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<int>("TenantId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TipoPessoa")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("WhatsApp")
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId", "Email")
-                        .IsUnique();
-
-                    b.ToTable("Pessoas");
-                });
-
             modelBuilder.Entity("WhatsFlow.Domain.Entities.Plano", b =>
                 {
                     b.Property<int>("Id")
@@ -1020,6 +1111,37 @@ namespace WhatsFlow.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Cor")
+                        .HasMaxLength(9)
+                        .HasColumnType("character varying(9)");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId", "Nome")
+                        .IsUnique();
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("WhatsFlow.Domain.Entities.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -1039,15 +1161,37 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Documento")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
                     b.Property<string>("FaviconUrl")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<string>("FusoHorario")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
                     b.Property<bool>("IsRootTenant")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("LimiteContatos")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LimiteMensalMensagens")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LogoUrl")
                         .HasMaxLength(500)
@@ -1062,12 +1206,24 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
+                    b.Property<int?>("PlanoId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("character varying(120)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Telefone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PlanoId");
 
                     b.HasIndex("Slug")
                         .IsUnique();
@@ -1082,10 +1238,14 @@ namespace WhatsFlow.Infrastructure.Migrations
                             CorPrimaria = "#111827",
                             CorSecundaria = "#374151",
                             DataCriacao = new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Utc),
+                            FusoHorario = "America/Sao_Paulo",
                             IsRootTenant = true,
+                            LimiteContatos = 0,
+                            LimiteMensalMensagens = 0,
                             Nome = "Mang Guarulhos",
                             NomeExibicao = "Mang Guarulhos",
-                            Slug = "mang-guarulhos"
+                            Slug = "mang-guarulhos",
+                            Status = 1
                         });
                 });
 
@@ -1138,6 +1298,13 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("DataNascimento")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
                     b.Property<string>("EmailLogin")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1146,16 +1313,22 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<bool>("IsPlatformAdmin")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("PerfilAcessoId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
-                    b.Property<int>("PessoaId")
+                    b.Property<int?>("PerfilAcessoId")
                         .HasColumnType("integer");
 
                     b.Property<string>("SenhaHash")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Telefone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("integer");
@@ -1169,15 +1342,16 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Property<DateTime?>("UltimoAcesso")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("WhatsApp")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EmailLogin")
                         .IsUnique();
 
                     b.HasIndex("PerfilAcessoId");
-
-                    b.HasIndex("PessoaId")
-                        .IsUnique();
 
                     b.HasIndex("TenantId");
 
@@ -1220,7 +1394,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.ToTable("VerificacoesEmail");
                 });
 
-            modelBuilder.Entity("WhatsFlow.Domain.Entities.Visitante", b =>
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.WebhookEvent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1228,29 +1402,103 @@ namespace WhatsFlow.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataCadastro")
+                    b.Property<DateTime>("CriadoEm")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DataVisita")
+                    b.Property<string>("Erro")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("EventType")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.Property<DateTime?>("ProcessadoEm")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Observacoes")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                    b.Property<int>("Provider")
+                        .HasColumnType("integer");
 
-                    b.Property<int>("PessoaId")
+                    b.Property<string>("ProviderMessageId")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("RawPayload")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("WhatsAppAccountId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PessoaId");
+                    b.HasIndex("WhatsAppAccountId");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("Provider", "ProviderMessageId");
 
-                    b.ToTable("Visitantes");
+                    b.HasIndex("TenantId", "Status", "CriadoEm");
+
+                    b.ToTable("WebhookEvents");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.WhatsAppAccount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccessTokenProtegido")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("BusinessAccountId")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("ConfiguracoesJson")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("PhoneNumberId")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<int>("Provider")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("WebhookSecret")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId", "Nome");
+
+                    b.ToTable("WhatsAppAccounts");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.Assinatura", b =>
@@ -1300,7 +1548,21 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasForeignKey("CriadoPorUsuarioId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("WhatsFlow.Domain.Entities.ComunicacaoSegmento", "Segmento")
+                        .WithMany()
+                        .HasForeignKey("SegmentoId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("WhatsFlow.Domain.Entities.ComunicacaoTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("CriadoPorUsuario");
+
+                    b.Navigation("Segmento");
+
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.ComunicacaoCampanhaCanal", b =>
@@ -1328,32 +1590,32 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasForeignKey("ComunicacaoCampanhaId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WhatsFlow.Domain.Entities.Pessoa", "DestinatarioPessoa")
+                    b.HasOne("WhatsFlow.Domain.Entities.Contato", "Contato")
                         .WithMany()
-                        .HasForeignKey("DestinatarioPessoaId")
+                        .HasForeignKey("ContatoId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("WhatsFlow.Domain.Entities.Visitante", "DestinatarioVisitante")
+                    b.HasOne("WhatsFlow.Domain.Entities.ComunicacaoTemplate", "Template")
                         .WithMany()
-                        .HasForeignKey("DestinatarioVisitanteId")
+                        .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("ComunicacaoCampanha");
 
-                    b.Navigation("DestinatarioPessoa");
+                    b.Navigation("Contato");
 
-                    b.Navigation("DestinatarioVisitante");
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.ComunicacaoPreferencia", b =>
                 {
-                    b.HasOne("WhatsFlow.Domain.Entities.Pessoa", "Pessoa")
+                    b.HasOne("WhatsFlow.Domain.Entities.Contato", "Contato")
                         .WithMany()
-                        .HasForeignKey("PessoaId")
+                        .HasForeignKey("ContatoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Pessoa");
+                    b.Navigation("Contato");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.ConfiguracaoMensagem", b =>
@@ -1376,6 +1638,25 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.ContatoTag", b =>
+                {
+                    b.HasOne("WhatsFlow.Domain.Entities.Contato", "Contato")
+                        .WithMany("ContatoTags")
+                        .HasForeignKey("ContatoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WhatsFlow.Domain.Entities.Tag", "Tag")
+                        .WithMany("ContatoTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contato");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.Fatura", b =>
@@ -1405,23 +1686,34 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("WhatsFlow.Domain.Entities.Contato", "Contato")
+                        .WithMany()
+                        .HasForeignKey("ContatoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WhatsFlow.Domain.Entities.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WhatsFlow.Domain.Entities.Visitante", "Visitante")
-                        .WithMany("MensagensAgendadas")
-                        .HasForeignKey("VisitanteId")
+                    b.Navigation("ConfiguracaoMensagem");
+
+                    b.Navigation("Contato");
+
+                    b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.MessageLog", b =>
+                {
+                    b.HasOne("WhatsFlow.Domain.Entities.ComunicacaoEntrega", "ComunicacaoEntrega")
+                        .WithMany("Logs")
+                        .HasForeignKey("ComunicacaoEntregaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ConfiguracaoMensagem");
-
-                    b.Navigation("Tenant");
-
-                    b.Navigation("Visitante");
+                    b.Navigation("ComunicacaoEntrega");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.NotificacaoUsuario", b =>
@@ -1465,7 +1757,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("WhatsFlow.Domain.Entities.Pessoa", b =>
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.Tag", b =>
                 {
                     b.HasOne("WhatsFlow.Domain.Entities.Tenant", "Tenant")
                         .WithMany()
@@ -1474,6 +1766,15 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.Tenant", b =>
+                {
+                    b.HasOne("WhatsFlow.Domain.Entities.Plano", "Plano")
+                        .WithMany()
+                        .HasForeignKey("PlanoId");
+
+                    b.Navigation("Plano");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.TenantDomain", b =>
@@ -1494,12 +1795,6 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasForeignKey("PerfilAcessoId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("WhatsFlow.Domain.Entities.Pessoa", "Pessoa")
-                        .WithOne("Usuario")
-                        .HasForeignKey("WhatsFlow.Domain.Entities.Usuario", "PessoaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WhatsFlow.Domain.Entities.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
@@ -1508,26 +1803,26 @@ namespace WhatsFlow.Infrastructure.Migrations
 
                     b.Navigation("PerfilAcesso");
 
-                    b.Navigation("Pessoa");
-
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("WhatsFlow.Domain.Entities.Visitante", b =>
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.WebhookEvent", b =>
                 {
-                    b.HasOne("WhatsFlow.Domain.Entities.Pessoa", "Pessoa")
-                        .WithMany("Visitantes")
-                        .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("WhatsFlow.Domain.Entities.WhatsAppAccount", "WhatsAppAccount")
+                        .WithMany()
+                        .HasForeignKey("WhatsAppAccountId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
+                    b.Navigation("WhatsAppAccount");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.WhatsAppAccount", b =>
+                {
                     b.HasOne("WhatsFlow.Domain.Entities.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Pessoa");
 
                     b.Navigation("Tenant");
                 });
@@ -1539,9 +1834,19 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Navigation("Entregas");
                 });
 
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.ComunicacaoEntrega", b =>
+                {
+                    b.Navigation("Logs");
+                });
+
             modelBuilder.Entity("WhatsFlow.Domain.Entities.ConfiguracaoMensagem", b =>
                 {
                     b.Navigation("MensagensAgendadas");
+                });
+
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.Contato", b =>
+                {
+                    b.Navigation("ContatoTags");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.PerfilAcesso", b =>
@@ -1551,11 +1856,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                     b.Navigation("Usuarios");
                 });
 
-            modelBuilder.Entity("WhatsFlow.Domain.Entities.Pessoa", b =>
+            modelBuilder.Entity("WhatsFlow.Domain.Entities.Tag", b =>
                 {
-                    b.Navigation("Usuario");
-
-                    b.Navigation("Visitantes");
+                    b.Navigation("ContatoTags");
                 });
 
             modelBuilder.Entity("WhatsFlow.Domain.Entities.Tenant", b =>
@@ -1566,11 +1869,6 @@ namespace WhatsFlow.Infrastructure.Migrations
             modelBuilder.Entity("WhatsFlow.Domain.Entities.Usuario", b =>
                 {
                     b.Navigation("Notificacoes");
-                });
-
-            modelBuilder.Entity("WhatsFlow.Domain.Entities.Visitante", b =>
-                {
-                    b.Navigation("MensagensAgendadas");
                 });
 #pragma warning restore 612, 618
         }

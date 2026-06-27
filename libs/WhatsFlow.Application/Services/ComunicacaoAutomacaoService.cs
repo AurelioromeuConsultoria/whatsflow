@@ -1,6 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using WhatsFlow.Application.Configuration;
 using WhatsFlow.Application.DTOs;
 using WhatsFlow.Application.DTOs.Auditoria;
 using WhatsFlow.Application.Interfaces;
@@ -10,8 +8,8 @@ namespace WhatsFlow.Application.Services;
 
 public interface IComunicacaoAutomacaoService
 {
-    Task<ComunicacaoAutomacaoExecucaoResumoDto> ExecutarNovoVisitanteAsync(int visitanteId, CancellationToken cancellationToken = default);
-    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
+    // TODO(WhatsFlow Etapa 4C): gatilho de boas-vindas para novo Contato (substitui o fluxo de novo-visitante).
+    Task<ComunicacaoAutomacaoExecucaoResumoDto> ExecutarBoasVindasContatoAsync(int contatoId, CancellationToken cancellationToken = default);
     Task<int> ExecutarLembretesOperacionaisAsync(IEnumerable<ComunicacaoLembreteOperacionalRequest> lembretes, CancellationToken cancellationToken = default);
     Task<int> ExecutarAvisoContextualKidsAsync(ComunicacaoAvisoContextualKidsRequest request, CancellationToken cancellationToken = default);
     Task<PagedResultDto<ComunicacaoAutomacaoHistoricoItemDto>> GetHistoricoAsync(ComunicacaoAutomacaoHistoricoQueryDto query);
@@ -19,7 +17,7 @@ public interface IComunicacaoAutomacaoService
 
 public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
 {
-    private readonly IVisitanteRepository _visitanteRepository;
+    private readonly IContatoRepository _contatoRepository;
     private readonly IConfiguracaoMensagemRepository _configuracaoMensagemRepository;
     private readonly IComunicacaoCampanhaRepository _campanhaRepository;
     private readonly IComunicacaoEntregaRepository _entregaRepository;
@@ -29,7 +27,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
     private readonly ILogger<ComunicacaoAutomacaoService> _logger;
 
     public ComunicacaoAutomacaoService(
-        IVisitanteRepository visitanteRepository,
+        IContatoRepository contatoRepository,
         IConfiguracaoMensagemRepository configuracaoMensagemRepository,
         IComunicacaoCampanhaRepository campanhaRepository,
         IComunicacaoEntregaRepository entregaRepository,
@@ -38,7 +36,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         IAuditLogService auditLogService,
         ILogger<ComunicacaoAutomacaoService> logger)
     {
-        _visitanteRepository = visitanteRepository;
+        _contatoRepository = contatoRepository;
         _configuracaoMensagemRepository = configuracaoMensagemRepository;
         _campanhaRepository = campanhaRepository;
         _entregaRepository = entregaRepository;
@@ -48,10 +46,10 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         _logger = logger;
     }
 
-    public async Task<ComunicacaoAutomacaoExecucaoResumoDto> ExecutarNovoVisitanteAsync(int visitanteId, CancellationToken cancellationToken = default)
+    public async Task<ComunicacaoAutomacaoExecucaoResumoDto> ExecutarBoasVindasContatoAsync(int contatoId, CancellationToken cancellationToken = default)
     {
-        var visitante = await _visitanteRepository.GetByIdAsync(visitanteId)
-            ?? throw new ArgumentException("Visitante não encontrado");
+        var contato = await _contatoRepository.GetByIdAsync(contatoId)
+            ?? throw new ArgumentException("Contato não encontrado");
 
         var configuracoes = (await _configuracaoMensagemRepository.GetAtivasAsync())
             .OrderBy(x => x.DiasAposVisita)
@@ -60,7 +58,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
 
         var resultado = new ComunicacaoAutomacaoExecucaoResumoDto
         {
-            Gatilho = "novo-visitante"
+            Gatilho = "boas-vindas-contato"
         };
 
         if (configuracoes.Count == 0)
@@ -73,12 +71,14 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var dataAgendamento = visitante.DataVisita.Date.AddDays(configuracao.DiasAposVisita) + configuracao.HorarioEnvio;
+            // TODO(WhatsFlow Etapa 4C): a base de agendamento era a data da visita;
+            // para Contato usamos a data de criação como aproximação até definir o gatilho real.
+            var dataAgendamento = contato.CriadoEm.Date.AddDays(configuracao.DiasAposVisita) + configuracao.HorarioEnvio;
             var campanha = await _campanhaRepository.CreateAsync(new ComunicacaoCampanha
             {
-                Nome = $"Automação visitante D+{configuracao.DiasAposVisita} - {visitante.Pessoa?.Nome ?? $"Visitante {visitante.Id}"}",
-                Objetivo = "onboarding-visitante",
-                PublicoAlvo = "visitantes",
+                Nome = $"Automação boas-vindas D+{configuracao.DiasAposVisita} - {contato.Nome}",
+                Objetivo = "onboarding-contato",
+                PublicoAlvo = "contatos",
                 Origem = TipoOrigemComunicacao.Automatica,
                 Status = dataAgendamento > DateTime.Now ? StatusComunicacaoCampanha.Agendada : StatusComunicacaoCampanha.Rascunho,
                 DataAgendamento = dataAgendamento,
@@ -93,31 +93,29 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
                 ]
             });
 
-            await _entregaRepository.CreateAsync(await CriarEntregaVisitanteAsync(campanha, visitante, configuracao));
+            await _entregaRepository.CreateAsync(await CriarEntregaContatoAsync(campanha, contato, configuracao));
             resultado.TotalCriadas++;
         }
 
         _logger.LogInformation(
-            "{EventName} Gatilho=novo-visitante VisitanteId={VisitanteId} Quantidade={Quantidade}",
+            "{EventName} Gatilho=boas-vindas-contato ContatoId={ContatoId} Quantidade={Quantidade}",
             ComunicacaoObservability.Events.CampanhaCriada,
-            visitanteId,
+            contatoId,
             resultado.TotalCriadas);
-        await _auditLogService.RecordAsync("ComunicacaoAutomacao", visitanteId.ToString(), "ExecutarNovoVisitante", new
+        await _auditLogService.RecordAsync("ComunicacaoAutomacao", contatoId.ToString(), "ExecutarBoasVindasContato", new
         {
-            VisitanteId = visitanteId,
+            ContatoId = contatoId,
             resultado.TotalCriadas
         });
 
         return resultado;
     }
 
-    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
-
     public async Task<int> ExecutarLembretesOperacionaisAsync(IEnumerable<ComunicacaoLembreteOperacionalRequest> lembretes, CancellationToken cancellationToken = default)
     {
         var total = 0;
 
-        foreach (var lembrete in lembretes.Where(x => x.PessoaId > 0 && !string.IsNullOrWhiteSpace(x.ChaveEvento)))
+        foreach (var lembrete in lembretes.Where(x => x.ContatoId > 0 && !string.IsNullOrWhiteSpace(x.ChaveEvento)))
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -130,7 +128,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
             {
                 Nome = lembrete.Titulo,
                 Objetivo = string.IsNullOrWhiteSpace(lembrete.Objetivo) ? "lembrete-operacional" : lembrete.Objetivo.Trim(),
-                PublicoAlvo = "pessoas",
+                PublicoAlvo = "contatos",
                 Origem = TipoOrigemComunicacao.Automatica,
                 Status = StatusComunicacaoCampanha.Processando,
                 DataAgendamento = DateTime.Now,
@@ -148,9 +146,9 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
             var entrega = await _entregaRepository.CreateAsync(new ComunicacaoEntrega
             {
                 ComunicacaoCampanhaId = campanha.Id,
-                DestinatarioPessoaId = lembrete.PessoaId,
+                ContatoId = lembrete.ContatoId,
                 Canal = CanalComunicacao.NotificacaoInterna,
-                DestinoResolvido = $"pessoa:{lembrete.PessoaId}",
+                DestinoResolvido = $"contato:{lembrete.ContatoId}",
                 RemetenteResolvido = lembrete.Titulo,
                 ConteudoFinal = lembrete.Mensagem,
                 Status = StatusComunicacaoEntrega.Pendente,
@@ -158,10 +156,10 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
                 DataCriacao = DateTime.UtcNow
             });
 
-            if (await _preferenciaService.EstaBloqueadoAsync(lembrete.PessoaId, CanalComunicacao.NotificacaoInterna))
+            if (await _preferenciaService.EstaBloqueadoAsync(lembrete.ContatoId, CanalComunicacao.NotificacaoInterna))
             {
                 entrega.Status = StatusComunicacaoEntrega.IgnoradoPorPreferencia;
-                entrega.Erro = $"Entrega ignorada: pessoa {lembrete.PessoaId} bloqueou o canal {CanalComunicacao.NotificacaoInterna}.";
+                entrega.Erro = $"Entrega ignorada: contato {lembrete.ContatoId} bloqueou o canal {CanalComunicacao.NotificacaoInterna}.";
                 await _entregaRepository.UpdateAsync(entrega);
             }
             else
@@ -170,7 +168,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
             }
             await RegistrarExecucaoAsync("ExecutarLembreteOperacional", lembrete.ChaveEvento, new
             {
-                lembrete.PessoaId,
+                lembrete.ContatoId,
                 lembrete.Titulo,
                 CampanhaId = campanha.Id,
                 EntregaId = entrega.Id
@@ -193,7 +191,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
             return 0;
         }
 
-        var responsavelIds = request.ResponsavelPessoaIds.Where(x => x > 0).Distinct().ToList();
+        var responsavelIds = request.ResponsavelContatoIds.Where(x => x > 0).Distinct().ToList();
         if (responsavelIds.Count == 0)
         {
             return 0;
@@ -219,27 +217,27 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         });
 
         var total = 0;
-        foreach (var responsavelPessoaId in responsavelIds)
+        foreach (var responsavelContatoId in responsavelIds)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var entrega = await _entregaRepository.CreateAsync(new ComunicacaoEntrega
             {
                 ComunicacaoCampanhaId = campanha.Id,
-                DestinatarioPessoaId = responsavelPessoaId,
+                ContatoId = responsavelContatoId,
                 Canal = CanalComunicacao.Push,
-                DestinoResolvido = $"pessoa:{responsavelPessoaId}",
+                DestinoResolvido = $"contato:{responsavelContatoId}",
                 RemetenteResolvido = request.Titulo,
                 ConteudoFinal = request.Mensagem,
                 Status = StatusComunicacaoEntrega.Pendente,
-                ChaveDedupe = $"{request.ChaveEvento}:{responsavelPessoaId}",
+                ChaveDedupe = $"{request.ChaveEvento}:{responsavelContatoId}",
                 DataCriacao = DateTime.UtcNow
             });
 
-            if (await _preferenciaService.EstaBloqueadoAsync(responsavelPessoaId, CanalComunicacao.Push))
+            if (await _preferenciaService.EstaBloqueadoAsync(responsavelContatoId, CanalComunicacao.Push))
             {
                 entrega.Status = StatusComunicacaoEntrega.IgnoradoPorPreferencia;
-                entrega.Erro = $"Entrega ignorada: pessoa {responsavelPessoaId} bloqueou o canal {CanalComunicacao.Push}.";
+                entrega.Erro = $"Entrega ignorada: contato {responsavelContatoId} bloqueou o canal {CanalComunicacao.Push}.";
                 await _entregaRepository.UpdateAsync(entrega);
                 continue;
             }
@@ -253,7 +251,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
 
         await RegistrarExecucaoAsync("ExecutarAvisoContextualKids", request.ChaveEvento, new
         {
-            request.CriancaPessoaId,
+            request.CriancaContatoId,
             request.Tipo,
             Responsaveis = responsavelIds,
             campanha.Id,
@@ -292,25 +290,24 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         };
     }
 
-    private async Task<ComunicacaoEntrega> CriarEntregaVisitanteAsync(ComunicacaoCampanha campanha, Visitante visitante, ConfiguracaoMensagem configuracao)
+    private async Task<ComunicacaoEntrega> CriarEntregaContatoAsync(ComunicacaoCampanha campanha, Contato contato, ConfiguracaoMensagem configuracao)
     {
-        var nome = visitante.Pessoa?.Nome ?? $"Visitante {visitante.Id}";
-        var whatsapp = visitante.Pessoa?.WhatsApp;
+        var nome = string.IsNullOrWhiteSpace(contato.Nome) ? $"Contato {contato.Id}" : contato.Nome;
+        var whatsapp = contato.TelefoneWhatsApp;
 
-        if (await _preferenciaService.EstaBloqueadoAsync(visitante.PessoaId, CanalComunicacao.WhatsApp))
+        if (await _preferenciaService.EstaBloqueadoAsync(contato.Id, CanalComunicacao.WhatsApp))
         {
             return new ComunicacaoEntrega
             {
                 ComunicacaoCampanhaId = campanha.Id,
-                DestinatarioPessoaId = visitante.PessoaId,
-                DestinatarioVisitanteId = visitante.Id,
+                ContatoId = contato.Id,
                 Canal = CanalComunicacao.WhatsApp,
-                DestinoResolvido = visitante.PessoaId > 0 ? $"pessoa:{visitante.PessoaId}" : $"visitante:{visitante.Id}",
+                DestinoResolvido = $"contato:{contato.Id}",
                 RemetenteResolvido = campanha.Nome,
                 ConteudoFinal = campanha.Nome,
                 Status = StatusComunicacaoEntrega.IgnoradoPorPreferencia,
                 Erro = $"Entrega ignorada: {nome} bloqueou o canal {CanalComunicacao.WhatsApp}.",
-                ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{visitante.PessoaId}:{visitante.Id}:preferencia",
+                ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{contato.Id}:preferencia",
                 DataCriacao = DateTime.UtcNow
             };
         }
@@ -320,15 +317,14 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
             return new ComunicacaoEntrega
             {
                 ComunicacaoCampanhaId = campanha.Id,
-                DestinatarioPessoaId = visitante.PessoaId,
-                DestinatarioVisitanteId = visitante.Id,
+                ContatoId = contato.Id,
                 Canal = CanalComunicacao.WhatsApp,
-                DestinoResolvido = visitante.PessoaId > 0 ? $"pessoa:{visitante.PessoaId}" : $"visitante:{visitante.Id}",
+                DestinoResolvido = $"contato:{contato.Id}",
                 RemetenteResolvido = campanha.Nome,
                 ConteudoFinal = campanha.Nome,
                 Status = StatusComunicacaoEntrega.Falhou,
                 Erro = $"Entrega bloqueada: {nome} não possui WhatsApp válido.",
-                ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{visitante.PessoaId}:{visitante.Id}",
+                ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{contato.Id}",
                 DataCriacao = DateTime.UtcNow
             };
         }
@@ -336,19 +332,16 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         return new ComunicacaoEntrega
         {
             ComunicacaoCampanhaId = campanha.Id,
-            DestinatarioPessoaId = visitante.PessoaId,
-            DestinatarioVisitanteId = visitante.Id,
+            ContatoId = contato.Id,
             Canal = CanalComunicacao.WhatsApp,
             DestinoResolvido = whatsapp,
             RemetenteResolvido = campanha.Nome,
             ConteudoFinal = RenderizarMensagem(configuracao.TextoMensagem, nome),
             Status = StatusComunicacaoEntrega.Pendente,
-            ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{visitante.PessoaId}:{visitante.Id}",
+            ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{contato.Id}",
             DataCriacao = DateTime.UtcNow
         };
     }
-
-    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
     private static string RenderizarMensagem(string template, string nome)
     {

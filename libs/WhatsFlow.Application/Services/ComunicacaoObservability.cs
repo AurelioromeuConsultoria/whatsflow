@@ -23,8 +23,7 @@ public static class ComunicacaoObservability
         public const string TemplateId = "TemplateId";
         public const string AutomacaoId = "AutomacaoId";
         public const string Canal = "Canal";
-        public const string DestinatarioPessoaId = "DestinatarioPessoaId";
-        public const string DestinatarioVisitanteId = "DestinatarioVisitanteId";
+        public const string DestinatarioContatoId = "DestinatarioContatoId";
         public const string UsuarioId = "UsuarioId";
         public const string Status = "Status";
         public const string Provider = "Provider";

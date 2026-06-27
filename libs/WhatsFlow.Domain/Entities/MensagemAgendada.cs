@@ -9,8 +9,9 @@ public class MensagemAgendada : ITenantEntity
     public int TenantId { get; set; } = Tenant.InitialTenantId;
     public virtual Tenant Tenant { get; set; } = null!;
     
-    public int VisitanteId { get; set; }
-    public virtual Visitante Visitante { get; set; } = null!;
+    // Destinatário migrado de Visitante para Contato (Etapa 4).
+    public int ContatoId { get; set; }
+    public virtual Contato Contato { get; set; } = null!;
     
     public int ConfiguracaoMensagemId { get; set; }
     public virtual ConfiguracaoMensagem ConfiguracaoMensagem { get; set; } = null!;

@@ -56,13 +56,13 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<TenantScopeOverride>();
         services.AddScoped<ITenantContext>(sp => sp.GetRequiredService<TenantScopeOverride>());
 
-        services.AddScoped<IPessoaRepository, PessoaRepository>();
-        services.AddScoped<IVisitanteRepository, VisitanteRepository>();
+        services.AddScoped<IContatoRepository, ContatoRepository>();
+        services.AddScoped<IWhatsAppAccountRepository, WhatsAppAccountRepository>();
+        services.AddScoped<IMessageLogRepository, MessageLogRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IConfiguracaoMensagemRepository, ConfiguracaoMensagemRepository>();
         services.AddScoped<IMensagemAgendadaRepository, MensagemAgendadaRepository>();
 
-        services.AddScoped<IVisitanteService, VisitanteService>();
         services.AddScoped<IConfiguracaoMensagemService, ConfiguracaoMensagemService>();
         services.AddScoped<IMensagemAgendadaService, MensagemAgendadaService>();
         services.AddSingleton<ISchedulerExecutionMonitor, SchedulerExecutionMonitor>();

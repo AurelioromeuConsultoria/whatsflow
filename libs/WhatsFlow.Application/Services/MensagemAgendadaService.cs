@@ -15,9 +15,9 @@ public interface IMensagemAgendadaService
     Task<IEnumerable<MensagemAgendadaDto>> GetMensagensProntasParaEnvioAsync();
     /// <summary>Reserva transacionalmente mensagens prontas (status → EmProcessamento). Apenas as reservadas devem ser processadas.</summary>
     Task<IEnumerable<MensagemAgendadaDto>> ReservarProntasParaEnvioAsync(int limit);
-    Task<IEnumerable<MensagemAgendadaDto>> GetMensagensPorVisitanteAsync(int visitanteId);
-    Task AgendarMensagensParaVisitanteAsync(int visitanteId);
-    Task<RegerarMensagensResultDto> RegerarMensagensParaVisitanteAsync(int visitanteId);
+    Task<IEnumerable<MensagemAgendadaDto>> GetMensagensPorContatoAsync(int contatoId);
+    Task AgendarMensagensParaContatoAsync(int contatoId);
+    Task<RegerarMensagensResultDto> RegerarMensagensParaContatoAsync(int contatoId);
     Task MarcarComoProntaParaEnvioAsync(int mensagemId);
     Task MarcarComoEnviadaAsync(int mensagemId);
     Task MarcarComoErroAsync(int mensagemId, string erro);
@@ -26,20 +26,20 @@ public interface IMensagemAgendadaService
 public class MensagemAgendadaService : IMensagemAgendadaService
 {
     private readonly IMensagemAgendadaRepository _mensagemRepository;
-    private readonly IVisitanteRepository _visitanteRepository;
+    private readonly IContatoRepository _contatoRepository;
     private readonly IConfiguracaoMensagemRepository _configuracaoRepository;
     private readonly ILogger<MensagemAgendadaService> _logger;
     private readonly IAuditLogService _auditLogService;
 
     public MensagemAgendadaService(
         IMensagemAgendadaRepository mensagemRepository,
-        IVisitanteRepository visitanteRepository,
+        IContatoRepository contatoRepository,
         IConfiguracaoMensagemRepository configuracaoRepository,
         ILogger<MensagemAgendadaService> logger,
         IAuditLogService auditLogService)
     {
         _mensagemRepository = mensagemRepository;
-        _visitanteRepository = visitanteRepository;
+        _contatoRepository = contatoRepository;
         _configuracaoRepository = configuracaoRepository;
         _logger = logger;
         _auditLogService = auditLogService;
@@ -69,7 +69,7 @@ public class MensagemAgendadaService : IMensagemAgendadaService
             Sort = queryDto.Sort,
             Direction = queryDto.Direction,
             Texto = queryDto.Texto,
-            VisitanteId = queryDto.VisitanteId,
+            ContatoId = queryDto.ContatoId,
             Status = status,
             DataEnvioFrom = queryDto.DataEnvioFrom,
             DataEnvioTo = queryDto.DataEnvioTo
@@ -114,31 +114,33 @@ public class MensagemAgendadaService : IMensagemAgendadaService
         return mensagens.Select(MapToDto);
     }
 
-    public async Task<IEnumerable<MensagemAgendadaDto>> GetMensagensPorVisitanteAsync(int visitanteId)
+    public async Task<IEnumerable<MensagemAgendadaDto>> GetMensagensPorContatoAsync(int contatoId)
     {
-        var mensagens = await _mensagemRepository.GetMensagensPorVisitanteAsync(visitanteId);
+        var mensagens = await _mensagemRepository.GetMensagensPorContatoAsync(contatoId);
         return mensagens.Select(MapToDto);
     }
 
-    public async Task AgendarMensagensParaVisitanteAsync(int visitanteId)
+    public async Task AgendarMensagensParaContatoAsync(int contatoId)
     {
-        var visitante = await _visitanteRepository.GetByIdAsync(visitanteId);
-        if (visitante == null)
-            throw new ArgumentException("Visitante não encontrado");
+        var contato = await _contatoRepository.GetByIdAsync(contatoId);
+        if (contato == null)
+            throw new ArgumentException("Contato não encontrado");
 
         var configuracoes = await _configuracaoRepository.GetAtivasAsync();
         var totalCriadas = 0;
 
         foreach (var configuracao in configuracoes)
         {
-            var dataEnvio = visitante.DataVisita.AddDays(configuracao.DiasAposVisita);
+            // TODO(WhatsFlow Etapa 4C): a base de agendamento era a data da visita;
+            // para Contato usamos a data de criação como aproximação.
+            var dataEnvio = contato.CriadoEm.AddDays(configuracao.DiasAposVisita);
             var dataEnvioCompleta = dataEnvio.Date + configuracao.HorarioEnvio;
 
-            var textoFinal = configuracao.TextoMensagem.Replace("{Nome}", visitante.Pessoa?.Nome ?? "");
+            var textoFinal = configuracao.TextoMensagem.Replace("{Nome}", contato.Nome ?? "");
 
             var mensagemAgendada = new MensagemAgendada
             {
-                VisitanteId = visitante.Id,
+                ContatoId = contato.Id,
                 ConfiguracaoMensagemId = configuracao.Id,
                 DataAgendamento = DateTime.Now,
                 DataEnvio = dataEnvioCompleta,
@@ -152,19 +154,19 @@ public class MensagemAgendadaService : IMensagemAgendadaService
         }
 
         _logger.LogInformation(
-            "Mensagens agendadas para visitante. VisitanteId={VisitanteId} Quantidade={Quantidade}",
-            visitanteId,
+            "Mensagens agendadas para contato. ContatoId={ContatoId} Quantidade={Quantidade}",
+            contatoId,
             totalCriadas);
     }
 
-    public async Task<RegerarMensagensResultDto> RegerarMensagensParaVisitanteAsync(int visitanteId)
+    public async Task<RegerarMensagensResultDto> RegerarMensagensParaContatoAsync(int contatoId)
     {
-        var visitante = await _visitanteRepository.GetByIdAsync(visitanteId);
-        if (visitante == null)
-            throw new ArgumentException("Visitante não encontrado");
+        var contato = await _contatoRepository.GetByIdAsync(contatoId);
+        if (contato == null)
+            throw new ArgumentException("Contato não encontrado");
 
-        var canceladas = await _mensagemRepository.CancelarPendentesPorVisitanteAsync(
-            visitanteId,
+        var canceladas = await _mensagemRepository.CancelarPendentesPorContatoAsync(
+            contatoId,
             $"Cancelada por regeneração em {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
 
         var configuracoes = await _configuracaoRepository.GetAtivasAsync();
@@ -172,14 +174,14 @@ public class MensagemAgendadaService : IMensagemAgendadaService
 
         foreach (var configuracao in configuracoes)
         {
-            var dataEnvio = visitante.DataVisita.AddDays(configuracao.DiasAposVisita);
+            var dataEnvio = contato.CriadoEm.AddDays(configuracao.DiasAposVisita);
             var dataEnvioCompleta = dataEnvio.Date + configuracao.HorarioEnvio;
 
-            var textoFinal = configuracao.TextoMensagem.Replace("{Nome}", visitante.Pessoa?.Nome ?? "");
+            var textoFinal = configuracao.TextoMensagem.Replace("{Nome}", contato.Nome ?? "");
 
             var mensagemAgendada = new MensagemAgendada
             {
-                VisitanteId = visitante.Id,
+                ContatoId = contato.Id,
                 ConfiguracaoMensagemId = configuracao.Id,
                 DataAgendamento = DateTime.Now,
                 DataEnvio = dataEnvioCompleta,
@@ -193,15 +195,15 @@ public class MensagemAgendadaService : IMensagemAgendadaService
         }
 
         _logger.LogInformation(
-            "Mensagens regeneradas para visitante. VisitanteId={VisitanteId} Canceladas={Canceladas} Criadas={Criadas}",
-            visitanteId,
+            "Mensagens regeneradas para contato. ContatoId={ContatoId} Canceladas={Canceladas} Criadas={Criadas}",
+            contatoId,
             canceladas,
             criadas);
         await _auditLogService.RecordAsync(
             "MensagemAgendada",
-            visitanteId.ToString(),
+            contatoId.ToString(),
             "Regerar",
-            new { VisitanteId = visitanteId, Canceladas = canceladas, Criadas = criadas });
+            new { ContatoId = contatoId, Canceladas = canceladas, Criadas = criadas });
 
         return new RegerarMensagensResultDto
         {
@@ -221,14 +223,14 @@ public class MensagemAgendadaService : IMensagemAgendadaService
 
         await _mensagemRepository.UpdateAsync(mensagem);
         _logger.LogInformation(
-            "Mensagem marcada como pronta para envio. MensagemId={MensagemId} VisitanteId={VisitanteId}",
+            "Mensagem marcada como pronta para envio. MensagemId={MensagemId} ContatoId={ContatoId}",
             mensagem.Id,
-            mensagem.VisitanteId);
+            mensagem.ContatoId);
         await _auditLogService.RecordAsync(
             "MensagemAgendada",
             mensagem.Id.ToString(),
             "ProntaParaEnvio",
-            new { mensagem.VisitanteId });
+            new { mensagem.ContatoId });
     }
 
     public async Task MarcarComoEnviadaAsync(int mensagemId)
@@ -242,14 +244,14 @@ public class MensagemAgendadaService : IMensagemAgendadaService
 
         await _mensagemRepository.UpdateAsync(mensagem);
         _logger.LogInformation(
-            "Mensagem marcada como enviada. MensagemId={MensagemId} VisitanteId={VisitanteId}",
+            "Mensagem marcada como enviada. MensagemId={MensagemId} ContatoId={ContatoId}",
             mensagem.Id,
-            mensagem.VisitanteId);
+            mensagem.ContatoId);
         await _auditLogService.RecordAsync(
             "MensagemAgendada",
             mensagem.Id.ToString(),
             "Enviada",
-            new { mensagem.VisitanteId });
+            new { mensagem.ContatoId });
     }
 
     public async Task MarcarComoErroAsync(int mensagemId, string erro)
@@ -264,29 +266,26 @@ public class MensagemAgendadaService : IMensagemAgendadaService
 
         await _mensagemRepository.UpdateAsync(mensagem);
         _logger.LogWarning(
-            "Mensagem marcada como erro. MensagemId={MensagemId} VisitanteId={VisitanteId}",
+            "Mensagem marcada como erro. MensagemId={MensagemId} ContatoId={ContatoId}",
             mensagem.Id,
-            mensagem.VisitanteId);
+            mensagem.ContatoId);
         await _auditLogService.RecordAsync(
             "MensagemAgendada",
             mensagem.Id.ToString(),
             "ErroEnvio",
-            new { mensagem.VisitanteId });
+            new { mensagem.ContatoId });
     }
 
     private static MensagemAgendadaDto MapToDto(MensagemAgendada mensagem)
     {
-        // Priorizar WhatsApp, usar Telefone como fallback
-        var telefoneOuWhatsApp = mensagem.Visitante?.Pessoa?.WhatsApp 
-            ?? mensagem.Visitante?.Pessoa?.Telefone 
-            ?? "";
+        var telefone = mensagem.Contato?.TelefoneWhatsApp ?? "";
 
         return new MensagemAgendadaDto
         {
             Id = mensagem.Id,
-            VisitanteId = mensagem.VisitanteId,
-            NomeVisitante = mensagem.Visitante?.Pessoa?.Nome ?? "",
-            TelefoneVisitante = telefoneOuWhatsApp,
+            ContatoId = mensagem.ContatoId,
+            NomeContato = mensagem.Contato?.Nome ?? "",
+            TelefoneContato = telefone,
             ConfiguracaoMensagemId = mensagem.ConfiguracaoMensagemId,
             NomeConfiguracao = mensagem.ConfiguracaoMensagem?.Nome ?? "",
             DataAgendamento = mensagem.DataAgendamento,
