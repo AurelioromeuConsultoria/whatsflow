@@ -8,3 +8,7 @@ dist/
 # OS / IDE
 .DS_Store
 .vs/
+
+# Segredos locais de desenvolvimento (.NET)
+appsettings.Development.json
+appsettings.*.local.json
