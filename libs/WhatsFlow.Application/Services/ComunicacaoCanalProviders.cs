@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WhatsFlow.Application.Configuration;
 using WhatsFlow.Application.Interfaces;
+using WhatsFlow.Application.Services.WhatsApp;
 using WhatsFlow.Domain.Entities;
 
 namespace WhatsFlow.Application.Services;
@@ -16,6 +17,12 @@ public class ComunicacaoCanalEnvioResultado
 {
     public bool Sucesso { get; init; }
     public string? Mensagem { get; init; }
+
+    /// <summary>Id da mensagem no provider (quando aplicável), para rastrear status via webhook.</summary>
+    public string? ProviderMessageId { get; init; }
+
+    /// <summary>Código de erro do provider (quando aplicável).</summary>
+    public string? ErrorCode { get; init; }
 }
 
 public interface IComunicacaoCanalProvider
@@ -28,67 +35,89 @@ public interface IComunicacaoCanalProvider
 
 public class ComunicacaoWhatsAppCanalProvider : IComunicacaoCanalProvider
 {
-    private readonly IEvolutionApiService _evolutionApiService;
-    private readonly EvolutionApiSettings _settings;
+    private readonly IWhatsAppProviderResolver _providerResolver;
+    private readonly IWhatsAppAccountRepository _accountRepository;
     private readonly ILogger<ComunicacaoWhatsAppCanalProvider> _logger;
 
     public ComunicacaoWhatsAppCanalProvider(
-        IEvolutionApiService evolutionApiService,
-        IOptions<EvolutionApiSettings> settings,
+        IWhatsAppProviderResolver providerResolver,
+        IWhatsAppAccountRepository accountRepository,
         ILogger<ComunicacaoWhatsAppCanalProvider> logger)
     {
-        _evolutionApiService = evolutionApiService;
-        _settings = settings.Value;
+        _providerResolver = providerResolver;
+        _accountRepository = accountRepository;
         _logger = logger;
     }
 
     public CanalComunicacao Canal => CanalComunicacao.WhatsApp;
     public string Nome => "WhatsApp";
 
-    public Task<ComunicacaoCanalDiagnostico> ValidarConfiguracaoAsync(CancellationToken cancellationToken = default)
+    /// <summary>Conta WhatsApp ativa do tenant atual (a 1ª ativa). Null = canal não configurado.</summary>
+    private async Task<WhatsAppAccount?> ObterContaAtivaAsync()
     {
-        var faltantes = new List<string>();
-        if (string.IsNullOrWhiteSpace(_settings.BaseUrl)) faltantes.Add("EvolutionApi:BaseUrl");
-        if (string.IsNullOrWhiteSpace(_settings.ApiKey)) faltantes.Add("EvolutionApi:ApiKey");
-        if (string.IsNullOrWhiteSpace(_settings.InstanceName)) faltantes.Add("EvolutionApi:InstanceName");
+        var contas = await _accountRepository.GetAllAsync();
+        return contas.FirstOrDefault(c => c.Status == WhatsAppAccountStatus.Ativa);
+    }
 
-        if (faltantes.Count == 0)
+    public async Task<ComunicacaoCanalDiagnostico> ValidarConfiguracaoAsync(CancellationToken cancellationToken = default)
+    {
+        var conta = await ObterContaAtivaAsync();
+        if (conta != null)
         {
-            return Task.FromResult(new ComunicacaoCanalDiagnostico { Configurado = true });
+            return new ComunicacaoCanalDiagnostico { Configurado = true };
         }
 
-        var mensagem = $"Configuração do canal WhatsApp incompleta. Campos obrigatórios: {string.Join(", ", faltantes)}.";
+        const string mensagem = "Nenhuma conta WhatsApp ativa configurada para este tenant.";
         _logger.LogWarning(mensagem);
-        return Task.FromResult(new ComunicacaoCanalDiagnostico
-        {
-            Configurado = false,
-            Mensagem = mensagem
-        });
+        return new ComunicacaoCanalDiagnostico { Configurado = false, Mensagem = mensagem };
     }
 
     public async Task<ComunicacaoCanalEnvioResultado> EnviarAsync(ComunicacaoEntrega entrega, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(entrega.DestinoResolvido))
         {
-            return new ComunicacaoCanalEnvioResultado
-            {
-                Sucesso = false,
-                Mensagem = "Destino de WhatsApp não resolvido."
-            };
+            return new ComunicacaoCanalEnvioResultado { Sucesso = false, Mensagem = "Destino de WhatsApp não resolvido." };
         }
 
-        var response = string.IsNullOrWhiteSpace(entrega.MidiaUrl)
-            ? await _evolutionApiService.EnviarMensagemTextoAsync(entrega.DestinoResolvido, entrega.ConteudoFinal, cancellationToken)
-            : await _evolutionApiService.EnviarMensagemImagemAsync(entrega.DestinoResolvido, entrega.MidiaUrl, entrega.ConteudoFinal, cancellationToken);
-        if (response.Sucesso)
+        var conta = await ObterContaAtivaAsync();
+        if (conta == null)
         {
-            return new ComunicacaoCanalEnvioResultado { Sucesso = true };
+            return new ComunicacaoCanalEnvioResultado { Sucesso = false, Mensagem = "Nenhuma conta WhatsApp ativa." };
+        }
+
+        var provider = _providerResolver.ResolveFor(conta);
+
+        // Quando a entrega referencia um template com ProviderTemplateId, usa o fluxo de template;
+        // caso contrário envia o conteúdo já renderizado como texto.
+        ProviderSendResult result;
+        if (!string.IsNullOrWhiteSpace(entrega.Template?.ProviderTemplateId))
+        {
+            result = await provider.SendTemplateMessageAsync(
+                conta, entrega.DestinoResolvido, entrega.Template!.ProviderTemplateId!,
+                new Dictionary<string, string>(), cancellationToken);
+        }
+        else
+        {
+            result = await provider.SendTextMessageAsync(
+                conta, entrega.DestinoResolvido, entrega.ConteudoFinal, cancellationToken);
+        }
+
+        if (result.Success)
+        {
+            // best-effort: 4D persiste ProviderMessageId via MarcarComoEnviadaAsync
+            entrega.ProviderMessageId = result.ProviderMessageId;
+            return new ComunicacaoCanalEnvioResultado
+            {
+                Sucesso = true,
+                ProviderMessageId = result.ProviderMessageId
+            };
         }
 
         return new ComunicacaoCanalEnvioResultado
         {
             Sucesso = false,
-            Mensagem = $"Evolution API: {response.MensagemErro} (Status: {response.StatusCode})"
+            Mensagem = $"{provider.Type}: {result.ErrorMessage} (Code: {result.ErrorCode})",
+            ErrorCode = result.ErrorCode
         };
     }
 }

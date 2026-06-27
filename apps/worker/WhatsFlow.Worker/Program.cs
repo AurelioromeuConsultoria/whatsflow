@@ -104,6 +104,9 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<IComunicacaoEntregaService, ComunicacaoEntregaService>();
         services.AddScoped<IComunicacaoProcessamentoService, ComunicacaoProcessamentoService>();
         services.AddScoped<IComunicacaoAutomacaoService, ComunicacaoAutomacaoService>();
+        services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProvider, WhatsFlow.Application.Services.WhatsApp.FakeWhatsAppProvider>();
+        services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProvider, WhatsFlow.Application.Services.WhatsApp.EvolutionWhatsAppProvider>();
+        services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProviderResolver, WhatsFlow.Application.Services.WhatsApp.WhatsAppProviderResolver>();
         services.AddScoped<IComunicacaoCanalProvider, ComunicacaoWhatsAppCanalProvider>();
         services.AddScoped<IComunicacaoCanalProvider, ComunicacaoEmailCanalProvider>();
         services.AddScoped<IComunicacaoCanalProvider, ComunicacaoNotificacaoInternaCanalProvider>();

@@ -115,6 +115,10 @@ builder.Services.AddScoped<IComunicacaoSegmentoService, ComunicacaoSegmentoServi
 builder.Services.AddScoped<IComunicacaoAudienceResolver, ComunicacaoAudienceResolver>();
 builder.Services.AddScoped<IComunicacaoProcessamentoService, ComunicacaoProcessamentoService>();
 builder.Services.AddScoped<IComunicacaoAutomacaoService, ComunicacaoAutomacaoService>();
+// Providers de WhatsApp (abstração IWhatsAppProvider) + resolver por conta/tenant
+builder.Services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProvider, WhatsFlow.Application.Services.WhatsApp.FakeWhatsAppProvider>();
+builder.Services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProvider, WhatsFlow.Application.Services.WhatsApp.EvolutionWhatsAppProvider>();
+builder.Services.AddScoped<WhatsFlow.Application.Services.WhatsApp.IWhatsAppProviderResolver, WhatsFlow.Application.Services.WhatsApp.WhatsAppProviderResolver>();
 builder.Services.AddScoped<IComunicacaoCanalProvider, ComunicacaoWhatsAppCanalProvider>();
 builder.Services.AddScoped<IComunicacaoCanalProvider, ComunicacaoEmailCanalProvider>();
 builder.Services.AddScoped<IComunicacaoCanalProvider, ComunicacaoNotificacaoInternaCanalProvider>();
