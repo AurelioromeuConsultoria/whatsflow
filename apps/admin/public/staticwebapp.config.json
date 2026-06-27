@@ -1,0 +1,21 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/assets/*",
+      "/*.css",
+      "/*.js",
+      "/*.map",
+      "/*.png",
+      "/*.jpg",
+      "/*.jpeg",
+      "/*.gif",
+      "/*.webp",
+      "/*.svg",
+      "/favicon.ico",
+      "/robots.txt",
+      "/manifest.webmanifest"
+    ]
+  }
+}
+

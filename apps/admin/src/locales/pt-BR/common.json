@@ -1,0 +1,4606 @@
+{
+  "app": {
+    "name": "Verbo+",
+    "tagline": "Organize sua igreja. Transforme vidas.",
+    "developedBy": "Desenvolvido por Malach Digital"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "mySchedules": "Minhas Escalas",
+    "users": "Usuários",
+    "audit": "Logs",
+    "operations": "Operação",
+    "accessProfiles": "Perfis de Acesso",
+    "administration": "Administração",
+    "platform": "Plataforma",
+    "tenants": "Tenants",
+    "connect": "Connect",
+    "people": "Pessoas",
+    "birthdays": "Aniversariantes",
+    "birthdayCampaign": "Campanha de Aniversário",
+    "profiles": "Perfis",
+    "visitors": "Visitantes",
+    "messageSettings": "Configurações de Mensagens",
+    "scheduledMessages": "Fila de Comunicação",
+    "communication": "Comunicação",
+    "communicationCampaigns": "Campanhas de Comunicação",
+    "communicationTemplates": "Templates de Comunicação",
+    "communicationSegments": "Segmentos de Comunicação",
+    "communicationPreferences": "Preferências de Comunicação",
+    "volunteering": "Voluntariado",
+    "teams": "Equipes",
+    "roles": "Cargos",
+    "volunteers": "Voluntários",
+    "schedules": "Escalas",
+    "monthlyPlanning": "Planejamento Mensal",
+    "coveragePanel": "Painel de Cobertura",
+    "scheduleModels": "Modelos de Escala",
+    "unavailabilities": "Indisponibilidades",
+    "linksReport": "Relatório Vínculos",
+    "swapRequests": "Solicitações de Troca",
+    "volunteerHistory": "Histórico Operacional",
+    "hub": "Hub",
+    "houses": "Casas",
+    "events": "Eventos",
+    "occurrences": "Ocorrências",
+    "registrations": "Inscrições",
+    "finance": "Financeiro",
+    "suppliers": "Fornecedores",
+    "expenseCategories": "Categorias de Despesas",
+    "bankAccounts": "Contas Bancárias",
+    "costCenters": "Centros de Custos",
+    "projects": "Projetos",
+    "patrimony": "Patrimônio",
+    "patrimonyCategories": "Categorias de Patrimônio",
+    "patrimonyReport": "Relatório de Patrimônio",
+    "expenses": "Despesas",
+    "revenues": "Receitas",
+    "revenueCategories": "Categorias de Receitas",
+    "financeDashboard": "Dashboard Financeiro",
+    "financeReports": "Relatórios Financeiros",
+    "portal": "Portal",
+    "newsCategories": "Categorias de Notícias",
+    "news": "Notícias",
+    "polls": "Enquetes",
+    "contacts": "Contatos",
+    "contactMessages": "Mensagens do Fale Conosco",
+    "siteHighlights": "Destaques do Site",
+    "portalConfig": "Configuração",
+    "media": "Mídia",
+    "mediaCategories": "Categorias de Mídia",
+    "photoGalleries": "Galerias de Fotos",
+    "kids": "Kids",
+    "kidsPanel": "Painel",
+    "kidsChildren": "Crianças",
+    "kidsStructure": "Estrutura",
+    "kidsHistory": "Histórico",
+    "kidsLessonContent": "Conteúdos da aula",
+    "kidsCheckins": "Check-ins"
+  },
+  "layout": {
+    "expandAll": "Expandir todos os menus",
+    "collapseAll": "Colapsar todos os menus",
+    "expandSidebar": "Expandir menu lateral",
+    "collapseSidebar": "Recolher menu lateral",
+    "openMenu": "Abrir menu"
+  },
+  "header": {
+    "dashboard": "Dashboard",
+    "people": "Pessoas",
+    "aniversarios-campanha": "Campanha de Aniversário",
+    "visitors": "Visitantes",
+    "profiles": "Perfis",
+    "messageSettings": "Configurações de Mensagens",
+    "scheduledMessages": "Mensagens Agendadas",
+    "teams": "Equipes",
+    "roles": "Cargos",
+    "volunteers": "Voluntários",
+    "events": "Eventos",
+    "eventRegistrations": "Inscrições em Eventos",
+    "patrimony": "Patrimônio",
+    "patrimonyCategories": "Categorias de Patrimônio",
+    "patrimonyReport": "Relatório de Patrimônio",
+    "siteHighlights": "Destaques do Site",
+    "newsCategories": "Categorias de Notícias",
+    "news": "Notícias",
+    "contacts": "Contatos",
+    "users": "Usuários",
+    "operations": "Operação",
+    "profile": "Meu Perfil",
+    "mediaCategories": "Categorias de Mídia",
+    "photoGalleries": "Galerias de Fotos",
+    "new": "Novo",
+    "edit": "Editar",
+    "useLightTheme": "Usar tema claro",
+    "useDarkTheme": "Usar tema escuro",
+    "currentVerboTheme": "Tema Verbo+ ativo",
+    "logout": "Sair",
+    "operating": "Operando:",
+    "selectTenant": "Selecione um tenant",
+    "origin": "Origem",
+    "remote": "Remoto",
+    "homeTenant": "Tenant de origem",
+    "currentTenant": "Tenant em operação",
+    "platformMode": "Modo plataforma",
+    "operatingRemoteTenant": "Operando tenant remoto",
+    "operatingHomeTenant": "Operando tenant de origem",
+    "returnToHomeTenant": "Voltar para tenant de origem",
+    "notAvailable": "n/d",
+    "tenantSwitchErrorLog": "Erro ao registrar troca de contexto operacional",
+    "tenantSwitchError": "Não foi possível registrar a troca de tenant. Tente novamente.",
+    "returnToHomeTenantErrorLog": "Erro ao registrar retorno ao tenant de origem",
+    "returnToHomeTenantError": "Não foi possível registrar o retorno ao tenant de origem.",
+    "remoteTenantDialog": {
+      "title": "Entrar em tenant remoto",
+      "description": "Você vai operar o tenant \"{{tenant}}\". As próximas ações administrativas usarão esse contexto até você voltar para o tenant de origem.",
+      "confirm": "Entrar no tenant"
+    }
+  },
+  "userMenu": {
+    "myProfile": "Meu Perfil",
+    "logout": "Sair"
+  },
+  "actions": {
+    "save": "Salvar",
+    "saving": "Salvando...",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "back": "Voltar",
+    "edit": "Editar",
+    "select": "Selecione",
+    "update": "Atualizar",
+    "create": "Cadastrar",
+    "remove": "Remover",
+    "refresh": "Atualizar",
+    "refreshing": "Atualizando...",
+    "see": "Ver"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "notDefined": "Não definido"
+  },
+  "auth": {
+    "checkingAuthentication": "Verificando autenticação..."
+  },
+  "permissions": {
+    "checking": "Verificando permissões...",
+    "adminOnly": "Esta área é restrita a administradores.",
+    "noAccess": "Você não tem permissão para acessar esta seção."
+  },
+  "emptyState": {
+    "title": "Nada encontrado",
+    "description": "Não há dados para exibir com os filtros atuais."
+  },
+  "notifications": {
+    "title": "Notificações",
+    "subtitle": "Central de avisos operacionais do sistema, com foco em escalas e trocas.",
+    "loading": "Carregando notificações...",
+    "errorLoad": "Erro ao carregar notificações",
+    "readAll": "Ler todas",
+    "viewAll": "Ver todas",
+    "emptyShort": "Nenhuma notificação por enquanto.",
+    "emptyTitle": "Nenhuma notificação encontrada",
+    "emptyDescription": "Sua central está limpa no momento. Novos avisos operacionais vão aparecer aqui.",
+    "markAsRead": "Marcar como lida",
+    "markReadError": "Erro ao marcar notificação como lida",
+    "markAllSuccess": "Notificações marcadas como lidas",
+    "markAllError": "Erro ao atualizar notificações",
+    "open": "Abrir",
+    "status": {
+      "read": "Lida",
+      "new": "Nova"
+    },
+    "types": {
+      "general": "Geral",
+      "schedule": "Escala",
+      "swap": "Troca"
+    }
+  },
+  "advancedSearch": {
+    "title": "Busca e Filtros",
+    "clear": "Limpar",
+    "hide": "Ocultar",
+    "filters": "Filtros",
+    "advancedFilters": "Filtros Avançados",
+    "searchPlaceholder": "Buscar por {{field}}...",
+    "selectPlaceholder": "Selecione {{field}}",
+    "all": "Todos",
+    "from": "De",
+    "to": "Até",
+    "yes": "Sim",
+    "no": "Não"
+  },
+  "confirmDialog": {
+    "confirm": "Confirmar",
+    "processing": "Processando..."
+  },
+  "richTextEditor": {
+    "pasteHint": "Cole o texto e os espaços entre parágrafos serão preservados automaticamente"
+  },
+  "scheduledMessagesManagement": {
+    "title": "Mensagens Agendadas",
+    "subtitle": "Acompanhe o status das mensagens automáticas",
+    "loading": "Carregando mensagens...",
+    "errorLoad": "Erro ao carregar dados",
+    "visitorNotFound": "Visitante não encontrado",
+    "logs": {
+      "enrichVisitorsWarning": "Não foi possível carregar visitantes para enriquecer a listagem.",
+      "fetchError": "Erro ao buscar dados:",
+      "loadVisitorsError": "Erro ao carregar visitantes:"
+    },
+    "autoRefresh": {
+      "label": "Auto-atualizar",
+      "triggerTitle": "Intervalo de atualização automática",
+      "off": "Desligado"
+    },
+    "stats": {
+      "total": "Total",
+      "scheduled": "Agendadas",
+      "sent": "Enviadas",
+      "error": "Com Erro"
+    },
+    "filters": {
+      "messageOrVisitor": "Mensagem/Visitante",
+      "searchPlaceholder": "Buscar por texto ou nome do visitante...",
+      "status": "Status",
+      "visitor": "Visitante",
+      "sendDate": "Data de Envio"
+    },
+    "status": {
+      "scheduled": "Agendada",
+      "ready": "Pronta para envio",
+      "readyShort": "Pronta",
+      "sent": "Enviada",
+      "error": "Erro",
+      "canceled": "Cancelada",
+      "processing": "Em processamento",
+      "processingShort": "Processando",
+      "unknown": "Status {{status}}"
+    },
+    "listTitle": "Mensagens ({{total}})",
+    "empty": {
+      "title": "Nenhuma mensagem encontrada",
+      "description": "As mensagens aparecerão aqui quando houver agendamentos compatíveis com os filtros atuais.",
+      "pageTitle": "Nenhuma mensagem nesta página",
+      "pageDescription": "Não há mensagens nesta página atual. Tente navegar ou ajustar os filtros."
+    },
+    "table": {
+      "visitor": "Visitante",
+      "message": "Mensagem",
+      "sendDateTime": "Data/Hora Envio",
+      "status": "Status",
+      "actions": "Ações",
+      "visitorId": "ID: {{id}}"
+    },
+    "actions": {
+      "viewVisitor": "Ver visitante"
+    }
+  },
+  "birthdayCampaignManagement": {
+    "title": "Campanha de Aniversário",
+    "subtitle": "Configure a arte, a legenda e o horário do envio automático de aniversário pelo WhatsApp.",
+    "loading": "Carregando campanha de aniversário...",
+    "errorLoad": "Erro ao carregar a campanha de aniversário.",
+    "errorSave": "Erro ao salvar a campanha.",
+    "saveSuccess": "Campanha de aniversário salva com sucesso.",
+    "defaultMessage": "{Nome},\n\nHoje celebramos a sua vida! 🎂\n\nQue neste novo ciclo, Cristo se manifeste de forma ainda mais clara em cada área da sua vida — nos seus caminhos, decisões e sonhos.\n\nQue você experimente um tempo de crescimento, intimidade com Deus e direção em cada passo. Que a graça te sustente, o amor te envolva e o propósito dEle te conduza todos os dias. 🙏✨\n\nFeliz aniversário! Você é parte importante daquilo que Deus está fazendo! 💛\n\nEquipe Kingdom",
+    "validation": {
+      "imageRequired": "Envie a imagem da campanha antes de salvar.",
+      "messageRequired": "A legenda da campanha é obrigatória."
+    },
+    "howItWorks": {
+      "title": "Como funciona",
+      "description": "O job roda em segundo plano, procura aniversariantes do dia com WhatsApp preenchido e envia a imagem com a legenda configurada no horário definido. Cada pessoa recebe no máximo uma vez por ano."
+    },
+    "configuration": {
+      "title": "Configuração da campanha",
+      "description": "Use o placeholder",
+      "placeholderHint": "para personalizar a mensagem.",
+      "activeLabel": "Campanha ativa",
+      "activeHint": "Quando ativa, o envio automático entra na rotina diária.",
+      "imageLabel": "Imagem do WhatsApp",
+      "imageHint": "Prefira uma arte vertical, como a que será exibida no WhatsApp.",
+      "scheduleTime": "Horário de envio",
+      "messageLabel": "Legenda",
+      "save": "Salvar campanha"
+    },
+    "preview": {
+      "title": "Prévia",
+      "description": "Visualização com o nome que será usado no teste.",
+      "fallbackName": "Fulano",
+      "imageAlt": "Prévia da campanha",
+      "emptyImage": "Envie uma imagem para ver a prévia."
+    },
+    "test": {
+      "title": "Enviar teste",
+      "description": "Dispare a arte atual para validar imagem, legenda e integração do WhatsApp.",
+      "defaultName": "Teste Kingdom",
+      "nameLabel": "Nome para prévia",
+      "whatsAppLabel": "WhatsApp de teste",
+      "whatsAppPlaceholder": "11999999999",
+      "whatsAppRequired": "Informe um WhatsApp para teste.",
+      "sending": "Enviando...",
+      "send": "Enviar teste por WhatsApp",
+      "success": "Teste enviado com sucesso.",
+      "error": "Erro ao enviar mensagem de teste."
+    },
+    "metrics": {
+      "totalHistory": "Histórico total",
+      "sentYear": "Enviados no ano",
+      "failuresYear": "Falhas no ano",
+      "pendingYear": "Pendentes no ano",
+      "today": "Hoje",
+      "todaySent": "{{count}} enviados",
+      "todayFailures": "{{count}} falhas"
+    },
+    "history": {
+      "title": "Histórico recente",
+      "description": "Acompanhe o resultado dos disparos, filtre rapidamente e reenvie mensagens quando necessário.",
+      "searchLabel": "Buscar pessoa ou WhatsApp",
+      "searchPlaceholder": "Nome ou WhatsApp",
+      "statusLabel": "Status",
+      "allStatuses": "Todos os status",
+      "quantityLabel": "Quantidade",
+      "recordsCount": "{{count}} registros",
+      "filter": "Filtrar",
+      "clear": "Limpar",
+      "empty": "Ainda não há envios registrados para esta campanha.",
+      "resend": "Reenviar",
+      "resending": "Reenviando...",
+      "resendSuccess": "Mensagem reenviada com sucesso.",
+      "resendError": "Erro ao reenviar mensagem.",
+      "confirmResendTitle": "Reenviar mensagem",
+      "confirmResendDescription": "Deseja reenviar agora a campanha de aniversário para {{name}}?",
+      "confirmResend": "Reenviar agora",
+      "status": {
+        "sent": "Enviado",
+        "error": "Erro",
+        "pending": "Pendente",
+        "processing": "Em processamento"
+      },
+      "table": {
+        "person": "Pessoa",
+        "whatsApp": "WhatsApp",
+        "birthday": "Aniversário",
+        "status": "Status",
+        "attempts": "Tentativas",
+        "lastAttempt": "Última tentativa",
+        "sentAt": "Enviado em",
+        "actions": "Ações"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Visão geral do sistema de gestão",
+    "errorLoad": "Erro ao carregar estatísticas do dashboard",
+    "cards": {
+      "totalVisitors": {
+        "title": "Total de Visitantes",
+        "description": "Visitantes cadastrados"
+      },
+      "scheduledMessages": {
+        "title": "Mensagens Agendadas",
+        "description": "Aguardando envio"
+      },
+      "sentMessages": {
+        "title": "Mensagens Enviadas",
+        "description": "Enviadas com sucesso"
+      },
+      "activeSettings": {
+        "title": "Configurações Ativas",
+        "description": "Mensagens configuradas"
+      },
+      "totalPeople": {
+        "title": "Total de Pessoas",
+        "description": "Pessoas cadastradas"
+      },
+      "totalEvents": {
+        "title": "Total de Eventos",
+        "description": "Eventos cadastrados"
+      },
+      "totalRegistrations": {
+        "title": "Total de Inscrições",
+        "description": "Inscrições em eventos"
+      },
+      "totalVolunteers": {
+        "title": "Total de Voluntários",
+        "description": "Voluntários ativos"
+      },
+      "upcomingBirthdays": {
+        "title": "Aniversariantes (30 dias)",
+        "description": "Próximos aniversários"
+      }
+    },
+    "birthdays": {
+      "title": "Próximos Aniversariantes",
+      "nextBirthday": "Próximo aniversário",
+      "empty": "Nenhum aniversariante nos próximos dias.",
+      "days_one": "{{count}} dia",
+      "days_other": "{{count}} dias"
+    },
+    "welcome": {
+      "title": "Bem-vindo ao Verbo+",
+      "description": "Este sistema permite gerenciar visitantes, eventos, voluntários e automatizar o envio de mensagens de boas-vindas via WhatsApp. Use o menu lateral para navegar entre as diferentes funcionalidades."
+    }
+  },
+  "imageUpload": {
+    "fileTypes": {
+      "image": "Imagem",
+      "video": "Vídeo",
+      "audio": "Áudio",
+      "pdf": "PDF",
+      "file": "Arquivo"
+    },
+    "fileTooLarge": "Arquivo muito grande. Máximo: {{size}}",
+    "fileTypeNotAllowed": "Tipo de arquivo não permitido. Aceitos: {{accept}}",
+    "uploadSuccess": "{{fileType}} enviado com sucesso!",
+    "uploadError": "Erro ao fazer upload do {{fileType}}",
+    "previewAlt": "Preview",
+    "previewTitle": "Visualização de {{fileType}}",
+    "pdfTitle": "Visualização PDF",
+    "previewUnavailable": "Visualização não disponível",
+    "openUrl": "Abrir URL",
+    "uploading": "Enviando...",
+    "replace": "Substituir",
+    "upload": "Enviar {{fileType}}",
+    "view": "Ver {{fileType}}",
+    "remove": "Remover",
+    "browserNotSupportVideo": "Seu navegador não suporta vídeo.",
+    "browserNotSupportAudio": "Seu navegador não suporta áudio.",
+    "previewDialogTitle": "Visualizar {{fileType}}"
+  },
+  "portalConfigManagement": {
+    "title": "Configuração do Portal",
+    "subtitle": "Configure as opções gerais do portal público",
+    "errorLoad": "Erro ao carregar configuração do portal",
+    "errorSave": "Erro ao salvar configuração do portal",
+    "saveSuccess": "Configuração do portal atualizada com sucesso!",
+    "validation": {
+      "transitionTimeRange": "Tempo de transição deve estar entre 1 e 60 segundos"
+    },
+    "carousel": {
+      "title": "Carrossel de Destaques",
+      "description": "Configure o tempo de transição automática do carrossel na página inicial"
+    },
+    "fields": {
+      "transitionTime": "Tempo de Transição (segundos)",
+      "transitionTimeHint": "Tempo em segundos para trocar automaticamente os slides do carrossel na página inicial do portal. Valor deve estar entre 1 e 60 segundos. Padrão: 5 segundos."
+    },
+    "actions": {
+      "save": "Salvar Configuração"
+    },
+    "logs": {
+      "errorLoad": "Erro ao carregar configuração:",
+      "errorSave": "Erro ao salvar configuração:"
+    }
+  },
+  "siteHighlightsManagement": {
+    "title": "Destaques do Site",
+    "subtitle": "Gerencie os destaques do site",
+    "loading": "Carregando destaques do site...",
+    "errorLoad": "Erro ao carregar destaques do site",
+    "filtersTitle": "Filtros",
+    "searchLabel": "Buscar",
+    "searchPlaceholder": "Digite o texto ou descrição",
+    "listTitle": "Lista de Destaques do Site ({{total}})",
+    "emptyTitle": "Nenhum destaque encontrado.",
+    "emptyDescription": "Ajuste os filtros ou crie um novo destaque para o site.",
+    "deleteTitle": "Excluir Destaque",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "fallbackName": "este destaque",
+    "deleteSuccess": "Destaque excluído com sucesso",
+    "deleteError": "Erro ao excluir destaque do site",
+    "table": {
+      "text": "Texto",
+      "description": "Descrição",
+      "createdAt": "Data de Criação",
+      "actions": "Ações"
+    },
+    "actions": {
+      "new": "Novo Destaque"
+    },
+    "form": {
+      "loading": "Carregando destaque...",
+      "errorLoad": "Erro ao carregar destaque do site",
+      "errorSave": "Erro ao salvar destaque do site",
+      "createSuccess": "Destaque criado com sucesso!",
+      "updateSuccess": "Destaque atualizado com sucesso!",
+      "newTitle": "Novo Destaque do Site",
+      "editTitle": "Editar Destaque do Site",
+      "newSubtitle": "Cadastre um novo destaque do site",
+      "editSubtitle": "Atualize as informações do destaque",
+      "cardTitle": "Cadastrar Destaque do Site",
+      "fields": {
+        "text": "Texto",
+        "textPlaceholder": "Texto do destaque",
+        "description": "Descrição",
+        "descriptionPlaceholder": "Descrição do destaque",
+        "urlPlaceholder": "exemplo.com ou https://exemplo.com",
+        "urlHint": "Será adicionado https:// automaticamente",
+        "image": "Imagem"
+      }
+    }
+  },
+  "news": {
+    "title": "Notícias",
+    "subtitle": "Gerencie as notícias da igreja",
+    "loading": "Carregando notícias...",
+    "errorLoad": "Erro ao carregar notícias",
+    "new": "Nova Notícia",
+    "listTitle": "Lista de Notícias ({{total}})",
+    "exportCsv": "Exportar CSV",
+    "exportSuccess": "Dados exportados com sucesso!",
+    "emptyTitle": "Nenhuma notícia encontrada",
+    "emptyDescription": "Não há notícias para os filtros atuais. Ajuste a busca ou crie um novo conteúdo.",
+    "deleteTitle": "Excluir Notícia",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteFallbackName": "esta notícia",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Notícia excluída com sucesso",
+    "deleteError": "Erro ao excluir notícia",
+    "filters": {
+      "searchTitle": "Buscar por título...",
+      "searchDescription": "Buscar por descrição..."
+    },
+    "table": {
+      "title": "Título",
+      "description": "Descrição",
+      "category": "Categoria",
+      "date": "Data",
+      "actions": "Ações"
+    },
+    "form": {
+      "loading": "Carregando notícia...",
+      "errorLoad": "Erro ao carregar dados",
+      "createPageTitle": "Nova Notícia",
+      "editPageTitle": "Editar Notícia",
+      "createSubtitle": "Cadastre uma nova notícia",
+      "editSubtitle": "Atualize as informações da notícia",
+      "createCardTitle": "Cadastrar Notícia",
+      "editCardTitle": "Editar Notícia",
+      "createSuccess": "Notícia criada com sucesso!",
+      "updateSuccess": "Notícia atualizada com sucesso!",
+      "saveError": "Erro ao salvar notícia",
+      "urlHint": "Será adicionado https:// automaticamente",
+      "fields": {
+        "content": "Texto",
+        "url": "URL",
+        "image": "Imagem"
+      },
+      "placeholders": {
+        "title": "Título da notícia",
+        "description": "Descrição da notícia",
+        "content": "Texto completo da notícia. Cole o texto e os espaços entre parágrafos serão preservados automaticamente.",
+        "url": "exemplo.com ou https://exemplo.com"
+      },
+      "validation": {
+        "categoryRequired": "Categoria é obrigatória"
+      },
+      "import": {
+        "title": "Importar de link",
+        "description": "Cole a URL de uma notícia (ex.: CPAD News, Guiame) para preencher título, data, descrição e texto automaticamente.",
+        "placeholder": "https://exemplo.com/noticia/...",
+        "extract": "Extrair conteúdo",
+        "extracting": "Extraindo...",
+        "imageWarning": "Conteúdo extraído. Imagem do link não foi possível baixar; adicione manualmente se quiser.",
+        "success": "Conteúdo extraído. Revise e salve a notícia.",
+        "successWithImage": "Conteúdo e imagem extraídos. Revise e salve.",
+        "extractUnavailable": "Não foi possível extrair o conteúdo do link.",
+        "extractError": "Erro ao extrair conteúdo",
+        "validation": {
+          "urlRequired": "Informe a URL do artigo"
+        }
+      }
+    }
+  },
+  "newsCategories": {
+    "title": "Categorias de Notícias",
+    "subtitle": "Gerencie as categorias de notícias",
+    "new": "Nova Categoria",
+    "loading": "Carregando categorias de notícias...",
+    "errorLoad": "Erro ao carregar categorias de notícias",
+    "filtersTitle": "Filtros",
+    "searchLabel": "Buscar por nome",
+    "searchPlaceholder": "Digite o nome da categoria",
+    "listTitle": "Lista de Categorias de Notícias ({{total}})",
+    "emptyTitle": "Nenhuma categoria encontrada.",
+    "emptyDescription": "Ajuste os filtros ou crie uma nova categoria de notícia.",
+    "deleteTitle": "Excluir Categoria",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita. Se houver notícias vinculadas, a exclusão será bloqueada.",
+    "deleteFallbackName": "esta categoria",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Categoria excluída com sucesso",
+    "deleteError": "Erro ao excluir categoria. Pode haver notícias vinculadas.",
+    "table": {
+      "name": "Nome",
+      "createdAt": "Data de Criação",
+      "actions": "Ações"
+    },
+    "form": {
+      "loading": "Carregando categoria...",
+      "errorLoad": "Erro ao carregar categoria de notícia",
+      "createPageTitle": "Nova Categoria de Notícia",
+      "editPageTitle": "Editar Categoria de Notícia",
+      "createSubtitle": "Cadastre uma nova categoria de notícia",
+      "editSubtitle": "Atualize as informações da categoria",
+      "createCardTitle": "Cadastrar Categoria de Notícia",
+      "editCardTitle": "Editar Categoria de Notícia",
+      "namePlaceholder": "Nome da categoria",
+      "createSuccess": "Categoria criada com sucesso",
+      "updateSuccess": "Categoria atualizada com sucesso",
+      "saveError": "Erro ao salvar categoria de notícia",
+      "validation": {
+        "nameRequired": "Nome é obrigatório"
+      }
+    }
+  },
+  "pollsManagement": {
+    "title": "Enquetes",
+    "subtitle": "Gerencie as enquetes do sistema",
+    "new": "Nova Enquete",
+    "loading": "Carregando enquetes...",
+    "errorLoad": "Erro ao carregar enquetes",
+    "filtersTitle": "Filtros",
+    "searchLabel": "Buscar",
+    "searchPlaceholder": "Digite o título ou descrição",
+    "listTitle": "Lista de Enquetes ({{total}})",
+    "emptyTitle": "Nenhuma enquete encontrada.",
+    "emptyDescriptionFirst": "Crie a primeira enquete para começar.",
+    "emptyDescriptionFiltered": "Ajuste os filtros para ampliar o resultado.",
+    "createFirst": "Criar Primeira Enquete",
+    "deleteTitle": "Excluir Enquete",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteFallbackName": "esta enquete",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Enquete excluída com sucesso",
+    "deleteError": "Erro ao excluir enquete",
+    "optionsCount": "{{count}} opções",
+    "status": {
+      "active": "Ativa",
+      "waiting": "Aguardando",
+      "inactive": "Inativa"
+    },
+    "table": {
+      "title": "Título",
+      "description": "Descrição",
+      "period": "Período",
+      "options": "Opções",
+      "votes": "Votos",
+      "status": "Status",
+      "actions": "Ações"
+    },
+    "form": {
+      "loading": "Carregando enquete...",
+      "errorLoad": "Erro ao carregar enquete",
+      "createPageTitle": "Nova Enquete",
+      "editPageTitle": "Editar Enquete",
+      "createSubtitle": "Cadastre uma nova enquete",
+      "editSubtitle": "Atualize as informações da enquete",
+      "createSuccess": "Enquete criada com sucesso!",
+      "updateSuccess": "Enquete atualizada com sucesso!",
+      "saveError": "Erro ao salvar enquete",
+      "sections": {
+        "basic": "Informações Básicas",
+        "options": "Opções da Enquete",
+        "settings": "Configurações"
+      },
+      "fields": {
+        "startDate": "Data e Hora de Início",
+        "endDate": "Data e Hora de Fim"
+      },
+      "placeholders": {
+        "title": "Ex: Qual sua opinião sobre...",
+        "description": "Descrição da enquete (opcional)"
+      },
+      "optionLabel": "Opção {{index}}",
+      "optionPlaceholder": "Digite a opção {{index}}",
+      "addOption": "Adicionar Opção",
+      "minOptionsHint": "A enquete deve ter pelo menos 2 opções",
+      "settings": {
+        "active": "Enquete Ativa",
+        "activeHint": "Enquetes inativas não aparecerão no portal",
+        "multipleChoice": "Permitir Múltipla Escolha",
+        "multipleChoiceHint": "Permite que o usuário vote em mais de uma opção",
+        "anonymousVote": "Permitir Voto Anônimo",
+        "anonymousVoteHint": "Permite que usuários não logados votem"
+      },
+      "validation": {
+        "minOneOption": "A enquete deve ter pelo menos uma opção",
+        "titleRequired": "O título é obrigatório",
+        "minTwoOptions": "A enquete deve ter pelo menos 2 opções",
+        "optionsTextRequired": "Todas as opções devem ter texto"
+      }
+    }
+  },
+  "rolesForm": {
+    "loading": "Carregando cargo...",
+    "errorLoad": "Erro ao carregar cargo",
+    "editSubtitle": "Atualize as informações do cargo",
+    "createSubtitle": "Cadastre um novo cargo",
+    "fields": {
+      "name": "Nome"
+    },
+    "placeholders": {
+      "name": "Nome do cargo"
+    },
+    "createSuccess": "Cargo criado com sucesso",
+    "updateSuccess": "Cargo atualizado com sucesso",
+    "saveError": "Erro ao salvar cargo",
+    "validation": {
+      "nameRequired": "Nome é obrigatório"
+    }
+  },
+  "housesForm": {
+    "loading": "Carregando casa...",
+    "errorLoad": "Erro ao carregar dados",
+    "newTitle": "Nova Casa",
+    "editTitle": "Editar Casa",
+    "createSubtitle": "Cadastre uma nova casa",
+    "editSubtitle": "Atualize as informações da casa",
+    "createCardTitle": "Cadastrar Casa",
+    "editCardTitle": "Editar Casa",
+    "fields": {
+      "name": "Nome",
+      "host": "Anfitrião",
+      "openedBy": "Aberto por (usuário)",
+      "leader": "Líder (usuário)",
+      "timothy": "Timóteo (usuário)",
+      "address": "Endereço Completo"
+    },
+    "placeholders": {
+      "name": "Nome da casa",
+      "host": "Nome do anfitrião",
+      "address": "Rua, número, bairro, cidade, estado"
+    },
+    "createSuccess": "Casa criada com sucesso",
+    "updateSuccess": "Casa atualizada com sucesso",
+    "saveError": "Erro ao salvar casa",
+    "validation": {
+      "nameRequired": "Nome é obrigatório",
+      "addressRequired": "Endereço completo é obrigatório",
+      "hostRequired": "Anfitrião é obrigatório",
+      "usersRequired": "Selecione Aberto por, Líder e Timóteo"
+    }
+  },
+  "contactsForm": {
+    "loading": "Carregando contato...",
+    "errorLoad": "Erro ao carregar contato",
+    "newTitle": "Novo Contato",
+    "editTitle": "Editar Contato",
+    "createSubtitle": "Cadastre um novo contato",
+    "editSubtitle": "Atualize as informações do contato",
+    "createCardTitle": "Cadastrar Contato",
+    "editCardTitle": "Editar Contato",
+    "fields": {
+      "name": "Nome",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "isMember": "É membro da igreja?",
+      "message": "Mensagem"
+    },
+    "placeholders": {
+      "name": "Nome completo",
+      "whatsapp": "(11) 99999-9999",
+      "email": "email@exemplo.com",
+      "message": "Mensagem do contato"
+    },
+    "createSuccess": "Contato criado com sucesso",
+    "updateSuccess": "Contato atualizado com sucesso",
+    "saveError": "Erro ao salvar contato",
+    "validation": {
+      "nameRequired": "Nome é obrigatório"
+    }
+  },
+  "messageSettings": {
+    "title": "Configurações de Mensagens",
+    "subtitle": "Gerencie as mensagens automáticas enviadas aos visitantes",
+    "new": "Nova Configuração",
+    "loading": "Carregando configurações...",
+    "errorLoad": "Erro ao carregar configurações de mensagens",
+    "deleteTitle": "Excluir configuração?",
+    "deleteDescription": "Tem certeza que deseja excluir a configuração da mensagem #{{id}}?",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Configuração excluída com sucesso",
+    "deleteError": "Erro ao excluir configuração",
+    "activated": "Configuração ativada",
+    "deactivated": "Configuração desativada",
+    "statusError": "Erro ao alterar status da configuração",
+    "messageLabel": "Mensagem #{{id}}",
+    "emptyTitle": "Nenhuma configuração encontrada",
+    "emptyDescription": "Comece criando sua primeira configuração de mensagem automática.",
+    "actions": {
+      "activate": "Ativar",
+      "deactivate": "Desativar"
+    },
+    "status": {
+      "active": "Ativa",
+      "inactive": "Inativa"
+    },
+    "schedule": {
+      "sameDay": "No mesmo dia",
+      "daysAfter": "{{count}} dia após a visita",
+      "daysAfter_other": "{{count}} dias após a visita",
+      "atTime": "Às {{time}}"
+    },
+    "form": {
+      "newTitle": "Nova Configuração",
+      "editTitle": "Editar Configuração",
+      "createSubtitle": "Configure uma nova mensagem automática",
+      "editSubtitle": "Altere as informações da configuração de mensagem",
+      "errorLoad": "Erro ao carregar configuração",
+      "createError": "Erro ao criar configuração",
+      "updateError": "Erro ao atualizar configuração",
+      "previewTitle": "Preview da Mensagem",
+      "previewChannel": "WhatsApp",
+      "previewExampleName": "João Silva",
+      "scheduleTitle": "Agendamento",
+      "scheduleDescription": "Esta mensagem será enviada {{period}} às {{time}}",
+      "messageTip": "Dica: Use {Nome} para incluir automaticamente o nome do visitante na mensagem",
+      "fields": {
+        "messageText": "Texto da Mensagem",
+        "daysAfterVisit": "Enviar quantos dias após a visita?",
+        "sendTime": "Horário de Envio",
+        "active": "Configuração ativa"
+      },
+      "placeholders": {
+        "messageText": "Digite o texto da mensagem... Use {Nome} para incluir o nome do visitante"
+      },
+      "schedule": {
+        "sameDay": "no mesmo dia da visita",
+        "oneDayAfter": "1 dia após a visita",
+        "daysAfter": "{{count}} dias após a visita"
+      },
+      "scheduleOptions": {
+        "sameDay": "No mesmo dia",
+        "day1": "1 dia depois",
+        "day2": "2 dias depois",
+        "day3": "3 dias depois",
+        "week1": "1 semana depois",
+        "week2": "2 semanas depois",
+        "month1": "1 mês depois"
+      },
+      "validation": {
+        "messageRequired": "O texto da mensagem é obrigatório"
+      }
+    }
+  },
+  "audit": {
+    "title": "Auditoria",
+    "subtitle": "Histórico de alterações no sistema",
+    "loading": "Carregando auditoria...",
+    "errorLoad": "Erro ao carregar auditoria",
+    "system": "Sistema",
+    "userFallback": "Usuário {{id}}",
+    "records": "{{count}} registro(s)",
+    "allActions": "Todas as ações",
+    "activeFilters": "Filtros ativos: {{count}}",
+    "periodLabel": "{{from}} até {{to}}",
+    "periodLabelBadge": "Período: {{value}}",
+    "actionLabel": "Ação: {{value}}",
+    "entityLabel": "Entidade: {{value}}",
+    "logsTitle": "Logs ({{total}})",
+    "noLogsTitle": "Nenhum log encontrado",
+    "noLogsDescription": "Ajuste os filtros ou aguarde novas alterações no sistema.",
+    "operationalAlerts": "Alertas operacionais",
+    "noAlerts": "Nenhum alerta automático disparado com os filtros atuais.",
+    "recentCriticalEvents": "Eventos críticos recentes",
+    "noCriticalEvents": "Nenhum evento crítico no resultado atual.",
+    "recentTrend": "Tendência recente",
+    "noTrendData": "Sem dados suficientes para tendência.",
+    "investigationShortcuts": "Atalhos de investigação",
+    "search": {
+      "general": "Busca geral",
+      "generalPlaceholder": "Entidade, ação, usuário, e-mail ou ID...",
+      "entityId": "ID da entidade",
+      "entityIdPlaceholder": "Ex.: 10, teste, 2026-04-02...",
+      "userName": "Nome do usuário",
+      "userNamePlaceholder": "Buscar por nome...",
+      "userEmail": "E-mail do usuário",
+      "userEmailPlaceholder": "Buscar por e-mail...",
+      "entity": "Entidade",
+      "action": "Ação",
+      "date": "Data"
+    },
+    "cards": {
+      "total": {
+        "title": "Total no resultado",
+        "description": "Todos os logs do conjunto filtrado"
+      },
+      "critical": {
+        "title": "Ocorrências críticas",
+        "description": "Ações sensíveis no conjunto filtrado"
+      },
+      "failures": {
+        "title": "Falhas e recusas",
+        "description": "Erros operacionais e respostas negativas"
+      },
+      "highestVolume": {
+        "title": "Maior volume atual",
+        "user": "Usuário",
+        "entity": "Entidade",
+        "action": "Ação"
+      }
+    },
+    "alertPriority": {
+      "high": "Alta",
+      "medium": "Média",
+      "attention": "Atenção"
+    },
+    "alerts": {
+      "failureSpike": {
+        "title": "Volume elevado de falhas ou recusas",
+        "description": "{{count}} eventos negativos encontrados no conjunto filtrado.",
+        "action": "Filtrar falhas"
+      },
+      "sendErrors": {
+        "title": "Erros de envio em destaque",
+        "description": "{{count}} registros com erro de envio dominam o resultado atual.",
+        "action": "Ver erros de envio"
+      },
+      "passwordChanges": {
+        "title": "Muitas alterações de senha",
+        "description": "{{count}} alterações de senha aparecem como ação mais frequente.",
+        "action": "Filtrar senhas"
+      },
+      "loginActivity": {
+        "title": "Pico de login no período",
+        "description": "{{count}} logins foram registrados com os filtros atuais.",
+        "action": "Ver logins"
+      },
+      "criticalActions": {
+        "title": "Alta concentração de ações críticas",
+        "description": "{{count}} ações críticas foram encontradas no conjunto filtrado.",
+        "action": "Isolar críticas"
+      }
+    },
+    "shortcuts": {
+      "allPeriod": "Todo o período",
+      "today": "Hoje",
+      "last24h": "Últimas 24h",
+      "last7d": "Últimos 7 dias",
+      "last30d": "Últimos 30 dias"
+    },
+    "period": {
+      "from": "desde {{value}}",
+      "to": "até {{value}}",
+      "all": "todo o período"
+    },
+    "table": {
+      "date": "Data",
+      "action": "Ação",
+      "entity": "Entidade",
+      "entityId": "ID",
+      "user": "Usuário",
+      "ip": "IP",
+      "details": "Detalhes"
+    },
+    "dialog": {
+      "title": "Detalhes do log",
+      "entity": "Entidade:",
+      "entityId": "ID da entidade:",
+      "action": "Ação:",
+      "user": "Usuário:",
+      "ip": "IP:",
+      "when": "Quando:",
+      "recordedChanges": "Mudanças registradas",
+      "noChangeDetails": "Sem detalhes de mudanças."
+    },
+    "destinations": {
+      "openPerson": "Abrir pessoa",
+      "openVisitor": "Abrir visitante",
+      "openUsers": "Abrir usuários",
+      "openMessages": "Abrir mensagens",
+      "openSchedule": "Abrir escala",
+      "openOccurrence": "Abrir ocorrência",
+      "openSchedules": "Abrir escalas",
+      "openSwaps": "Abrir trocas",
+      "openCampaign": "Abrir campanha"
+    },
+    "entities": {
+      "Auth": "Autenticação",
+      "CampanhaAniversario": "Campanha de Aniversário",
+      "CampanhaAniversarioEnvio": "Envio da Campanha",
+      "Escala": "Escala",
+      "EscalaItem": "Item de Escala",
+      "SolicitacaoTrocaEscala": "Solicitação de Troca",
+      "MensagemAgendada": "Mensagem Agendada",
+      "Pessoa": "Pessoa",
+      "PessoaPerfil": "Perfil de Pessoa",
+      "Visitante": "Visitante",
+      "Evento": "Evento",
+      "Noticia": "Notícia",
+      "Usuario": "Usuário"
+    },
+    "actionsMap": {
+      "Create": "Criação",
+      "Update": "Edição",
+      "Delete": "Exclusão",
+      "Login": "Login",
+      "RefreshToken": "Refresh Token",
+      "AlterarSenha": "Alterar Senha",
+      "Publicar": "Publicar",
+      "GerarAutomatico": "Gerar Automático",
+      "Confirmar": "Confirmar",
+      "Recusar": "Recusar",
+      "RegistrarPresenca": "Registrar Presença",
+      "Aprovar": "Aprovar",
+      "Rejeitar": "Rejeitar",
+      "Regerar": "Regerar",
+      "ProntaParaEnvio": "Pronta para Envio",
+      "Enviada": "Enviada",
+      "ErroEnvio": "Erro de Envio",
+      "AtualizarConfiguracao": "Atualizar Configuração",
+      "EnviarTeste": "Enviar Teste",
+      "Reenviar": "Reenviar",
+      "ProcessarDia": "Processar Dia"
+    }
+  },
+  "globalSearch": {
+    "title": "Busca global",
+    "description": "Busque pessoas, visitantes, eventos e mais.",
+    "placeholder": "Buscar (ex: João, 1199999, culto, notícia...)",
+    "loading": "Buscando...",
+    "minChars": "Digite pelo menos 2 caracteres para buscar.",
+    "empty": "Nenhum resultado.",
+    "types": {
+      "Pessoa": "Pessoas",
+      "Visitante": "Visitantes",
+      "Evento": "Eventos",
+      "Noticia": "Notícias",
+      "Usuario": "Usuários",
+      "Other": "Outros"
+    }
+  },
+  "usersManagement": {
+    "title": "Usuários",
+    "subtitle": "Gerencie os usuários do sistema",
+    "loading": "Carregando usuários...",
+    "errorLoad": "Erro ao carregar usuários",
+    "new": "Novo Usuário",
+    "listTitle": "Lista de Usuários ({{total}})",
+    "emptyTitle": "Nenhum usuário encontrado",
+    "emptyDescription": "Não há usuários para os filtros atuais. Ajuste os filtros ou crie um novo acesso.",
+    "deleteTitle": "Excluir Usuário",
+    "deleteDescription": "Tem certeza que deseja excluir o usuário \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteFallbackName": "este usuário",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Usuário excluído com sucesso",
+    "deleteError": "Erro ao excluir usuário",
+    "activateSuccess": "Usuário ativado com sucesso",
+    "deactivateSuccess": "Usuário desativado com sucesso",
+    "statusError": "Erro ao alterar status do usuário",
+    "never": "Nunca",
+    "userTypes": {
+      "administrator": "Administrador",
+      "portal": "Portal",
+      "both": "Ambos"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "actions": {
+      "activate": "Ativar",
+      "deactivate": "Desativar"
+    },
+    "filters": {
+      "title": "Filtros",
+      "search": "Buscar",
+      "searchPlaceholder": "Nome ou email",
+      "userType": "Tipo de Usuário",
+      "allTypes": "Todos os tipos",
+      "status": "Status",
+      "allStatuses": "Todos os status"
+    },
+    "table": {
+      "name": "Nome",
+      "email": "Email",
+      "type": "Tipo",
+      "profile": "Perfil",
+      "status": "Status",
+      "createdAt": "Data Criação",
+      "lastAccess": "Último Acesso",
+      "actions": "Ações"
+    },
+    "form": {
+      "loading": "Carregando usuário...",
+      "errorLoad": "Erro ao carregar usuário",
+      "createTitle": "Novo Usuário",
+      "editTitle": "Editar Usuário",
+      "linkMode": "Vínculo com Pessoa",
+      "linkModeExisting": "Usar pessoa existente",
+      "linkModeNew": "Criar nova pessoa",
+      "person": "Pessoa",
+      "personHint": "Será criado acesso para: {{name}}",
+      "accessProfile": "Perfil de Acesso",
+      "activeUser": "Usuário ativo",
+      "password": "Senha",
+      "confirmPassword": "Confirmar Senha",
+      "createSuccess": "Usuário criado com sucesso",
+      "updateSuccess": "Usuário atualizado com sucesso",
+      "saveError": "Erro ao salvar usuário",
+      "placeholders": {
+        "name": "Nome completo",
+        "email": "email@exemplo.com",
+        "password": "Mínimo 6 caracteres",
+        "confirmPassword": "Confirme a senha"
+      },
+      "validation": {
+        "selectPerson": "Selecione uma pessoa",
+        "nameRequired": "Nome é obrigatório",
+        "emailRequired": "Email é obrigatório",
+        "emailInvalid": "Email inválido",
+        "passwordRequired": "Senha é obrigatória",
+        "passwordMin": "Senha deve ter no mínimo 6 caracteres",
+        "passwordMismatch": "As senhas não coincidem",
+        "profileRequired": "Perfil de acesso é obrigatório"
+      }
+    }
+  },
+  "operation": {
+    "title": "Operação",
+    "subtitle": "Visão consolidada de saúde, schedulers e acesso rápido à investigação.",
+    "loading": "Carregando operação...",
+    "errorLoad": "Erro ao carregar operação",
+    "actions": {
+      "investigate": "Investigar",
+      "openAudit": "Abrir auditoria"
+    },
+    "cards": {
+      "health": {
+        "title": "Saúde geral",
+        "duration": "Duração total: {{value}}"
+      },
+      "degradedChecks": {
+        "title": "Checks degradados",
+        "description": "Dependências com atenção"
+      },
+      "unhealthyChecks": {
+        "title": "Checks indisponíveis",
+        "description": "Falhas críticas de ambiente"
+      },
+      "schedulersAttention": {
+        "title": "Schedulers com atenção",
+        "description": "Última execução fora de sucesso"
+      },
+      "audit24h": {
+        "title": "Auditoria 24h",
+        "description": "Eventos auditados no último dia"
+      },
+      "criticalActions": {
+        "title": "Ações críticas",
+        "description": "Operações sensíveis nas últimas 24h"
+      },
+      "failures": {
+        "title": "Falhas e recusas",
+        "description": "Sinais de erro ou exceção operacional"
+      },
+      "activeUsers": {
+        "title": "Usuários ativos",
+        "topUser": "Topo: {{user}} ({{count}})"
+      }
+    },
+    "alerts": {
+      "title": "Alertas operacionais",
+      "empty": "Nenhum alerta crítico nesta leitura.",
+      "unhealthyChecks": {
+        "title": "Health check em estado crítico",
+        "description": "Há {{count}} verificação(ões) em estado `Unhealthy`."
+      },
+      "schedulers": {
+        "title": "Schedulers exigem revisão",
+        "description": "Há {{count}} scheduler(s) sem sucesso na última execução."
+      },
+      "auditFailures": {
+        "title": "Auditoria indica falhas recentes",
+        "description": "Foram detectados {{count}} evento(s) de falha, recusa ou rejeição nas últimas 24 horas."
+      },
+      "criticalActions": {
+        "title": "Volume alto de ações críticas",
+        "description": "A auditoria registrou {{count}} ações críticas no período recente. Vale revisar o contexto operacional."
+      }
+    },
+    "healthChecks": {
+      "title": "Health checks",
+      "noDescription": "Sem descrição adicional.",
+      "duration": "Duração: {{value}}",
+      "error": "Erro: {{value}}"
+    },
+    "quickAccess": {
+      "title": "Acesso rápido",
+      "openAudit": "Abrir auditoria",
+      "openScheduledMessages": "Abrir mensagens agendadas",
+      "openRecentLogins": "Abrir logins recentes",
+      "openPasswordChanges": "Abrir alterações de senha",
+      "openDeliveryErrors": "Abrir erros de envio",
+      "openBirthdayCampaign": "Abrir campanha de aniversário",
+      "openSwapRequests": "Abrir trocas de escala",
+      "openOperationalSignals": "Abrir falhas e sinais operacionais"
+    },
+    "auditSignals": {
+      "title": "Sinais da auditoria nas últimas 24h",
+      "topEntity": "Entidade dominante",
+      "topAction": "Ação dominante",
+      "records": "{{count}} registro(s)",
+      "operationalReading": "Leitura operacional",
+      "noRelevantSignals": "Sem sinais relevantes de auditoria nas últimas 24 horas.",
+      "summary": "A soma de ações críticas e falhas chegou a {{count}} evento(s), com destaque para {{action}} em {{entity}}."
+    },
+    "investigation": {
+      "title": "Investigação rápida",
+      "generalAudit": "Auditoria geral",
+      "deliveryErrors": "Erros de envio",
+      "logins": "Logins",
+      "passwordChanges": "Alterações de senha",
+      "volunteerOperations": "Escalas e operação voluntária",
+      "criticalActions": "Ações críticas"
+    },
+    "schedulers": {
+      "title": "Schedulers",
+      "empty": "Nenhum scheduler monitorado no momento.",
+      "table": {
+        "scheduler": "Scheduler",
+        "status": "Status",
+        "start": "Início",
+        "end": "Fim",
+        "duration": "Duração",
+        "details": "Detalhes"
+      }
+    }
+  },
+  "accessProfiles": {
+    "title": "Perfis de Acesso",
+    "subtitle": "Gerencie permissões por seção",
+    "new": "Novo Perfil",
+    "listTitle": "Lista de Perfis",
+    "loading": "Carregando perfis de acesso...",
+    "errorLoad": "Erro ao carregar perfis de acesso",
+    "emptyMessage": "Nenhum perfil encontrado.",
+    "deleteTitle": "Excluir Perfil",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteSuccess": "Perfil excluído com sucesso",
+    "deleteError": "Erro ao excluir perfil",
+    "editTitle": "Editar Perfil",
+    "newTitle": "Novo Perfil",
+    "editSubtitle": "Atualize as permissões do perfil",
+    "newSubtitle": "Cadastre um novo perfil de acesso",
+    "cardTitle": "Dados do Perfil",
+    "cardPermissions": "Permissões por Seção",
+    "permissions": "Permissões",
+    "permissionView": "Ver",
+    "permissionEdit": "Editar/Inserir",
+    "permissionDelete": "Excluir",
+    "nameRequired": "Nome é obrigatório",
+    "saveSuccessEdit": "Perfil atualizado com sucesso",
+    "saveSuccessCreate": "Perfil criado com sucesso",
+    "saveError": "Erro ao salvar perfil",
+    "loadingForm": "Carregando perfil...",
+    "filters": "Filtros",
+    "searchByName": "Buscar por nome",
+    "placeholderName": "Digite o nome do perfil",
+    "name": "Nome",
+    "description": "Descrição",
+    "actions": "Ações",
+    "resources": {
+      "dashboard": "Dashboard",
+      "usuarios": "Usuários",
+      "perfis-acesso": "Perfis de Acesso",
+      "auditoria": "Logs",
+      "pessoas": "Pessoas",
+      "perfis": "Perfis",
+      "visitantes": "Visitantes",
+      "configuracoes-mensagens": "Configurações de Mensagens",
+      "mensagens-agendadas": "Mensagens Agendadas",
+      "comunicacao": "Comunicação",
+      "equipes": "Equipes",
+      "cargos": "Cargos",
+      "voluntarios": "Voluntários",
+      "eventos": "Eventos",
+      "inscricoes-eventos": "Inscrições em Eventos",
+      "portal": "Portal",
+      "noticias": "Notícias",
+      "categorias-noticias": "Categorias de Notícias",
+      "contatos": "Contatos",
+      "destaques-site": "Destaques do Site",
+      "categorias-midias": "Categorias de Mídia",
+      "galerias-fotos": "Galerias de Fotos",
+      "enquetes": "Enquetes",
+      "kids": "Kids",
+      "hub": "Hub",
+      "financeiro": "Financeiro",
+      "fornecedores": "Fornecedores"
+    }
+  },
+  "birthdays": {
+    "title": "Aniversariantes",
+    "subtitle": "Próximos aniversários das pessoas cadastradas",
+    "filter": "Filtro",
+    "days": "Dias",
+    "daysPlaceholder": "Ex: 30",
+    "daysHint": "Com mês selecionado, o filtro de dias é ignorado.",
+    "month": "Mês do ano",
+    "allMonths": "Todos (próximos dias)",
+    "months": {
+      "1": "Janeiro",
+      "2": "Fevereiro",
+      "3": "Março",
+      "4": "Abril",
+      "5": "Maio",
+      "6": "Junho",
+      "7": "Julho",
+      "8": "Agosto",
+      "9": "Setembro",
+      "10": "Outubro",
+      "11": "Novembro",
+      "12": "Dezembro"
+    },
+    "update": "Atualizar",
+    "listTitle": "Lista de Aniversariantes",
+    "emptyMessage": "Nenhum aniversariante encontrado.",
+    "loading": "Carregando aniversariantes...",
+    "errorLoad": "Erro ao carregar aniversariantes",
+    "table": {
+      "name": "Nome",
+      "birthDate": "Data de Nascimento",
+      "nextBirthday": "Próximo Aniversário",
+      "days": "Dias"
+    }
+  },
+  "photoGalleries": {
+    "title": "Galerias de Fotos",
+    "subtitle": "Gerencie as galerias de fotos da igreja",
+    "new": "Nova Galeria",
+    "filters": "Filtros",
+    "search": "Buscar",
+    "searchPlaceholder": "Nome ou descrição",
+    "event": "Evento",
+    "category": "Categoria",
+    "status": "Status",
+    "allEvents": "Todos os eventos",
+    "allCategories": "Todas as categorias",
+    "allStatus": "Todos os status",
+    "active": "Ativo",
+    "inactive": "Inativo",
+    "emptyMessage": "Nenhuma galeria encontrada.",
+    "deleteTitle": "Excluir Galeria",
+    "deleteDescription": "Esta ação irá deletar a galeria \"{{name}}\" e TODAS as fotos associadas. Esta ação não pode ser desfeita. Tem certeza que deseja continuar?",
+    "deleteSuccess": "Galeria excluída com sucesso",
+    "deleteError": "Erro ao excluir galeria",
+    "viewPhotos": "Ver Fotos",
+    "noDescription": "Sem descrição",
+    "eventLabel": "Evento",
+    "categoryLabel": "Categoria",
+    "photosCount": "{{count}} foto(s)",
+    "loading": "Carregando galerias...",
+    "errorLoad": "Erro ao carregar galerias de fotos",
+    "editTitle": "Editar Galeria",
+    "newTitle": "Nova Galeria",
+    "editSubtitle": "Atualize as informações da galeria",
+    "newSubtitle": "Cadastre uma nova galeria de fotos",
+    "cardTitle": "Cadastrar Galeria",
+    "nameRequired": "Nome é obrigatório",
+    "name": "Nome",
+    "description": "Descrição",
+    "date": "Data",
+    "eventOptional": "Evento",
+    "categoryOptional": "Categoria",
+    "none": "Nenhum",
+    "noneCategory": "Nenhuma",
+    "activeLabel": "Galeria ativa",
+    "saveAndAddPhotos": "Salvar e Adicionar Fotos",
+    "saveSuccess": "Galeria salva com sucesso",
+    "createSuccess": "Galeria criada com sucesso",
+    "saveError": "Erro ao salvar galeria",
+    "loadingForm": "Carregando galeria...",
+    "errorLoadData": "Erro ao carregar dados",
+    "back": "Voltar",
+    "galleryInfo": "Informações da Galeria",
+    "quantityPhotos": "Quantidade de Fotos",
+    "uploadTitle": "Upload de Fotos",
+    "dragHint": "Arraste fotos aqui ou clique para selecionar",
+    "formatsHint": "Formatos: JPG, PNG, GIF, WEBP | Máximo: 10MB por arquivo",
+    "selectFiles": "Selecionar Arquivos",
+    "selectedCount": "Fotos selecionadas: {{count}}",
+    "sendPhotos": "Enviar {{count}} Foto(s)",
+    "sending": "Enviando...",
+    "selectAtLeastOne": "Selecione pelo menos uma foto",
+    "uploadSuccess": "{{count}} foto(s) enviada(s) com sucesso!",
+    "uploadError": "Erro ao fazer upload das fotos",
+    "formatNotSupported": "Formato não suportado. Use JPG, PNG, GIF ou WEBP.",
+    "fileTooBig": "Arquivo muito grande. Máximo: 10MB.",
+    "photosOfGallery": "Fotos da Galeria ({{count}})",
+    "featured": "Destaque",
+    "setAsFeatured": "Definir como Destaque",
+    "featuredSetSuccess": "Imagem de destaque definida com sucesso!",
+    "featuredSetError": "Erro ao definir imagem de destaque",
+    "viewPhoto": "Visualizar Foto",
+    "noPhotosUpload": "Nenhuma foto encontrada. Faça upload de fotos acima.",
+    "featuredImage": "Imagem de Destaque",
+    "imageNotFound": "Imagem não encontrada",
+    "loadingGallery": "Carregando galeria...",
+    "galleryNotFound": "Galeria não encontrada",
+    "invalidGalleryId": "ID da galeria não informado"
+  },
+  "mediaCategories": {
+    "title": "Categorias de Mídia",
+    "subtitle": "Gerencie as categorias para organizar as galerias",
+    "new": "Nova Categoria",
+    "filtersTitle": "Filtros",
+    "searchLabel": "Buscar",
+    "searchPlaceholder": "Nome ou descrição",
+    "listTitle": "Lista de Categorias de Mídia",
+    "loading": "Carregando categorias de mídia...",
+    "errorLoad": "Erro ao carregar categorias de mídia",
+    "emptyTitle": "Nenhuma categoria encontrada.",
+    "emptyDescription": "Ajuste a busca ou crie uma nova categoria de mídia.",
+    "deleteTitle": "Excluir categoria de mídia?",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"?",
+    "deleteFallbackName": "esta categoria",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Categoria excluída com sucesso",
+    "deleteErrorInUse": "Erro ao excluir. Pode haver galerias usando esta categoria.",
+    "editTitle": "Editar Categoria de Mídia",
+    "newTitle": "Nova Categoria de Mídia",
+    "editSubtitle": "Atualize as informações da categoria",
+    "newSubtitle": "Cadastre uma nova categoria de mídia",
+    "cardTitle": "Cadastrar Categoria de Mídia",
+    "nameRequired": "Nome é obrigatório",
+    "saveSuccessEdit": "Categoria atualizada com sucesso",
+    "saveSuccessCreate": "Categoria criada com sucesso",
+    "saveError": "Erro ao salvar categoria de mídia",
+    "loadingForm": "Carregando categoria...",
+    "table": {
+      "name": "Nome",
+      "description": "Descrição",
+      "createdAt": "Data de Criação",
+      "actions": "Ações"
+    },
+    "fields": {
+      "name": "Nome",
+      "namePlaceholder": "Nome da categoria",
+      "description": "Descrição",
+      "descriptionPlaceholder": "Descrição da categoria"
+    }
+  },
+  "communicationTemplates": {
+    "title": "Templates de Comunicação",
+    "subtitle": "Biblioteca inicial de templates reutilizáveis por canal.",
+    "loading": "Carregando templates...",
+    "errorLoad": "Erro ao carregar templates",
+    "emptyTitle": "Nenhum template cadastrado",
+    "emptyDescription": "Comece criando o primeiro template do módulo de comunicação.",
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "push": "Push",
+      "internalNotification": "Notificação interna",
+      "fallback": "Canal {{canal}}"
+    },
+    "actions": {
+      "campaigns": "Campanhas",
+      "new": "Novo Template",
+      "createFirst": "Criar template"
+    }
+  },
+  "communicationSegmentsManagement": {
+    "title": "Segmentos de Comunicação",
+    "subtitle": "Salve públicos prioritários e entenda a audiência prevista antes do disparo.",
+    "loading": "Carregando segmentos...",
+    "errorLoad": "Erro ao carregar segmentos",
+    "emptyTitle": "Nenhum segmento cadastrado",
+    "emptyDescription": "Crie segmentos básicos para reutilizar públicos prioritários do módulo.",
+    "badges": {
+      "default": "Padrão",
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "stats": {
+      "total": "Total",
+      "whatsApp": "WhatsApp",
+      "email": "E-mail",
+      "contextual": "Contextual"
+    },
+    "actions": {
+      "campaigns": "Campanhas",
+      "new": "Novo Segmento",
+      "createFirst": "Criar segmento"
+    },
+    "form": {
+      "loading": "Carregando segmento...",
+      "errorLoad": "Erro ao carregar segmento",
+      "errorSave": "Erro ao salvar segmento",
+      "createSuccess": "Segmento criado com sucesso.",
+      "updateSuccess": "Segmento atualizado com sucesso.",
+      "editTitle": "Editar Segmento",
+      "newTitle": "Novo Segmento",
+      "subtitle": "Salve públicos prioritários para reutilizar em campanhas e automações.",
+      "cardTitle": "Dados do segmento",
+      "validation": {
+        "requiredFields": "Preencha nome e público alvo do segmento."
+      },
+      "fields": {
+        "name": "Nome",
+        "namePlaceholder": "Ex: Responsáveis de primeira visita",
+        "description": "Descrição",
+        "descriptionPlaceholder": "Resumo rápido do uso desse segmento",
+        "targetAudience": "Público alvo",
+        "active": "Segmento ativo"
+      },
+      "audiences": {
+        "visitors": "Visitantes",
+        "members": "Membros",
+        "volunteers": "Voluntários",
+        "kidsGuardians": "Responsáveis do Kids",
+        "people": "Pessoas"
+      }
+    }
+  },
+  "communicationCampaignForm": {
+    "title": "Nova Campanha",
+    "subtitle": "Primeiro fluxo operacional do módulo de comunicação.",
+    "cardTitle": "Dados da campanha",
+    "validation": {
+      "requiredFields": "Preencha nome, objetivo, público alvo e selecione pelo menos um canal."
+    },
+    "createSuccess": "Campanha criada com sucesso.",
+    "createError": "Erro ao criar campanha",
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "push": "Push",
+      "internalNotification": "Notificação interna",
+      "internalNotificationShort": "Notif. interna",
+      "fallback": "Canal {{canal}}"
+    },
+    "fields": {
+      "name": "Nome",
+      "objective": "Objetivo",
+      "objectivePlaceholder": "Ex: boas-vindas, comunicado, lembrete",
+      "savedSegment": "Segmento salvo",
+      "noSavedSegment": "Sem segmento salvo",
+      "targetAudience": "Público alvo",
+      "targetAudiencePlaceholder": "Ex: visitantes, membros, voluntários, responsáveis-kids",
+      "scheduling": "Agendamento opcional",
+      "channels": "Canais",
+      "templateByChannel": "Template por canal",
+      "noTemplate": "Sem template",
+      "operationalNote": "Observação operacional"
+    },
+    "audienceEstimate": {
+      "title": "Estimativa de audiência",
+      "total": "Total"
+    },
+    "diagnostics": {
+      "title": "Diagnóstico dos canais",
+      "noAudience": "Sem audiência válida",
+      "configurationOk": "Configuração OK",
+      "configurationPending": "Configuração pendente",
+      "noDetailedDiagnosis": "Sem diagnóstico detalhado. O canal será validado durante o processamento.",
+      "estimatedAudience": "Audiência estimada para este canal: {{count}}"
+    },
+    "preview": {
+      "title": "Preview por canal",
+      "description": "A visualização abaixo usa dados de exemplo para mostrar como o conteúdo será renderizado por canal.",
+      "noTemplateFallback": "Sem template, usando fallback da campanha",
+      "withTemplate": "Com template",
+      "fallback": "Fallback",
+      "subject": "Assunto",
+      "titleLabel": "Título",
+      "message": "Mensagem",
+      "html": "HTML"
+    },
+    "actions": {
+      "create": "Criar campanha"
+    }
+  },
+  "communicationTemplateForm": {
+    "editTitle": "Editar Template",
+    "newTitle": "Novo Template",
+    "subtitle": "Base reutilizável para campanhas e automações.",
+    "cardTitle": "Dados do template",
+    "loading": "Carregando template...",
+    "errorLoad": "Erro ao carregar template",
+    "saveSuccessEdit": "Template atualizado com sucesso.",
+    "saveSuccessCreate": "Template criado com sucesso.",
+    "saveError": "Erro ao salvar template",
+    "validation": {
+      "requiredFields": "Preencha nome, objetivo e corpo do template.",
+      "subjectRequired": "Para este canal, informe o assunto ou título do template."
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "push": "Push",
+      "internalNotification": "Notificação interna",
+      "fallback": "Canal"
+    },
+    "status": {
+      "draft": "Rascunho",
+      "active": "Ativo",
+      "archived": "Arquivado"
+    },
+    "fields": {
+      "name": "Nome",
+      "objective": "Objetivo",
+      "channel": "Canal",
+      "status": "Status",
+      "subject": "Assunto",
+      "titleLabel": "Título",
+      "requiredForChannel": "Obrigatório para este canal",
+      "optionalForChannel": "Opcional para este canal",
+      "textBody": "Corpo texto",
+      "message": "Mensagem",
+      "htmlBodyOptional": "Corpo HTML opcional",
+      "htmlBody": "Corpo HTML",
+      "htmlHelpEmail": "Use HTML quando quiser uma versão mais rica do e-mail.",
+      "htmlHelpContextual": "Para canais contextuais, o HTML normalmente não será usado no primeiro momento.",
+      "htmlHelpWhatsapp": "Para WhatsApp, normalmente só o corpo texto será usado.",
+      "allowedVariables": "Variáveis permitidas"
+    },
+    "preview": {
+      "title": "Preview do template",
+      "description": "A pré-visualização usa valores de exemplo para facilitar a revisão do conteúdo antes do uso em campanha.",
+      "noContent": "Sem conteúdo para pré-visualizar."
+    }
+  },
+  "communicationCampaigns": {
+    "title": "Campanhas de Comunicação",
+    "subtitle": "Gerencie campanhas omnichannel e acompanhe o status do núcleo de entregas.",
+    "loading": "Carregando campanhas de comunicação...",
+    "errorLoad": "Erro ao carregar campanhas de comunicação",
+    "emptyTitle": "Nenhuma campanha cadastrada",
+    "emptyDescription": "Comece criando a primeira campanha do módulo de comunicação.",
+    "status": {
+      "draft": "Rascunho",
+      "scheduled": "Agendada",
+      "processing": "Processando",
+      "completed": "Concluída",
+      "withFailures": "Com falhas",
+      "canceled": "Cancelada",
+      "fallback": "Status {{status}}"
+    },
+    "stats": {
+      "total": "Total",
+      "drafts": "Rascunhos",
+      "pending": "Pendentes",
+      "failures": "Falhas"
+    },
+    "cards": {
+      "deliveries": "Entregas",
+      "scheduling": "Agendamento",
+      "failures": "Falhas",
+      "immediateDraft": "Imediato / rascunho"
+    },
+    "actions": {
+      "templates": "Templates",
+      "new": "Nova Campanha",
+      "createFirst": "Criar campanha",
+      "openDetails": "Abrir detalhes"
+    }
+  },
+  "communicationCampaignDetails": {
+    "loading": "Carregando detalhes da campanha...",
+    "errorLoad": "Erro ao carregar detalhes da campanha",
+    "notFound": "Campanha não encontrada.",
+    "processPendingSuccess": "{{count}} entregas processadas.",
+    "processPendingError": "Erro ao processar pendências",
+    "reprocessSuccess": "Entrega reprocessada.",
+    "reprocessError": "Erro ao reprocessar entrega",
+    "status": {
+      "draft": "Rascunho",
+      "scheduled": "Agendada",
+      "processing": "Processando",
+      "completed": "Concluída",
+      "withFailures": "Com falhas",
+      "canceled": "Cancelada",
+      "fallback": "Status {{status}}"
+    },
+    "deliveryStatus": {
+      "pending": "Pendente",
+      "reserved": "Reservado",
+      "sent": "Enviado",
+      "delivered": "Entregue",
+      "failed": "Falhou",
+      "canceled": "Cancelado",
+      "ignored": "Ignorado",
+      "fallback": "Status {{status}}"
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "push": "Push",
+      "internalNotification": "Notificação interna",
+      "fallback": "Canal {{canal}}"
+    },
+    "actions": {
+      "preferences": "Preferências",
+      "processing": "Processando...",
+      "processPending": "Processar pendências",
+      "reprocess": "Reprocessar"
+    },
+    "cards": {
+      "status": "Status",
+      "deliveries": "Entregas",
+      "failures": "Falhas",
+      "scheduling": "Agendamento",
+      "immediateDraft": "Imediato / rascunho"
+    },
+    "channelsCard": {
+      "title": "Canais",
+      "noLinkedTemplate": "Sem template vinculado",
+      "noDetailedDiagnosis": "Sem diagnóstico detalhado para este canal.",
+      "summary": "{{success}} com sucesso • {{failures}} falhas",
+      "priority": "Prioridade {{priority}}",
+      "deliveries": "{{count}} entregas",
+      "configurationPending": "Configuração pendente"
+    },
+    "recentFailures": {
+      "title": "Falhas recentes por canal",
+      "noDetailedMessage": "Falha sem mensagem detalhada."
+    },
+    "filters": {
+      "all": "Todos",
+      "failures": "Falhas",
+      "pending": "Pendentes",
+      "sent": "Enviadas",
+      "ignored": "Ignoradas",
+      "allChannels": "Todos os canais"
+    },
+    "summary": {
+      "success": "{{count}} com sucesso",
+      "failures": "{{count}} falhas",
+      "ignored": "{{count}} ignoradas por regra"
+    },
+    "deliveriesTable": {
+      "title": "Entregas",
+      "channel": "Canal",
+      "destination": "Destino",
+      "status": "Status",
+      "attempts": "Tentativas",
+      "error": "Erro",
+      "empty": "Nenhuma entrega encontrada para o filtro atual."
+    }
+  },
+  "communicationPreferences": {
+    "title": "Preferências de Comunicação",
+    "subtitle": "Controle opt-out por canal e acompanhe a trilha mínima das automações.",
+    "actions": {
+      "campaigns": "Campanhas"
+    },
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "push": "Push",
+      "internalNotification": "Notificação interna"
+    },
+    "triggers": {
+      "newVisitor": "Novo visitante",
+      "birthday": "Aniversário",
+      "operationalReminder": "Lembrete operacional",
+      "kidsContextual": "Kids contextual"
+    },
+    "search": {
+      "person": "Buscar pessoa",
+      "placeholder": "Nome, e-mail, telefone ou WhatsApp",
+      "personId": "Pessoa ID",
+      "personIdPlaceholder": "Ex.: 101",
+      "action": "Buscar pessoa",
+      "searching": "Buscando...",
+      "minChars": "Digite pelo menos 2 caracteres para buscar a pessoa.",
+      "error": "Erro ao buscar pessoas",
+      "noPrimaryContact": "Sem contato principal",
+      "idBadge": "ID {{id}}",
+      "selectedPerson": "Pessoa selecionada",
+      "personIdBadge": "Pessoa ID {{id}}"
+    },
+    "preferences": {
+      "title": "Preferências por Pessoa",
+      "loadAction": "Carregar preferências",
+      "loading": "Carregando...",
+      "selectPersonFirst": "Selecione uma pessoa para consultar as preferências.",
+      "selectPersonBeforeSave": "Selecione uma pessoa antes de salvar.",
+      "loadError": "Erro ao carregar preferências",
+      "saveSuccess": "Preferência atualizada.",
+      "saveError": "Erro ao atualizar preferência",
+      "empty": "Busque e selecione uma pessoa para consultar e atualizar as preferências por canal. O `Pessoa ID` continua disponível como fallback operacional.",
+      "status": {
+        "allowed": "Permitido",
+        "blocked": "Bloqueado"
+      },
+      "fields": {
+        "status": "Status",
+        "consentOrigin": "Origem do consentimento",
+        "consentOriginPlaceholder": "Ex.: portal, atendimento, importacao"
+      }
+    },
+    "history": {
+      "title": "Histórico de Automação",
+      "all": "Todos",
+      "loadAction": "Consultar",
+      "loading": "Consultando...",
+      "loadError": "Erro ao carregar histórico",
+      "empty": "Nenhum evento encontrado para o filtro atual.",
+      "fields": {
+        "trigger": "Gatilho",
+        "eventKey": "Chave do evento",
+        "eventKeyPlaceholder": "Ex.: escala:1:24h"
+      },
+      "table": {
+        "trigger": "Gatilho",
+        "key": "Chave",
+        "executedAt": "Executado em",
+        "payload": "Payload"
+      }
+    }
+  },
+  "suppliers": {
+    "title": "Fornecedores",
+    "subtitle": "Gerencie fornecedores e contatos responsáveis",
+    "new": "Novo Fornecedor",
+    "listTitle": "Lista de Fornecedores",
+    "loading": "Carregando fornecedores...",
+    "errorLoad": "Erro ao carregar fornecedores",
+    "emptyMessage": "Nenhum fornecedor encontrado.",
+    "deleteTitle": "Excluir Fornecedor",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteSuccess": "Fornecedor excluído com sucesso",
+    "deleteError": "Erro ao excluir fornecedor",
+    "filters": "Filtros",
+    "searchByName": "Buscar por nome",
+    "placeholderName": "Digite o nome do fornecedor",
+    "name": "Nome",
+    "cnpjCpf": "CNPJ/CPF",
+    "phone": "Telefone",
+    "contact": "Contato",
+    "actions": "Ações",
+    "editTitle": "Editar Fornecedor",
+    "newTitle": "Novo Fornecedor",
+    "editSubtitle": "Atualize as informações do fornecedor",
+    "newSubtitle": "Cadastre um novo fornecedor",
+    "companyData": "Dados da Empresa",
+    "contactData": "Dados do Contato Responsável",
+    "nameRequired": "Nome é obrigatório",
+    "invalidEmail": "E-mail do responsável inválido",
+    "razaoSocial": "Razão Social",
+    "inscricaoEstadual": "Inscrição Estadual",
+    "address": "Endereço",
+    "site": "Site",
+    "contactName": "Nome",
+    "cpf": "CPF",
+    "whatsapp": "WhatsApp",
+    "email": "E-mail",
+    "saveSuccessEdit": "Fornecedor atualizado com sucesso",
+    "saveSuccessCreate": "Fornecedor criado com sucesso",
+    "saveError": "Erro ao salvar fornecedor",
+    "loadingForm": "Carregando fornecedor..."
+  },
+  "kids": {
+    "title": "Check-ins Kids",
+    "subtitle": "Histórico de check-ins e check-outs das crianças",
+    "loading": "Carregando...",
+    "errorLoad": "Erro ao carregar dados",
+    "toastError": "Erro ao carregar check-ins",
+    "totalCheckins": "Total de Check-ins",
+    "recordsInSystem": "Registros no sistema",
+    "activeCheckins": "Check-ins Ativos",
+    "childrenOnSite": "Crianças no local",
+    "checkoutsDone": "Check-outs Realizados",
+    "sessionsFinished": "Sessões finalizadas",
+    "checkinsToday": "Check-ins Hoje",
+    "todayRecords": "Registros de hoje",
+    "filters": "Filtros",
+    "search": "Buscar",
+    "searchPlaceholder": "Nome da criança...",
+    "child": "Criança",
+    "allChildren": "Todas as crianças",
+    "status": "Status",
+    "allStatus": "Todos os status",
+    "active": "Ativo",
+    "finished": "Finalizado",
+    "dateStart": "Data Início",
+    "dateEnd": "Data Fim",
+    "clearFilters": "Limpar Filtros",
+    "historyTitle": "Histórico de Check-ins",
+    "emptyMessage": "Nenhum check-in encontrado com os filtros aplicados.",
+    "table": {
+      "child": "Criança",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "duration": "Duração",
+      "method": "Método",
+      "status": "Status",
+      "checkinBy": "Check-in por",
+      "checkoutBy": "Check-out por",
+      "notes": "Observações"
+    },
+    "unknown": "Desconhecido",
+    "common": {
+      "name": "Nome",
+      "description": "Descrição",
+      "notes": "Observações",
+      "room": "Sala",
+      "class": "Turma",
+      "identifier": "Identificador",
+      "selectRoom": "Selecione a sala",
+      "selectClass": "Selecione a turma"
+    },
+    "sections": {
+      "overview": {
+        "title": "Painel Kids",
+        "subtitle": "Operação do culto em tempo real com presentes, pendências e alertas críticos."
+      },
+      "painel": {
+        "title": "Painel operacional",
+        "subtitle": "Visão ao vivo do culto com presença, retirada, alertas e ocorrências."
+      },
+      "criancas": {
+        "title": "Crianças",
+        "subtitle": "Cadastro e acompanhamento da base de crianças e responsáveis do módulo."
+      },
+      "estrutura": {
+        "title": "Estrutura",
+        "subtitle": "Organize salas e turmas para sustentar capacidade e operação do Kids."
+      },
+      "historico": {
+        "title": "Histórico e ocorrências",
+        "subtitle": "Consulte check-ins, retiradas e situações registradas pela equipe."
+      },
+      "conteudos": {
+        "title": "Conteúdos da aula",
+        "subtitle": "Publique resumos, atividades e materiais para os responsáveis no AppKids."
+      }
+    },
+    "panel": {
+      "attention": "Atenção",
+      "exception": "Exceção",
+      "activeToken": "Token ativo",
+      "unavailableToken": "Token indisponível",
+      "presentNow": "Presentes agora",
+      "presentNowHint": "Crianças atualmente em check-in",
+      "pendingPickup": "Pendentes de retirada",
+      "pendingPickupHint": "Crianças ainda aguardando saída",
+      "completedToday": "Retiradas hoje",
+      "completedTodayHint": "Saídas concluídas no dia",
+      "indicators30Days": "Indicadores de 30 dias",
+      "checkinsInPeriod": "Check-ins no período",
+      "dailyAverage": "Média por dia",
+      "pickupMethods": "Métodos de retirada",
+      "registeredBase": "Base cadastrada",
+      "activeChildren": "Crianças ativas",
+      "activeGuardians": "Responsáveis ativos",
+      "roomsClasses": "Salas / turmas",
+      "presentList": "Presentes agora",
+      "noChildrenPresent": "Nenhuma criança presente neste momento.",
+      "byRoom": "Distribuição por sala",
+      "roomSummary": "{{presentes}} presentes • {{pendentes}} pendentes",
+      "alertCount": "{{count}} alertas",
+      "noRooms": "Nenhuma sala com presença no momento.",
+      "criticalList": "Alertas críticos",
+      "noCriticalAlerts": "Nenhum alerta crítico entre as crianças presentes.",
+      "selectRoom": "Filtrar por sala",
+      "allRooms": "Todas as salas",
+      "refresh": "Atualizar painel",
+      "currentTab": "Painel atual",
+      "historyTab": "Histórico",
+      "allergy": "Alergia",
+      "restriction": "Restrição",
+      "criticalNote": "Observação crítica"
+    },
+    "occurrence": {
+      "register": "Registrar ocorrência",
+      "dialogDescription": "Registre fatos relevantes do culto para manter a operação segura e rastreável.",
+      "selectChild": "Selecione a criança",
+      "type": "Tipo",
+      "selectType": "Selecione o tipo",
+      "title": "Título",
+      "titlePlaceholder": "Resumo curto da ocorrência",
+      "descriptionPlaceholder": "Descreva o que aconteceu, ações tomadas e contexto relevante.",
+      "requiresGuardianContact": "Requer contato com responsável",
+      "requiresGuardianContactHint": "Marque quando a equipe precisar avisar o responsável ainda durante o culto.",
+      "visibleToGuardian": "Visível ao responsável",
+      "visibleToGuardianHint": "Use apenas quando a informação fizer sentido no histórico do responsável.",
+      "validationRequired": "Preencha criança, título e descrição para registrar a ocorrência.",
+      "createSuccess": "Ocorrência registrada com sucesso.",
+      "createError": "Não foi possível registrar a ocorrência.",
+      "updateSuccess": "Ocorrência atualizada.",
+      "updateError": "Não foi possível atualizar a ocorrência.",
+      "openTitle": "Ocorrências abertas",
+      "openDescription": "Situações em acompanhamento pela equipe",
+      "historySubtitle": "Acompanhe registros ativos e abra o histórico da criança quando precisar aprofundar.",
+      "noneOpen": "Nenhuma ocorrência aberta neste momento.",
+      "types": {
+        "FEBRE": "Febre",
+        "QUEDA": "Queda",
+        "CHORO": "Choro persistente",
+        "TROCA_SALA": "Troca de sala",
+        "MEDICACAO": "Medicação",
+        "COMPORTAMENTO": "Comportamento",
+        "OUTRO": "Outro"
+      },
+      "status": {
+        "open": "Aberta",
+        "inProgress": "Em andamento",
+        "closed": "Encerrada",
+        "noStatus": "Sem status"
+      }
+    },
+    "children": {
+      "new": "Nova criança",
+      "create": "Cadastrar criança",
+      "createSuccess": "Criança cadastrada com sucesso.",
+      "createError": "Não foi possível cadastrar a criança.",
+      "validationRequired": "Preencha nome, data de nascimento e sala da criança.",
+      "dialogDescription": "Cadastre a criança já usando a estrutura formal de sala e turma do Kids.",
+      "namePlaceholder": "Nome da criança",
+      "birthDate": "Data de nascimento",
+      "allergies": "Alergias",
+      "foodRestrictions": "Restrições alimentares",
+      "registeredTitle": "Crianças cadastradas",
+      "registeredDescription": "Base ativa disponível para operação",
+      "checkedInNowTitle": "Em check-in agora",
+      "checkedInNowDescription": "Crianças com presença ativa neste momento",
+      "withCriticalAlertTitle": "Com alerta crítico",
+      "withCriticalAlertDescription": "Crianças com dados sensíveis para atenção da equipe",
+      "baseTitle": "Base de crianças",
+      "baseSubtitle": "Cadastro administrativo com sala, turma, responsáveis e alertas de cuidado.",
+      "checkedIn": "Em check-in",
+      "outOfRoom": "Fora da sala",
+      "noteBadge": "Observação",
+      "noRoom": "Sem sala",
+      "noClass": "Sem turma",
+      "roomLabel": "Sala: {{value}}",
+      "classLabel": "Turma: {{value}}",
+      "guardiansLabel": "Responsáveis: {{count}}",
+      "empty": "Nenhuma criança cadastrada no módulo Kids."
+    },
+    "structure": {
+      "newRoom": "Nova sala",
+      "createRoom": "Cadastrar sala",
+      "roomCreateSuccess": "Sala cadastrada com sucesso.",
+      "roomCreateError": "Não foi possível cadastrar a sala.",
+      "roomValidation": "Preencha identificador e nome da sala.",
+      "roomDialogDescription": "Cadastre uma sala formal para organizar capacidade e distribuição do Kids.",
+      "roomIdentifierPlaceholder": "Ex.: SALA_BERCARIO",
+      "roomNamePlaceholder": "Ex.: Berçário",
+      "newClass": "Nova turma",
+      "createClass": "Cadastrar turma",
+      "classCreateSuccess": "Turma cadastrada com sucesso.",
+      "classCreateError": "Não foi possível cadastrar a turma.",
+      "classValidation": "Preencha identificador, sala e nome da turma.",
+      "classDialogDescription": "Vincule a turma a uma sala para preparar capacidade e organização por culto.",
+      "classIdentifierPlaceholder": "Ex.: MATERNAL_A",
+      "classNamePlaceholder": "Ex.: Maternal A",
+      "maxCapacity": "Capacidade máxima",
+      "capacityPlaceholder": {
+        "room": "Ex.: 12",
+        "class": "Ex.: 8"
+      },
+      "roomActive": "Sala ativa",
+      "roomActiveHint": "Salas inativas não entram no fluxo operacional padrão.",
+      "classActive": "Turma ativa",
+      "classActiveHint": "Turmas inativas ficam fora da estrutura principal.",
+      "activeRoomsTitle": "Salas ativas",
+      "activeRoomsDescription": "Salas disponíveis para operação",
+      "activeClassesTitle": "Turmas ativas",
+      "activeClassesDescription": "Turmas vinculadas à estrutura formal",
+      "capacityMonitoredTitle": "Capacidade monitorada",
+      "capacityMonitoredDescription": "Salas com limite configurado",
+      "currentTitle": "Estrutura atual",
+      "currentSubtitle": "Cadastre salas e turmas formais para organizar capacidade, distribuição e segurança.",
+      "capacityLabel": "Capacidade {{value}}",
+      "shortCapacity": "Cap. {{value}}",
+      "notDefined": "não definida",
+      "active": "Ativa",
+      "inactive": "Inativa",
+      "noClassesForRoom": "Nenhuma turma cadastrada para esta sala.",
+      "empty": "Nenhuma sala cadastrada na estrutura do Kids."
+    },
+    "history": {
+      "view": "Ver histórico",
+      "occurrenceHistory": "Histórico de ocorrências",
+      "dialogDescription": "Acompanhe o que foi registrado, se houve contato com responsável e o encerramento de cada item.",
+      "loadingOccurrences": "Carregando ocorrências...",
+      "loadError": "Não foi possível carregar o histórico de ocorrências.",
+      "recordedBy": "Registrado por {{name}}",
+      "roomLabel": "Sala {{room}}",
+      "markContact": "Marcar contato",
+      "close": "Encerrar",
+      "contactDoneOn": "Contato com responsável realizado em {{date}}",
+      "contactPending": "Contato com responsável ainda pendente.",
+      "contactNotRequired": "Esta ocorrência não exige contato com responsável.",
+      "closedOn": "Encerrada em {{date}}",
+      "by": "por {{name}}",
+      "noOccurrencesForChild": "Nenhuma ocorrência registrada para esta criança."
+    }
+  },
+  "profile": {
+    "title": "Meu Perfil",
+    "subtitle": "Gerencie suas informações pessoais",
+    "loading": "Carregando perfil...",
+    "errorLoad": "Erro ao carregar dados do perfil",
+    "userNotFound": "Usuário não encontrado",
+    "preferences": "Preferências",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "verboTheme": "Verbo+",
+    "themeLightDescription": "Visual atual claro, neutro e limpo.",
+    "themeDarkDescription": "Visual escuro atual para ambientes com pouca luz.",
+    "themeVerboDescription": "Paleta da marca Verbo+ com roxo, azul e ciano.",
+    "themeHint": "O tema escolhido fica salvo neste navegador. O ícone no topo alterna rapidamente entre claro e escuro.",
+    "avatarTitle": "Foto de perfil",
+    "avatarSubtitle": "Personalize sua foto",
+    "avatarHint": "A imagem aparece redonda no topo e no menu do usuário.",
+    "avatarChoose": "Escolher foto",
+    "avatarRemove": "Remover foto",
+    "avatarEditorTitle": "Ajustar foto de perfil",
+    "avatarEditorDescription": "Arraste a imagem dentro do círculo e ajuste o zoom até enquadrar do seu jeito.",
+    "avatarZoom": "Zoom",
+    "avatarDragHint": "Arraste a foto para posicionar o rosto dentro do círculo.",
+    "avatarSave": "Salvar foto",
+    "avatarSaved": "Foto de perfil salva com sucesso!",
+    "avatarRemoved": "Foto de perfil removida.",
+    "avatarInvalidFile": "Selecione um arquivo de imagem.",
+    "avatarLoadError": "Não foi possível carregar esta imagem.",
+    "personalData": "Dados Pessoais",
+    "name": "Nome",
+    "email": "Email",
+    "userType": "Tipo de Usuário",
+    "createdAt": "Data de Criação",
+    "lastAccess": "Último Acesso",
+    "changePassword": "Alterar Senha",
+    "currentPassword": "Senha Atual *",
+    "currentPasswordPlaceholder": "Digite sua senha atual",
+    "newPassword": "Nova Senha *",
+    "newPasswordPlaceholder": "Mínimo 6 caracteres",
+    "confirmPassword": "Confirmar Nova Senha *",
+    "confirmPasswordPlaceholder": "Confirme a nova senha",
+    "changePasswordButton": "Alterar Senha",
+    "changing": "Alterando...",
+    "fillAllFields": "Preencha todos os campos",
+    "minPasswordLength": "A nova senha deve ter no mínimo 6 caracteres",
+    "passwordsDontMatch": "As senhas não coincidem",
+    "passwordChangeSuccess": "Senha alterada com sucesso!",
+    "passwordChangeError": "Erro ao alterar senha",
+    "userTypeAdmin": "Administrador",
+    "userTypePortal": "Portal",
+    "userTypeBoth": "Ambos"
+  },
+  "login": {
+    "title": "Verbo+",
+    "subtitle": "Faça login para acessar o sistema",
+    "brandHeadline": "Gestão inteligente para igrejas",
+    "brandDescription": "Pessoas, comunicação, decisões e cuidado em uma operação simples e conectada.",
+    "welcomeTitle": "Bem-vindo",
+    "welcomeSubtitle": "Informe suas credenciais para acessar o sistema",
+    "footer": "© 2026 Verbo+ - Todos os direitos reservados.",
+    "featureManagement": "Gestão completa",
+    "featureCommunication": "Comunicação eficiente",
+    "featureDecisions": "Decisões inteligentes",
+    "featureCare": "Cuidado com pessoas",
+    "workspaceLabel": "Gestão ministerial",
+    "badge": "Operação pastoral em um só lugar",
+    "heroTitle": "Uma entrada mais bonita para uma rotina mais organizada.",
+    "heroDescription": "Organize sua igreja. Transforme vidas.",
+    "metricPeopleValue": "360°",
+    "metricPeopleLabel": "visão de pessoas",
+    "metricAgendaValue": "24/7",
+    "metricAgendaLabel": "agenda conectada",
+    "metricSecurityValue": "LGPD",
+    "metricSecurityLabel": "acesso protegido",
+    "panelLabel": "Hoje no painel",
+    "panelTitle": "Acompanhe decisões, atendimentos e próximos passos sem perder o contexto.",
+    "securityTitle": "Pronto para uma operação mais segura",
+    "securityItemOne": "Autenticação centralizada para a equipe administrativa.",
+    "securityItemTwo": "Dados sensíveis tratados com rastreabilidade.",
+    "securityItemThree": "Fluxo preparado para múltiplos perfis e permissões.",
+    "accessLabel": "Acesso restrito",
+    "secureAccess": "Seguro",
+    "email": "Email",
+    "emailPlaceholder": "seu@email.com",
+    "password": "Senha",
+    "passwordPlaceholder": "••••••••",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha",
+    "trustTitle": "Ambiente protegido",
+    "trustDescription": "Use seu email institucional e senha para continuar com segurança.",
+    "submit": "Acessar",
+    "submitting": "Entrando...",
+    "fillAllFields": "Preencha todos os campos",
+    "success": "Login realizado com sucesso!",
+    "invalidCredentials": "Email ou senha inválidos"
+  },
+  "people": {
+    "title": "Pessoas",
+    "subtitle": "Gerencie as pessoas cadastradas no sistema",
+    "listTitle": "Lista de Pessoas",
+    "loading": "Carregando pessoas...",
+    "errorLoad": "Erro ao carregar pessoas",
+    "errorLoadToast": "Erro ao carregar pessoas: {{message}}",
+    "new": "Nova Pessoa",
+    "edit": "Editar Pessoa",
+    "create": "Cadastrar Pessoa",
+    "update": "Atualizar Pessoa",
+    "emptyTitle": "Nenhuma pessoa encontrada",
+    "emptyMessage": "Nenhuma pessoa encontrada com os filtros aplicados.",
+    "emptyPageMessage": "Nenhuma pessoa nesta página.",
+    "emptyCta": "Cadastrar Primeira Pessoa",
+    "deleteTitle": "Excluir Pessoa",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteFallbackName": "esta pessoa",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Pessoa excluída com sucesso",
+    "deleteError": "Erro ao excluir pessoa",
+    "bulkDeleteTitle": "Excluir em lote",
+    "bulkDeleteDescription": "Tem certeza que deseja excluir {{count}} pessoa(s) selecionada(s)? Esta ação não pode ser desfeita.",
+    "bulkDeleteSuccess": "{{count}} pessoa(s) excluída(s) com sucesso",
+    "bulkDeletePartial": "{{ok}} excluída(s), {{fail}} falha(s).",
+    "bulkDeleteError": "Erro ao excluir em lote",
+    "selectedCount": "{{count}} selecionada(s)",
+    "clearSelection": "Limpar seleção",
+    "deleteSelected": "Excluir selecionadas",
+    "selectAll": "Selecionar todas",
+    "selectOne": "Selecionar {{name}}",
+    "boolean": {
+      "yes": "Sim",
+      "no": "Não"
+    },
+    "fields": {
+      "name": "Nome",
+      "email": "Email",
+      "phone": "Telefone",
+      "whatsapp": "WhatsApp"
+    },
+    "filters": {
+      "profile": "Perfil",
+      "personType": "Tipo de Pessoa",
+      "status": "Status",
+      "profileOptions": {
+        "visitor": "Visitante",
+        "member": "Membro",
+        "volunteer": "Voluntário",
+        "leader": "Líder",
+        "admin": "Administrador"
+      }
+    },
+    "search": {
+      "namePlaceholder": "Buscar por nome...",
+      "emailPlaceholder": "Buscar por email...",
+      "phonePlaceholder": "Buscar por telefone...",
+      "whatsappPlaceholder": "Buscar por WhatsApp..."
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "table": {
+      "type": "Tipo",
+      "profiles": "Perfis",
+      "active": "Ativo",
+      "actions": "Ações"
+    },
+    "actions": {
+      "createAccess": "Criar acesso para esta pessoa"
+    },
+    "details": {
+      "subtitle": "Visão 360° — perfis, visitas, voluntariado e acesso",
+      "errorLoad": "Erro ao carregar dados da pessoa",
+      "notFound": "Pessoa não encontrada",
+      "createAccess": "Criar Acesso",
+      "addVisit": "Adicionar Visita",
+      "addVisitDialogTitle": "Adicionar Visita (Visitante)",
+      "registerVisit": "Registrar Visita",
+      "visitDateRequired": "Data da visita é obrigatória",
+      "visitAdded": "Visita registrada com sucesso",
+      "visitAddError": "Erro ao registrar visita",
+      "personalInfo": "Informações Pessoais",
+      "status": "Status",
+      "profiles": "Perfis",
+      "addProfile": "Adicionar Perfil",
+      "addProfileTitle": "Adicionar Perfil",
+      "selectProfile": "Selecione um perfil",
+      "selectProfilePlaceholder": "Selecione um perfil",
+      "profileAdded": "Perfil adicionado com sucesso",
+      "profileAddError": "Erro ao adicionar perfil",
+      "fallbackProfile": "este perfil",
+      "endProfileTitle": "Encerrar perfil?",
+      "endProfileDescription": "Deseja encerrar o perfil \"{{profile}}\" agora?",
+      "endProfileConfirm": "Encerrar",
+      "endProfileSuccess": "Perfil encerrado com sucesso",
+      "endProfileError": "Erro ao encerrar perfil",
+      "removeProfileTitle": "Remover perfil?",
+      "removeProfileDescription": "Tem certeza que deseja remover o perfil \"{{profile}}\"? Essa ação não pode ser desfeita.",
+      "removeProfileConfirm": "Remover",
+      "removeProfileSuccess": "Perfil removido com sucesso",
+      "removeProfileError": "Erro ao remover perfil",
+      "startDate": "Data de Início",
+      "endDate": "Data de Fim",
+      "add": "Adicionar",
+      "activeProfiles": "Perfis Ativos",
+      "since": "Desde {{date}}",
+      "profileHistory": "Histórico de Perfis",
+      "noProfiles": "Nenhum perfil cadastrado.",
+      "visitHistory": "Histórico de Visitas ({{count}})",
+      "noVisits": "Nenhuma visita registrada.",
+      "date": "Data",
+      "volunteering": "Voluntariado ({{count}})",
+      "noVolunteerLinks": "Nenhum vínculo de voluntariado.",
+      "systemAccess": "Acesso ao Sistema",
+      "lastAccess": "Último acesso",
+      "manageUser": "Gerenciar usuário",
+      "profileOptions": {
+        "visitor": "Visitante",
+        "member": "Membro",
+        "volunteer": "Voluntário",
+        "leader": "Líder",
+        "pastor": "Pastor"
+      }
+    },
+    "export": {
+      "button": "Exportar CSV",
+      "success": "Dados exportados com sucesso!",
+      "error": "Erro ao exportar dados",
+      "name": "Nome",
+      "email": "Email",
+      "phone": "Telefone",
+      "whatsapp": "WhatsApp",
+      "personType": "Tipo de Pessoa",
+      "profiles": "Perfis",
+      "active": "Ativo",
+      "createdAt": "Data de Criação"
+    },
+    "form": {
+      "loading": "Carregando pessoa...",
+      "errorLoad": "Erro ao carregar pessoa",
+      "editSubtitle": "Atualize as informações da pessoa",
+      "createSubtitle": "Cadastre uma nova pessoa",
+      "createSuccess": "Pessoa cadastrada com sucesso",
+      "updateSuccess": "Pessoa atualizada com sucesso",
+      "saveError": "Erro ao salvar pessoa",
+      "fields": {
+        "name": "Nome",
+        "email": "Email",
+        "phone": "Telefone",
+        "whatsapp": "WhatsApp",
+        "birthDate": "Data de Nascimento",
+        "personType": "Tipo de Pessoa",
+        "active": "Pessoa ativa"
+      },
+      "placeholders": {
+        "name": "Nome completo",
+        "email": "email@exemplo.com",
+        "phone": "11999998888 (apenas números)",
+        "whatsapp": "11999998888 (apenas números)"
+      },
+      "personType": {
+        "adult": "Adulto",
+        "child": "Criança"
+      },
+      "validation": {
+        "nameRequired": "Nome é obrigatório",
+        "nameMin": "Nome deve ter pelo menos 2 caracteres",
+        "emailInvalid": "Email inválido"
+      }
+    }
+  },
+  "visitors": {
+    "title": "Visitantes",
+    "subtitle": "Histórico de visitas",
+    "listTitle": "Lista de Visitas",
+    "loading": "Carregando visitantes...",
+    "errorLoad": "Erro ao carregar visitantes",
+    "new": "Novo Visitante",
+    "edit": "Editar Visitante",
+    "create": "Cadastrar Visitante",
+    "update": "Atualizar Visitante",
+    "emptyTitle": "Nenhum visitante encontrado",
+    "emptyMessage": "Nenhuma visita encontrada com os filtros aplicados.",
+    "emptyPageMessage": "Nenhuma visita nesta página.",
+    "emptyCta": "Cadastrar Primeira Visita",
+    "deleteTitle": "Excluir Visita",
+    "deleteDescription": "Tem certeza que deseja excluir a visita de \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Visita excluída com sucesso",
+    "deleteError": "Erro ao excluir visita",
+    "bulkDeleteTitle": "Excluir em lote",
+    "bulkDeleteDescription": "Tem certeza que deseja excluir {{count}} visita(s) selecionada(s)? Esta ação não pode ser desfeita.",
+    "bulkDeleteSuccess": "{{count}} visita(s) excluída(s) com sucesso",
+    "bulkDeletePartial": "{{ok}} excluída(s), {{fail}} falha(s).",
+    "bulkDeleteError": "Erro ao excluir em lote",
+    "selectedCount": "{{count}} selecionada(s)",
+    "clearSelection": "Limpar seleção",
+    "deleteSelected": "Excluir selecionadas",
+    "selectAll": "Selecionar todas",
+    "selectOne": "Selecionar {{name}}",
+    "visitFallback": "visita",
+    "search": {
+      "name": "Nome",
+      "namePlaceholder": "Buscar por nome...",
+      "email": "Email",
+      "emailPlaceholder": "Buscar por email...",
+      "phone": "Telefone",
+      "phonePlaceholder": "Buscar por telefone...",
+      "whatsapp": "WhatsApp",
+      "whatsappPlaceholder": "Buscar por WhatsApp...",
+      "visitDate": "Data da Visita"
+    },
+    "table": {
+      "visitDate": "Data da Visita",
+      "person": "Pessoa",
+      "contact": "Contato",
+      "notes": "Observações",
+      "profiles": "Perfis",
+      "actions": "Ações"
+    },
+    "export": {
+      "button": "Exportar CSV",
+      "success": "Dados exportados com sucesso!",
+      "error": "Erro ao exportar dados",
+      "name": "Nome",
+      "email": "Email",
+      "phone": "Telefone",
+      "whatsapp": "WhatsApp",
+      "visitDate": "Data da Visita",
+      "notes": "Observações"
+    },
+    "details": {
+      "subtitle": "Detalhes da visita",
+      "errorLoad": "Erro ao carregar dados do visitante",
+      "notFound": "Visitante não encontrado",
+      "visitData": "Dados da Visita",
+      "personData": "Dados da Pessoa",
+      "profiles": "Perfis",
+      "scheduledMessages": "Fila de Comunicação",
+      "noScheduledMessages": "Nenhuma mensagem agendada para este visitante.",
+      "messageFallback": "Mensagem",
+      "messagesUnavailableLog": "Mensagens não disponíveis",
+      "table": {
+        "type": "Tipo",
+        "sendDate": "Data de Envio",
+        "status": "Status"
+      },
+      "messageStatus": {
+        "scheduled": "Agendada",
+        "ready": "Pronta",
+        "sent": "Enviada",
+        "error": "Erro",
+        "canceled": "Cancelada",
+        "processing": "Processando"
+      }
+    },
+    "form": {
+      "loading": "Carregando visitante...",
+      "errorLoad": "Erro ao carregar visitante",
+      "editSubtitle": "Atualize as informações do visitante",
+      "createSubtitle": "Cadastre um novo visitante",
+      "createSuccess": "Visita registrada com sucesso",
+      "updateSuccess": "Visita atualizada com sucesso",
+      "createError": "Erro ao cadastrar visita",
+      "updateError": "Erro ao atualizar visita",
+      "regenerateMessages": "Regerar Mensagens",
+      "regenerating": "Regerando...",
+      "regenerateError": "Erro ao regerar mensagens",
+      "regenerateSuccess": "Mensagens regeradas: {{created}} criadas, {{canceled}} canceladas",
+      "fields": {
+        "name": "Nome",
+        "email": "Email",
+        "phone": "Telefone",
+        "whatsapp": "WhatsApp",
+        "birthDate": "Data de Nascimento",
+        "visitDate": "Data da Visita",
+        "notes": "Observações"
+      },
+      "placeholders": {
+        "name": "Nome completo",
+        "email": "email@exemplo.com",
+        "phone": "11999998888 (apenas números)",
+        "whatsapp": "11999998888 (apenas números)",
+        "notes": "Observações sobre o visitante..."
+      },
+      "validation": {
+        "nameAndVisitDateRequired": "Nome e Data da Visita são obrigatórios",
+        "emailInvalid": "Email inválido"
+      }
+    }
+  },
+  "housesList": {
+    "title": "Hub - Casas",
+    "subtitle": "Gerencie as casas abertas para evangelização",
+    "loading": "Carregando casas...",
+    "errorLoad": "Erro ao carregar casas",
+    "new": "Nova Casa",
+    "listTitle": "Lista de Casas ({{total}})",
+    "emptyTitle": "Nenhuma casa encontrada",
+    "emptyDescription": "Ainda nao ha casas cadastradas para exibicao.",
+    "emptyFiltered": "Nenhuma casa corresponde ao filtro atual. Tente outro nome ou limpe a busca.",
+    "deleteTitle": "Excluir Casa",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteFallbackName": "esta casa",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Casa excluída com sucesso",
+    "deleteError": "Erro ao excluir casa",
+    "filters": {
+      "title": "Filtros",
+      "search": "Buscar por nome",
+      "searchPlaceholder": "Digite o nome da casa"
+    },
+    "table": {
+      "name": "Nome",
+      "openedBy": "Aberto por",
+      "leader": "Líder",
+      "timothy": "Timóteo",
+      "host": "Anfitrião",
+      "address": "Endereço",
+      "actions": "Ações"
+    }
+  },
+  "contactsList": {
+    "title": "Contatos",
+    "subtitle": "Gerencie os contatos recebidos",
+    "loading": "Carregando contatos...",
+    "errorLoad": "Erro ao carregar contatos",
+    "new": "Novo Contato",
+    "listTitle": "Lista de Contatos ({{total}})",
+    "emptyTitle": "Nenhum contato encontrado.",
+    "emptyDescription": "Ajuste os filtros ou cadastre um novo contato.",
+    "deleteTitle": "Excluir Contato",
+    "deleteDescription": "Tem certeza que deseja excluir o contato de \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleteFallbackName": "este contato",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Contato excluído com sucesso",
+    "deleteError": "Erro ao excluir contato",
+    "boolean": {
+      "yes": "Sim",
+      "no": "Nao"
+    },
+    "filters": {
+      "title": "Filtros",
+      "search": "Buscar",
+      "searchPlaceholder": "Digite o nome ou email",
+      "member": "Membro",
+      "all": "Todos",
+      "memberOnly": "Membro",
+      "nonMember": "Não Membro"
+    },
+    "table": {
+      "name": "Nome",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "member": "Membro",
+      "message": "Mensagem",
+      "createdAt": "Data de Criação",
+      "actions": "Ações"
+    }
+  },
+  "peopleProfiles": {
+    "title": "Perfis",
+    "subtitle": "Gerencie os perfis das pessoas",
+    "loading": "Carregando perfis...",
+    "errorLoad": "Erro ao carregar perfis",
+    "listTitle": "Lista de Perfis ({{total}})",
+    "notInformed": "Não informado",
+    "fallbackProfile": "este perfil",
+    "fallbackPerson": "esta pessoa",
+    "endTitle": "Encerrar Perfil",
+    "endDescription": "Tem certeza que deseja encerrar o perfil \"{{profile}}\" de \"{{person}}\"?",
+    "endConfirm": "Encerrar",
+    "endSuccess": "Perfil encerrado com sucesso",
+    "endError": "Erro ao encerrar perfil",
+    "deleteTitle": "Excluir Perfil",
+    "deleteDescription": "Tem certeza que deseja excluir o perfil \"{{profile}}\" de \"{{person}}\"? Esta ação não pode ser desfeita.",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Perfil excluído com sucesso",
+    "deleteError": "Erro ao excluir perfil",
+    "emptyNoneTitle": "Nenhum perfil cadastrado",
+    "emptyFilteredTitle": "Nenhum perfil encontrado",
+    "emptyNoneDescription": "Ainda nao ha perfis vinculados para exibicao nesta area.",
+    "emptyFilteredDescription": "Os filtros atuais nao retornaram perfis. Ajuste perfil ou status para ampliar a busca.",
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "filters": {
+      "title": "Filtros",
+      "profile": "Perfil",
+      "allProfiles": "Todos os perfis",
+      "status": "Status",
+      "allStatuses": "Todos os status"
+    },
+    "table": {
+      "person": "Pessoa",
+      "profile": "Perfil",
+      "startDate": "Data Início",
+      "endDate": "Data Fim",
+      "status": "Status",
+      "actions": "Ações"
+    }
+  },
+  "teamForm": {
+    "loading": "Carregando equipe...",
+    "errorLoad": "Erro ao carregar equipe",
+    "editSubtitle": "Atualize as informações da equipe",
+    "createSubtitle": "Cadastre uma nova equipe",
+    "createSuccess": "Equipe criada com sucesso",
+    "updateSuccess": "Equipe atualizada com sucesso",
+    "saveError": "Erro ao salvar equipe",
+    "noLeader": "Sem líder definido",
+    "fields": {
+      "name": "Nome",
+      "area": "Área",
+      "teamLeader": "Líder da equipe"
+    },
+    "placeholders": {
+      "name": "Nome da equipe"
+    },
+    "area": {
+      "green": "Verde",
+      "red": "Vermelha",
+      "orange": "Laranja"
+    },
+    "validation": {
+      "nameRequired": "Nome é obrigatório",
+      "invalidArea": "Área inválida"
+    },
+    "links": {
+      "title": "Voluntários desta equipe",
+      "person": "Pessoa",
+      "role": "Cargo",
+      "link": "Vincular",
+      "empty": "Nenhum voluntário vinculado ainda.",
+      "linkSuccess": "Voluntário vinculado",
+      "linkError": "Erro ao vincular",
+      "removeTitle": "Remover voluntário",
+      "removeConfirm": "Remover este voluntário da equipe?",
+      "removeSuccess": "Voluntário removido",
+      "removeError": "Erro ao remover",
+      "table": {
+        "name": "Nome",
+        "role": "Cargo"
+      },
+      "validation": {
+        "selectPersonAndRole": "Selecione Pessoa e Cargo"
+      }
+    }
+  },
+  "volunteer": {
+    "teams": {
+      "title": "Equipes",
+      "subtitle": "Gerencie as equipes da igreja",
+      "listTitle": "Lista de Equipes",
+      "new": "Nova Equipe",
+      "edit": "Editar Equipe",
+      "create": "Cadastrar Equipe",
+      "update": "Atualizar Equipe",
+      "loading": "Carregando equipes...",
+      "errorLoad": "Erro ao carregar equipes",
+      "filtersTitle": "Filtros",
+      "searchLabel": "Buscar por nome",
+      "searchPlaceholder": "Digite o nome da equipe",
+      "areaLabel": "Área",
+      "allAreas": "Todas as áreas",
+      "emptyTitle": "Nenhuma equipe encontrada.",
+      "emptyDescription": "Ajuste os filtros ou cadastre uma nova equipe.",
+      "deleteTitle": "Excluir Equipe",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita. Se houver voluntários vinculados, a exclusão será bloqueada.",
+      "deleteConfirm": "Excluir",
+      "deleteSuccess": "Equipe excluída com sucesso",
+      "deleteError": "Erro ao excluir equipe. Pode haver voluntários vinculados.",
+      "thisTeam": "esta equipe",
+      "areas": {
+        "green": "Verde",
+        "red": "Vermelha",
+        "orange": "Laranja"
+      },
+      "table": {
+        "name": "Nome",
+        "area": "Área",
+        "members": "Membros",
+        "createdAt": "Data de Criação",
+        "actions": "Ações"
+      }
+    },
+    "roles": {
+      "title": "Cargos",
+      "subtitle": "Gerencie os cargos",
+      "listTitle": "Lista de Cargos",
+      "new": "Novo Cargo",
+      "edit": "Editar Cargo",
+      "create": "Cadastrar Cargo",
+      "update": "Atualizar Cargo",
+      "loading": "Carregando cargos...",
+      "errorLoad": "Erro ao carregar cargos",
+      "filtersTitle": "Filtros",
+      "searchLabel": "Buscar por nome",
+      "searchPlaceholder": "Digite o nome do cargo",
+      "emptyTitle": "Nenhum cargo encontrado.",
+      "emptyDescription": "Ajuste os filtros ou cadastre um novo cargo.",
+      "deleteTitle": "Excluir Cargo",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita. Se houver voluntários vinculados, a exclusão será bloqueada.",
+      "deleteConfirm": "Excluir",
+      "deleteSuccess": "Cargo excluído com sucesso",
+      "deleteError": "Erro ao excluir cargo. Pode haver voluntários vinculados.",
+      "thisRole": "este cargo",
+      "table": {
+        "name": "Nome",
+        "createdAt": "Data de Criação",
+        "actions": "Ações"
+      }
+    },
+    "volunteers": {
+      "title": "Voluntários",
+      "subtitle": "Gerencie os voluntários",
+      "listTitle": "Lista de Voluntários",
+      "new": "Novo Voluntário",
+      "edit": "Editar Voluntário",
+      "create": "Cadastrar Voluntário",
+      "update": "Atualizar Voluntário",
+      "loading": "Carregando voluntários...",
+      "errorLoad": "Erro ao carregar voluntários",
+      "filtersTitle": "Filtros",
+      "searchLabel": "Buscar por nome",
+      "searchPlaceholder": "Digite o nome",
+      "teamLabel": "Equipe",
+      "roleLabel": "Cargo",
+      "allTeams": "Todas as equipes",
+      "allRoles": "Todos os cargos",
+      "emptyTitle": "Nenhum voluntário encontrado",
+      "emptyDescription": "Não há voluntários para os filtros atuais. Ajuste equipe, cargo ou busca para ampliar a lista.",
+      "deleteTitle": "Excluir Voluntário",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteConfirm": "Excluir",
+      "deleteSuccess": "Voluntário excluído com sucesso",
+      "deleteError": "Erro ao excluir voluntário",
+      "thisVolunteer": "este voluntário",
+      "table": {
+        "name": "Nome",
+        "whatsApp": "WhatsApp",
+        "team": "Equipe",
+        "teamsCount": "Qtd. equipes",
+        "role": "Cargo",
+        "roles": "Cargos",
+        "actions": "Ações"
+      },
+      "form": {
+        "loading": "Carregando voluntário...",
+        "errorLoad": "Erro ao carregar dados",
+        "errorSave": "Erro ao salvar voluntário",
+        "editSubtitle": "Atualize as informações do voluntário",
+        "createSubtitle": "Cadastre um novo voluntário",
+        "selectPersonError": "Selecione uma Pessoa",
+        "addTeamRoleError": "Adicione ao menos uma equipe com cargo",
+        "invalidEmail": "E-mail inválido",
+        "invalidWhatsapp": "WhatsApp inválido. Use apenas dígitos (10 a 13).",
+        "updateSuccess": "Voluntário atualizado com sucesso",
+        "createSuccess": "Voluntário criado com sucesso",
+        "createMultiSuccess": "Voluntário cadastrado em múltiplas equipes",
+        "currentValue": "Atual: {{value}}",
+        "selectOption": "Selecione",
+        "existingLinksTitle": "Esta pessoa já atua em:",
+        "existingLinksHint": "Adicione novas equipes e cargos abaixo. A mesma pessoa pode ter cargos diferentes em equipes diferentes.",
+        "fallbackTeam": "Equipe",
+        "fallbackRole": "Cargo",
+        "linksTitle": "Equipes e Cargos",
+        "addTeamAction": "Adicionar equipe",
+        "fields": {
+          "person": "Pessoa",
+          "personSearchPlaceholder": "Buscar pessoa por nome, email ou WhatsApp",
+          "whatsapp": "WhatsApp",
+          "whatsappPlaceholder": "11999998888 (apenas dígitos)",
+          "email": "Email",
+          "emailPlaceholder": "email@exemplo.com",
+          "phone": "Telefone",
+          "phonePlaceholder": "11999998888 (apenas dígitos)",
+          "team": "Equipe",
+          "role": "Cargo"
+        }
+      }
+    },
+    "monthlyPlanning": {
+      "title": "Planejamento Mensal",
+      "subtitle": "Visualize a distribuição das escalas do mês por voluntário, ocorrência e equipe.",
+      "loading": "Carregando planejamento mensal...",
+      "errorLoad": "Erro ao carregar planejamento mensal",
+      "filtersTitle": "Filtros",
+      "monthLabel": "Mês",
+      "eventLabel": "Evento",
+      "teamLabel": "Equipe",
+      "allEvents": "Todos os eventos",
+      "allTeams": "Todas as equipes",
+      "gridTitle": "Distribuição mensal",
+      "occurrences": "ocorrências",
+      "manualTitle": "Montagem manual",
+      "manualSelectTeamHint": "Selecione uma equipe para montar escalas manualmente ou gerar o mês automaticamente.",
+      "emptyOccurrencesTitle": "Nenhuma ocorrência encontrada para o mês.",
+      "emptyOccurrencesDescription": "Gere ocorrências do evento antes de planejar as escalas.",
+      "emptyVolunteersTitle": "Nenhum voluntário encontrado.",
+      "emptyVolunteersDescription": "Cadastre voluntários ou ajuste os filtros de equipe e evento.",
+      "cards": {
+        "volunteers": "Voluntários",
+        "allocations": "Escalas",
+        "withoutSchedule": "Sem escala",
+        "overloaded": "Mais de 2x",
+        "consecutive": "Consecutivos"
+      },
+      "table": {
+        "volunteer": "Voluntário",
+        "total": "Total"
+      },
+      "status": {
+        "confirmed": "Confirmado",
+        "pending": "Pendente",
+        "declined": "Recusado",
+        "absent": "Faltou"
+      },
+      "alerts": {
+        "consecutive": "Semanas seguidas"
+      },
+      "share": {
+        "title": "Escala mensal",
+        "badge": "VOLUNTARIADO",
+        "subtitle": "Distribuição de voluntários por data",
+        "footer": "Gerado pelo Verbo+",
+        "allTeams": "Todas as equipes",
+        "preview": "Ver imagem",
+        "previewing": "Gerando...",
+        "previewTitle": "Prévia da imagem da escala",
+        "actualSize": "Tamanho real",
+        "fitPreview": "Ajustar à tela",
+        "download": "Baixar imagem",
+        "share": "Compartilhar",
+        "noData": "Não há escalas preenchidas para gerar a imagem.",
+        "error": "Erro ao gerar imagem da escala.",
+        "downloadedFallback": "Seu navegador não compartilhou o arquivo diretamente. A imagem foi baixada."
+      },
+      "whatsapp": {
+        "send": "Disparar WhatsApp",
+        "sending": "Disparando...",
+        "message": "Olá! Segue a escala mensal de {{team}} - {{month}}. Qualquer ajuste, fale com a liderança.",
+        "sent": "{{sent}} de {{total}} mensagens enviadas pelo WhatsApp.",
+        "failures": "{{count}} envio(s) falharam. {{details}}",
+        "noRecipients": "Nenhum voluntário da equipe possui WhatsApp preenchido.",
+        "uploadError": "Não foi possível salvar a imagem da escala para envio.",
+        "error": "Erro ao disparar escala pelo WhatsApp."
+      },
+      "manualFields": {
+        "occurrence": "Ocorrência",
+        "selectOccurrence": "Selecione a data",
+        "volunteer": "Voluntário",
+        "selectVolunteer": "Selecione o voluntário",
+        "role": "Cargo",
+        "selectRole": "Selecione o cargo",
+        "keepVolunteerRole": "Usar cargo do vínculo"
+      },
+      "actions": {
+        "autoGenerate": "Gerar mês automaticamente",
+        "generating": "Gerando...",
+        "selectTeamRequired": "Selecione uma equipe para executar esta ação.",
+        "autoGenerateSuccess": "{{count}} escalas geradas em rascunho",
+        "autoGenerateError": "Erro ao gerar planejamento mensal",
+        "manualAdd": "Adicionar à escala",
+        "manualValidation": "Selecione ocorrência, equipe e voluntário.",
+        "manualAddSuccess": "Voluntário adicionado à escala",
+        "manualAddError": "Erro ao adicionar voluntário",
+        "removeSuccess": "Voluntário removido da escala",
+        "removeError": "Erro ao remover voluntário",
+        "scheduleHere": "Escalar",
+        "volunteerNotLinkedToTeam": "Este voluntário não tem vínculo com a equipe selecionada."
+      }
+    },
+    "schedules": {
+      "title": "Escalas de Voluntariado",
+      "subtitle": "Monte as escalas por ocorrência e equipe. Para gerar ocorrências use Eventos → Ocorrências.",
+      "listTitle": "Ocorrências",
+      "byTeamTitle": "Escalas por equipe",
+      "editorTitle": "Editor de Escala",
+      "modelsTitle": "Modelos de Escala",
+      "unavailabilitiesTitle": "Indisponibilidades",
+      "linksReportTitle": "Relatório Usuários x Pessoas x Voluntários",
+      "loading": "Carregando escalas...",
+      "loadingOccurrences": "Carregando ocorrências...",
+      "errorLoadEvents": "Erro ao carregar eventos",
+      "errorLoadOccurrences": "Erro ao carregar ocorrências para escala",
+      "filtersTitle": "Filtros",
+      "eventLabel": "Evento",
+      "allEventsOption": "Todos os eventos",
+      "startDateLabel": "Data início",
+      "endDateLabel": "Data fim",
+      "goToOccurrences": "Eventos → Ocorrências",
+      "emptyTitle": "Nenhuma ocorrência encontrada para o período.",
+      "emptyDescription": "Ajuste os filtros ou gere novas ocorrências a partir do módulo de eventos.",
+      "table": {
+        "event": "Evento",
+        "dateTime": "Data/Hora",
+        "occurrenceStatus": "Status da ocorrência",
+        "coverage": "Cobertura",
+        "actions": "Ações"
+      },
+      "coverage": {
+        "noSchedule": "Sem escala",
+        "confirmed": "confirmados",
+        "pending": "pendentes",
+        "declined": "recusas",
+        "replaced": "substituições"
+      },
+      "byOccurrence": {
+        "loading": "Carregando escalas por ocorrência...",
+        "errorLoad": "Erro ao carregar dados da ocorrência",
+        "notFound": "Ocorrência não encontrada",
+        "teamsTitle": "Equipes",
+        "teamsDescription": "Cada equipe tem sua própria escala para esta ocorrência. Crie ou edite por equipe. Um voluntário não pode estar em mais de uma equipe na mesma data.",
+        "createdSchedules": "Escalas criadas",
+        "mostCalledTitle": "Mais acionados recentemente",
+        "noRecentLoadData": "Sem dados de carga recente.",
+        "attentionPeopleTitle": "Pessoas com atenção",
+        "noCriticalPending": "Nenhuma pendência crítica nesta equipe.",
+        "createForTeamTitle": "Criar escala para equipe",
+        "createSchedule": "Criar escala",
+        "noTeamsRegistered": "Nenhuma equipe cadastrada. Cadastre equipes em Voluntariado → Equipes.",
+        "teamFallback": "Equipe {{id}}",
+        "noRole": "Sem cargo",
+        "recentSchedules": "{{count}} escalas",
+        "reasonLabel": "Motivo: {{reason}}",
+        "summary": {
+          "teams": "Equipes",
+          "withSchedule": "Com escala",
+          "withoutSchedule": "Sem escala",
+          "slots": "Vagas",
+          "pending": "Pendentes",
+          "declines": "Recusas"
+        },
+        "metrics": {
+          "slots": "Vagas",
+          "confirmed": "Confirmados",
+          "pending": "Pendentes",
+          "declines": "Recusas",
+          "replacements": "Substituições"
+        },
+        "scheduleStatus": {
+          "draft": "Rascunho",
+          "published": "Publicada",
+          "closed": "Fechada",
+          "unknown": "—"
+        },
+        "coverageRisk": {
+          "noCoverage": "Sem cobertura",
+          "highRisk": "Risco alto",
+          "attention": "Atenção",
+          "covered": "Coberta"
+        },
+        "attentionStatus": {
+          "declined": "Recusou",
+          "missed": "Faltou",
+          "pending": "Pendente"
+        }
+      },
+      "editor": {
+        "loading": "Carregando editor de escala...",
+        "errorLoad": "Erro ao carregar dados da escala",
+        "createSuccess": "Escala criada",
+        "addVolunteerSuccess": "Voluntário adicionado à escala",
+        "addVolunteerExceptionSuccess": "Voluntário adicionado com exceção manual",
+        "errorAddItem": "Erro ao adicionar item na escala",
+        "removeDialogTitle": "Remover da escala",
+        "removeDialogDescription": "Deseja remover \"{{volunteer}}\" da equipe \"{{team}}\"?",
+        "removeSuccess": "Item removido da escala",
+        "errorRemoveItem": "Erro ao remover item da escala",
+        "autoFill": "Preencher automaticamente",
+        "autoFilling": "Preenchendo...",
+        "autoFillSuccess": "Escala preenchida automaticamente",
+        "errorAutoFill": "Erro ao preencher escala",
+        "publish": "Publicar Escala",
+        "publishSuccess": "Escala publicada com sucesso",
+        "errorPublish": "Erro ao publicar escala",
+        "itemConfirmed": "Item confirmado",
+        "errorConfirmItem": "Erro ao confirmar item",
+        "itemDeclined": "Item marcado como recusado",
+        "errorDeclineItem": "Erro ao recusar item",
+        "noSubstituteAvailable": "Nenhum substituto disponível no momento",
+        "exchangeApproved": "Solicitação aprovada",
+        "errorApproveExchange": "Erro ao aprovar solicitação",
+        "exchangeRejected": "Solicitação rejeitada",
+        "errorRejectExchange": "Erro ao rejeitar solicitação",
+        "attendanceSuccess": "Presença registrada",
+        "absenceSuccess": "Falta registrada",
+        "errorRegisterAttendance": "Erro ao registrar presença",
+        "modelCoverageTitle": "Cobertura do modelo",
+        "noModelTitle": "Nenhum modelo configurado para esta equipe neste evento.",
+        "noModelDescription": "O preenchimento manual funciona, mas você fica sem uma referência clara do mínimo necessário.",
+        "createModel": "Criar modelo",
+        "modelWithoutItems": "Este modelo não tem itens definidos.",
+        "modelLabel": "Modelo:",
+        "filledLabel": "Preenchido:",
+        "fullCoverage": "Cobertura completa",
+        "missingCount": "Faltam {{count}}",
+        "availableNowTitle": "Quem pode servir agora",
+        "availableNowDescription": "Escolha direto na lista. A tela já prioriza quem está disponível para esta equipe e ocorrência.",
+        "noAvailableVolunteers": "Nenhum voluntário disponível no momento para esta equipe.",
+        "recentHistory": "Histórico recente: {{count}}",
+        "blockedTitle": "Bloqueados para esta ocorrência",
+        "unavailable": "Indisponível",
+        "addWithException": "Adicionar com exceção",
+        "builtScheduleTitle": "Escala montada ({{count}})",
+        "builtScheduleDescription": "Acompanhe respostas e faça ajustes sem sair da mesma visão.",
+        "emptySchedule": "Nenhum voluntário adicionado à escala ainda.",
+        "responseLabel": "Resposta:",
+        "awaitingResponse": "Aguardando resposta",
+        "notesLabel": "Observações:",
+        "manualException": "Exceção manual",
+        "exchangeRequestsTitle": "Solicitações de troca",
+        "approveExchangeTitle": "Aprovar solicitação de troca",
+        "approveExchangeDescription": "Selecione o substituto disponível para assumir esta escala.",
+        "recentLoad": "Carga recente: {{count}}",
+        "confirmSubstitute": "Confirmar substituto",
+        "summary": {
+          "total": "Total",
+          "confirmed": "Confirmados",
+          "pending": "Pendentes",
+          "declined": "Recusas",
+          "eventDay": "Dia do evento"
+        },
+        "scheduleStatus": {
+          "draft": "Rascunho",
+          "published": "Publicada",
+          "closed": "Fechada",
+          "unknown": "Desconhecido",
+          "notCreated": "Não criada"
+        },
+        "itemStatus": {
+          "pending": "Pendente",
+          "confirmed": "Confirmado",
+          "declined": "Recusado",
+          "replaced": "Substituído",
+          "served": "Serviu",
+          "missed": "Faltou",
+          "unknown": "Desconhecido"
+        },
+        "actionButtons": {
+          "confirm": "Confirmar",
+          "confirmed": "Confirmado",
+          "decline": "Recusar",
+          "declined": "Recusado",
+          "served": "Serviu",
+          "missed": "Faltou"
+        },
+        "prompts": {
+          "exceptionReason": "Motivo da exceção para {{name}}:",
+          "declineReason": "Motivo da recusa de {{name}}:",
+          "rejectExchangeReason": "Motivo da rejeição da solicitação de {{name}}:",
+          "attendanceNote": "Observação de presença para {{name}}:",
+          "absenceNote": "Observação de falta para {{name}}:",
+          "exceptionReasonTitle": "Adicionar com exceção",
+          "declineReasonTitle": "Recusar voluntário",
+          "rejectExchangeReasonTitle": "Rejeitar solicitação de troca",
+          "attendanceNoteTitle": "Registrar presença",
+          "absenceNoteTitle": "Registrar falta",
+          "optionalHint": "Opcional"
+        },
+        "logs": {
+          "errorLoadModel": "Erro ao carregar modelo da escala:",
+          "errorLoadSuggestions": "Erro ao carregar sugestões:"
+        }
+      },
+      "models": {
+        "title": "Modelos de Escala",
+        "subtitle": "Defina quantas pessoas por cargo cada equipe precisa por evento. Usado no \"Preencher automaticamente\".",
+        "new": "Novo modelo",
+        "loadingTeams": "Carregando equipes...",
+        "loadingModels": "Carregando modelos...",
+        "errorLoadTeams": "Erro ao carregar equipes",
+        "errorLoadModels": "Erro ao carregar modelos",
+        "filterByTeam": "Filtrar por equipe",
+        "selectTeam": "Selecione a equipe",
+        "allTeams": "Todas",
+        "listTitle": "Modelos {{team}}",
+        "emptySelectTitle": "Selecione uma equipe para listar os modelos.",
+        "emptySelectDescription": "Os modelos de escala são organizados por equipe.",
+        "emptyTitle": "Nenhum modelo para esta equipe.",
+        "emptyDescription": "Crie um modelo para usar o preenchimento automático.",
+        "deleteTitle": "Excluir modelo de escala",
+        "deleteDescription": "Excluir o modelo \"{{name}}\" da equipe {{team}}?",
+        "deleteConfirm": "Excluir",
+        "deleteSuccess": "Modelo excluído",
+        "deleteError": "Erro ao excluir",
+        "noName": "Sem nome",
+        "defaultAnyEvent": "Padrão (qualquer evento)",
+        "anyRole": "Qualquer",
+        "table": {
+          "event": "Evento",
+          "name": "Nome",
+          "team": "Equipe",
+          "daysOff": "Dias folga",
+          "items": "Itens (cargo × qtd)",
+          "actions": "Ações"
+        },
+        "form": {
+          "editTitle": "Editar modelo de escala",
+          "newTitle": "Novo modelo de escala",
+          "dataTitle": "Dados do modelo",
+          "itemsTitle": "Itens (vagas por cargo)",
+          "itemsHint": "Defina quantas pessoas de cada cargo, ou qualquer cargo, são necessárias.",
+          "add": "Adicionar",
+          "errorLoadModel": "Erro ao carregar modelo",
+          "errorLoadData": "Erro ao carregar dados",
+          "errorSave": "Erro ao salvar",
+          "selectTeamError": "Selecione a equipe",
+          "addItemError": "Adicione pelo menos um item (cargo e quantidade)",
+          "updateSuccess": "Modelo atualizado",
+          "createSuccess": "Modelo criado",
+          "fields": {
+            "team": "Equipe",
+            "selectTeam": "Selecione a equipe",
+            "select": "Selecione",
+            "eventOptional": "Evento (opcional)",
+            "defaultAnyEvent": "Padrão para qualquer evento",
+            "defaultAnyEventOption": "Padrão (qualquer evento)",
+            "eventHint": "Se vazio, o modelo vale para qualquer evento desta equipe.",
+            "nameOptional": "Nome (opcional)",
+            "namePlaceholder": "Ex: Culto dominical",
+            "daysOff": "Dias de folga após escala",
+            "daysOffPlaceholder": "Ex: 7",
+            "daysOffHint": "Não sugerir o mesmo voluntário nos próximos N dias.",
+            "active": "Modelo ativo",
+            "role": "Cargo",
+            "anyRole": "Qualquer cargo",
+            "people": "pessoas"
+          }
+        }
+      },
+      "unavailabilities": {
+        "title": "Indisponibilidades",
+        "subtitle": "Marque datas em que o voluntário não está disponível para escala. O preenchimento automático não os incluirá nesses dias.",
+        "loadingVolunteers": "Carregando voluntários...",
+        "errorLoadVolunteers": "Erro ao carregar voluntários",
+        "errorLoadItems": "Erro ao carregar indisponibilidades",
+        "errorSave": "Erro ao salvar",
+        "createSuccess": "Indisponibilidade registrada",
+        "deleteTitle": "Remover indisponibilidade",
+        "deleteDescription": "Remover a data {{date}}{{reason}}?",
+        "deleteConfirm": "Remover",
+        "deleteSuccess": "Removido",
+        "deleteError": "Erro ao remover",
+        "selectVolunteerAndDate": "Selecione o voluntário e informe a data",
+        "volunteerTitle": "Voluntário",
+        "selectVolunteer": "Selecione o voluntário",
+        "select": "Selecione",
+        "addTitle": "Adicionar data indisponível",
+        "addAction": "Adicionar",
+        "listTitle": "Datas indisponíveis {{name}}",
+        "emptyTitle": "Nenhuma data cadastrada.",
+        "emptyDescription": "Adicione a primeira indisponibilidade para esse voluntário.",
+        "fields": {
+          "date": "Data",
+          "reasonOptional": "Motivo (opcional)",
+          "reasonPlaceholder": "Ex: Viagem"
+        },
+        "table": {
+          "date": "Data",
+          "reason": "Motivo",
+          "actions": "Ações"
+        }
+      },
+      "linksReport": {
+        "title": "Relatório Usuários x Pessoas x Voluntários",
+        "subtitle": "Visão consolidada dos vínculos entre pessoa, acesso ao sistema e voluntariado",
+        "loading": "Carregando relatório...",
+        "errorLoad": "Erro ao carregar relatório de vínculos",
+        "searchLabel": "Buscar",
+        "searchPlaceholder": "Nome, email da pessoa ou email de login",
+        "statusLabel": "Status",
+        "listTitle": "Vínculos ({{total}})",
+        "empty": "Nenhum registro encontrado.",
+        "yes": "Sim",
+        "no": "Não",
+        "summary": {
+          "totalPeople": "Total de Pessoas",
+          "withUser": "Com Usuário",
+          "withVolunteer": "Com Voluntário",
+          "withBoth": "Com Ambos"
+        },
+        "filters": {
+          "all": "Todos",
+          "withUser": "Com usuário",
+          "withoutUser": "Sem usuário",
+          "withVolunteer": "Com voluntário",
+          "withoutVolunteer": "Sem voluntário",
+          "withBoth": "Com usuário e voluntário"
+        },
+        "status": {
+          "userAndVolunteer": "Usuário + Voluntário",
+          "userWithoutVolunteer": "Usuário sem vínculo de voluntário",
+          "volunteerWithoutUser": "Voluntário sem usuário",
+          "personOnly": "Somente pessoa"
+        },
+        "table": {
+          "person": "Pessoa",
+          "personEmail": "Email Pessoa",
+          "user": "Usuário",
+          "loginEmail": "Email Login",
+          "userType": "Tipo Usuário",
+          "volunteerLinks": "Vínculos Voluntário",
+          "teams": "Equipes",
+          "roles": "Cargos",
+          "status": "Status"
+        }
+      },
+      "exchangeRequests": {
+        "title": "Solicitações de Troca",
+        "subtitle": "Acompanhe pedidos de substituição das equipes e entre rápido nas pendências mais urgentes.",
+        "loading": "Carregando solicitações de troca...",
+        "errorLoad": "Erro ao carregar solicitações de troca",
+        "filtersTitle": "Filtros",
+        "searchLabel": "Buscar",
+        "searchPlaceholder": "Evento, equipe, voluntário ou motivo",
+        "teamLabel": "Equipe",
+        "allTeams": "Todas as equipes",
+        "statusLabel": "Status",
+        "listTitle": "Gestão de trocas ({{total}})",
+        "emptyTitle": "Nenhuma solicitação encontrada",
+        "emptyDescription": "Não há trocas de escala para os filtros atuais. Revise equipe, status ou busca para ampliar a leitura.",
+        "openSchedule": "Abrir escala",
+        "awaitingReview": "Aguardando análise",
+        "occurrenceFallback": "Ocorrência #{{id}}",
+        "summary": {
+          "total": "Total",
+          "pending": "Pendentes",
+          "approved": "Aprovadas",
+          "rejected": "Rejeitadas"
+        },
+        "status": {
+          "pending": "Pendente",
+          "approved": "Aprovada",
+          "rejected": "Rejeitada",
+          "canceled": "Cancelada"
+        },
+        "statusFilter": {
+          "all": "Todos"
+        },
+        "table": {
+          "event": "Evento",
+          "team": "Equipe",
+          "requester": "Solicitante",
+          "status": "Status",
+          "substitute": "Substituto",
+          "reason": "Motivo",
+          "response": "Resposta",
+          "actions": "Ações"
+        }
+      },
+      "editAction": "Editar Escala",
+      "buildAction": "Montar Escala"
+    },
+    "coverage": {
+      "title": "Painel de Cobertura",
+      "subtitle": "Visão consolidada das ocorrências com mais risco operacional no voluntariado.",
+      "loading": "Carregando painel de cobertura...",
+      "errorLoad": "Erro ao carregar painel de cobertura",
+      "processReminders": "Processar lembretes",
+      "remindersSent": "{{count}} lembrete(s) enviados",
+      "noPendingReminders": "Nenhum lembrete pendente no momento",
+      "errorProcessReminders": "Erro ao processar lembretes",
+      "filtersTitle": "Filtros",
+      "eventLabel": "Evento",
+      "allEventsOption": "Todos os eventos",
+      "startDateLabel": "Data início",
+      "endDateLabel": "Data fim",
+      "riskLabel": "Risco",
+      "searchLabel": "Buscar ocorrência",
+      "searchPlaceholder": "Digite o nome do evento",
+      "emptyTitle": "Nenhuma ocorrência encontrada",
+      "emptyDescription": "Não há ocorrências no período ou com o nível de risco selecionado. Ajuste os filtros para ampliar o painel.",
+      "openOccurrence": "Abrir ocorrência",
+      "summary": {
+        "occurrences": "Ocorrências",
+        "highRisk": "Risco alto",
+        "attention": "Atenção",
+        "noSchedule": "Sem escala",
+        "slots": "Vagas",
+        "pending": "Pendentes",
+        "declines": "Recusas"
+      },
+      "riskOptions": {
+        "all": "Todos",
+        "high": "Risco alto",
+        "attention": "Atenção",
+        "none": "Sem escala",
+        "ok": "Coberta"
+      },
+      "metrics": {
+        "confirmed": "confirmados",
+        "pending": "pendentes",
+        "declines": "recusas",
+        "replacements": "substituições"
+      },
+      "teamMetrics": {
+        "slots": "vagas",
+        "confirmed": "confirmados",
+        "pending": "pendentes",
+        "declines": "recusas"
+      }
+    },
+    "mySchedules": {
+      "title": "Minhas Escalas",
+      "subtitle": "Consulte suas escalas e confirme ou recuse sua participação.",
+      "loading": "Carregando suas escalas...",
+      "empty": "Nenhuma escala encontrada.",
+      "futureOnly": "Somente futuras",
+      "allSchedules": "Todas",
+      "undefinedRole": "Sem cargo definido",
+      "confirmAction": "Confirmar",
+      "declineAction": "Recusar",
+      "confirmedButton": "Confirmado",
+      "declinedButton": "Recusado",
+      "swapRequestAction": "Solicitar troca",
+      "swapRequestsTitle": "Minhas solicitações de troca",
+      "noSwapRequests": "Nenhuma solicitação registrada.",
+      "confirmSuccess": "Escala confirmada",
+      "declineSuccess": "Recusa registrada",
+      "swapRequestSuccess": "Solicitação de troca enviada",
+      "errorLoad": "Erro ao carregar suas escalas",
+      "errorConfirm": "Erro ao confirmar escala",
+      "errorDecline": "Erro ao recusar escala",
+      "errorSwapRequest": "Erro ao solicitar troca",
+      "declinePrompt": "Motivo da recusa para {{team}}:",
+      "declineTitle": "Recusar escala",
+      "declineOptionalHint": "Opcional",
+      "labels": {
+        "status": "Status",
+        "declineReason": "Motivo da recusa",
+        "reason": "Motivo",
+        "substitute": "Substituto",
+        "response": "Resposta"
+      },
+      "status": {
+        "pending": "Pendente",
+        "confirmed": "Confirmado",
+        "declined": "Recusado",
+        "replaced": "Substituído",
+        "served": "Serviu",
+        "missed": "Faltou",
+        "unknown": "Desconhecido"
+      },
+      "requestStatus": {
+        "pending": "Pendente",
+        "approved": "Aprovada",
+        "rejected": "Rejeitada"
+      },
+      "swapDialog": {
+        "title": "Solicitar troca",
+        "description": "Descreva o motivo da troca para ajudar o líder a tomar a decisão.",
+        "placeholder": "Ex.: estarei viajando / estou indisponível nesse horário",
+        "submit": "Enviar solicitação"
+      }
+    },
+    "history": {
+      "title": "Histórico Operacional",
+      "subtitle": "Acompanhe presença, faltas, pendências e carga recente dos voluntários.",
+      "loading": "Carregando histórico do voluntariado...",
+      "errorLoad": "Erro ao carregar histórico operacional",
+      "refresh": "Atualizar",
+      "filtersTitle": "Filtros",
+      "searchLabel": "Buscar",
+      "searchPlaceholder": "Nome do voluntário ou equipe",
+      "teamLabel": "Equipe",
+      "eventLabel": "Evento",
+      "allTeamsOption": "Todas",
+      "allEventsOption": "Todos",
+      "startDateLabel": "Data início",
+      "endDateLabel": "Data fim",
+      "listTitle": "Voluntários ({{total}})",
+      "empty": "Nenhum voluntário encontrado para os filtros atuais.",
+      "summary": {
+        "volunteers": "Voluntários",
+        "presences": "Presenças",
+        "absences": "Faltas",
+        "pending": "Pendências"
+      },
+      "table": {
+        "volunteer": "Voluntário",
+        "teams": "Equipes",
+        "total": "Total",
+        "presences": "Presenças",
+        "absences": "Faltas",
+        "pending": "Pendentes",
+        "monthLoad": "Carga no mês",
+        "lastSchedule": "Última escala",
+        "nextSchedule": "Próxima escala"
+      }
+    }
+  },
+  "events": {
+    "title": "Eventos",
+    "subtitle": "Gerencie os eventos da igreja",
+    "listTitle": "Lista de Eventos",
+    "loading": "Carregando eventos...",
+    "errorLoad": "Erro ao carregar eventos",
+    "new": "Novo Evento",
+    "edit": "Editar Evento",
+    "create": "Cadastrar Evento",
+    "update": "Atualizar Evento",
+    "emptyTitle": "Nenhum evento encontrado",
+    "emptyMessage": "Nenhum evento encontrado.",
+    "deleteTitle": "Excluir evento",
+    "deleteDescription": "Tem certeza que deseja excluir \"{{title}}\"? Esta ação não pode ser desfeita.",
+    "deleteFallbackTitle": "este evento",
+    "deleteConfirm": "Excluir",
+    "deleteSuccess": "Evento excluído com sucesso",
+    "deleteError": "Erro ao excluir evento",
+    "fields.title": "Título",
+    "fields.type": "Tipo",
+    "fields.description": "Descrição",
+    "fields.startDate": "Data de Início",
+    "fields.endDate": "Data de Fim",
+    "fields.url": "URL",
+    "fields.actions": "Ações",
+    "type.event": "Evento",
+    "type.service": "Culto",
+    "type.meeting": "Reunião",
+    "type.other": "Outro",
+    "search.titlePlaceholder": "Buscar por título...",
+    "search.descriptionPlaceholder": "Buscar por descrição...",
+    "export.button": "Exportar CSV",
+    "export.success": "Dados exportados com sucesso!",
+    "export.title": "Título",
+    "export.description": "Descrição",
+    "export.startDate": "Data Início",
+    "export.endDate": "Data Fim",
+    "export.url": "URL",
+    "actions.viewRegistrations": "Ver Inscrições",
+    "form.loading": "Carregando evento...",
+    "form.notFound": "Evento não encontrado",
+    "form.errorLoad": "Erro ao carregar evento",
+    "form.errorSave": "Erro ao salvar evento",
+    "form.created": "Evento criado com sucesso!",
+    "form.updated": "Evento atualizado com sucesso!",
+    "form.createSubtitle": "Cadastre um novo evento",
+    "form.editSubtitle": "Atualize as informações do evento",
+    "form.placeholders.title": "Título do evento",
+    "form.placeholders.url": "exemplo.com ou https://exemplo.com",
+    "form.placeholders.description": "Descrição do evento",
+    "form.urlHint": "Será adicionado https:// automaticamente",
+    "form.featuredImage": "Imagem de Destaque",
+    "form.recurringToggle": "É recorrente (ex.: culto dominical)",
+    "form.activeToggle": "Ativo",
+    "form.acceptRegistrations": "Aceitar inscrições (exibir formulário no portal)",
+    "form.registration.title": "Campos do formulário de inscrição",
+    "form.registration.description": "Colunas fixas: Nome, WhatsApp, Email, Observações. Adicione outros campos (ex.: RG, CPF) ou use o padrão.",
+    "form.registration.useDefaults": "Usar campos padrão",
+    "form.registration.addField": "Adicionar campo",
+    "form.registration.empty": "Nenhum campo definido. Clique em \"Usar campos padrão\" ou \"Adicionar campo\".",
+    "form.registration.table.slug": "Slug (identificador)",
+    "form.registration.table.label": "Rótulo",
+    "form.registration.table.type": "Tipo",
+    "form.registration.table.required": "Obrigatório",
+    "form.registration.table.actions": "Ações",
+    "form.registration.moveUp": "Subir",
+    "form.registration.moveDown": "Descer",
+    "form.registration.slugPlaceholder": "ex: nome, rg",
+    "form.registration.labelPlaceholder": "Ex.: Nome completo",
+    "form.registration.remove": "Remover",
+    "form.registration.fieldTypes.texto": "Texto",
+    "form.registration.fieldTypes.numero": "Número",
+    "form.registration.fieldTypes.email": "Email",
+    "form.registration.fieldTypes.tel": "Telefone",
+    "form.registration.defaultFields.name": "Nome",
+    "form.registration.defaultFields.whatsapp": "WhatsApp",
+    "form.registration.defaultFields.email": "Email",
+    "form.registration.defaultFields.notes": "Observações",
+    "form.recurrence.sectionTitle": "Recorrências",
+    "form.recurrence.sectionDescription": "Defina os dias e horários em que este evento se repete (ex.: todo domingo às 10h). Depois use \"Gerar Ocorrências\" em Voluntariado → Escalas.",
+    "form.recurrence.new": "Nova recorrência",
+    "form.recurrence.newTitle": "Nova recorrência",
+    "form.recurrence.editTitle": "Editar recorrência",
+    "form.recurrence.dayOfWeek": "Dia da semana",
+    "form.recurrence.startTime": "Hora início",
+    "form.recurrence.endTime": "Hora fim (opcional)",
+    "form.recurrence.frequencyLabel": "Periodicidade",
+    "form.recurrence.monthWeekLabel": "Ocorrência no mês",
+    "form.recurrence.validFrom": "Vigência desde",
+    "form.recurrence.validUntil": "Vigência até (opcional)",
+    "form.recurrence.loading": "Carregando recorrências...",
+    "form.recurrence.empty": "Nenhuma recorrência cadastrada. Clique em \"Nova recorrência\" para definir dias e horários.",
+    "form.recurrence.created": "Recorrência adicionada.",
+    "form.recurrence.updated": "Recorrência atualizada.",
+    "form.recurrence.deleted": "Recorrência excluída.",
+    "form.recurrence.errorSave": "Erro ao salvar recorrência",
+    "form.recurrence.errorDelete": "Erro ao excluir",
+    "form.recurrence.confirmDeleteTitle": "Excluir recorrência",
+    "form.recurrence.confirmDelete": "Excluir esta recorrência?",
+    "form.recurrence.noEndTime": "—",
+    "form.recurrence.noEndDate": "(sem fim)",
+    "form.recurrence.validityUntil": "até {{date}}",
+    "form.recurrence.yes": "Sim",
+    "form.recurrence.no": "Não",
+    "form.recurrence.table.day": "Dia",
+    "form.recurrence.table.startTime": "Hora início",
+    "form.recurrence.table.endTime": "Hora fim",
+    "form.recurrence.table.frequency": "Periodicidade",
+    "form.recurrence.table.validity": "Vigência",
+    "form.recurrence.table.active": "Ativo",
+    "form.recurrence.table.actions": "Ações",
+    "form.recurrence.days.0": "Domingo",
+    "form.recurrence.days.1": "Segunda-feira",
+    "form.recurrence.days.2": "Terça-feira",
+    "form.recurrence.days.3": "Quarta-feira",
+    "form.recurrence.days.4": "Quinta-feira",
+    "form.recurrence.days.5": "Sexta-feira",
+    "form.recurrence.days.6": "Sábado",
+    "form.recurrence.frequency.weekly": "Semanal",
+    "form.recurrence.frequency.biweekly": "Quinzenal",
+    "form.recurrence.frequency.monthly": "Mensal",
+    "form.recurrence.frequency.monthlyOrdinal": "Mensal ({{week}} {{day}})",
+    "form.recurrence.monthWeek.1": "1º",
+    "form.recurrence.monthWeek.2": "2º",
+    "form.recurrence.monthWeek.3": "3º",
+    "form.recurrence.monthWeek.4": "4º",
+    "form.recurrence.monthWeek.5": "5º",
+    "occurrencesTitle": "Ocorrências de Eventos",
+    "occurrencesSubtitle": "Gere e liste ocorrências (datas) dos eventos. Depois monte as escalas em Voluntariado → Escalas.",
+    "occurrencesFiltersTitle": "Filtros",
+    "occurrencesEventLabel": "Evento",
+    "occurrencesStartDateLabel": "Data início",
+    "occurrencesEndDateLabel": "Data fim",
+    "occurrencesListTitle": "Ocorrências",
+    "occurrencesLoading": "Carregando ocorrências...",
+    "occurrencesErrorLoad": "Erro ao carregar ocorrências",
+    "occurrencesAllEvents": "Todos os eventos",
+    "occurrencesEmptyMessage": "Nenhuma ocorrência encontrada para o período.",
+    "occurrencesEmptyDescription": "Ajuste o período, selecione um evento específico ou gere novas ocorrências.",
+    "occurrencesStatus.confirmed": "Confirmado",
+    "occurrencesStatus.canceled": "Cancelado",
+    "occurrencesStatus.done": "Realizado",
+    "occurrencesStatus.unknown": "Desconhecido",
+    "occurrencesActions.refresh": "Atualizar",
+    "occurrencesActions.generate": "Gerar Ocorrências",
+    "occurrencesGenerateSelectEvent": "Selecione um evento para gerar ocorrências",
+    "occurrencesGenerateCreated": "{{count}} ocorrência(s) criada(s)",
+    "occurrencesGenerateNone": "Nenhuma ocorrência nova foi criada. Verifique se o evento tem recorrências configuradas (Editar evento → Recorrências) e se a vigência cobre o período escolhido.",
+    "occurrencesGenerateError": "Erro ao gerar ocorrências",
+    "occurrencesDeleteTitle": "Excluir ocorrência",
+    "occurrencesDeleteConfirm": "Excluir esta ocorrência?",
+    "occurrencesDeleteSuccess": "Ocorrência excluída.",
+    "occurrencesDeleteError": "Erro ao excluir ocorrência",
+    "occurrencesDeleteHasScales": "Não é possível excluir ocorrência que já possui escala.",
+    "occurrencesTable.event": "Evento",
+    "occurrencesTable.dateTime": "Data/Hora",
+    "occurrencesTable.status": "Status",
+    "occurrencesTable.scales": "Escalas",
+    "occurrencesTable.actions": "Ações",
+    "occurrencesTable.hasScales": "Há escala(s)",
+    "occurrencesTable.noScales": "Nenhuma",
+    "occurrencesTable.buildScales": "Montar escalas",
+    "occurrencesTable.delete": "Excluir"
+  },
+  "eventRegistrations": {
+    "title": "Inscrições em Eventos",
+    "subtitle": "Gerencie as inscrições nos eventos",
+    "filtersTitle": "Filtros",
+    "searchLabel": "Buscar",
+    "searchPlaceholder": "Nome ou WhatsApp",
+    "eventLabel": "Evento",
+    "eventAllOption": "Todos",
+    "statusLabel": "Status",
+    "statusAllOption": "Todos",
+    "status.pending": "Pendente",
+    "status.confirmed": "Confirmada",
+    "status.canceled": "Cancelada",
+    "status.present": "Presente",
+    "status.unknown": "Desconhecido",
+    "listTitle": "Lista de Inscrições",
+    "emptyMessage": "Nenhuma inscrição encontrada.",
+    "table.name": "Nome",
+    "table.whatsapp": "WhatsApp",
+    "table.email": "Email",
+    "table.event": "Evento",
+    "table.status": "Status",
+    "table.companions": "Acompanhantes",
+    "table.registrationDate": "Data Inscrição",
+    "table.actions": "Ações",
+    "confirmDialog.deleteTitle": "Excluir inscrição?",
+    "confirmDialog.deleteDescription": "Essa ação não pode ser desfeita.",
+    "confirmDialog.cancelTitle": "Cancelar inscrição?",
+    "confirmDialog.cancelDescription": "A inscrição ficará com status cancelada.",
+    "confirmDialog.confirmDelete": "Excluir",
+    "confirmDialog.confirmCancel": "Cancelar",
+    "detailsTitle": "Detalhes da Inscrição",
+    "detailsSubtitle": "Informações completas da inscrição",
+    "participantCardTitle": "Dados do Participante",
+    "eventCardTitle": "Informações do Evento",
+    "participantNameLabel": "Nome",
+    "participantWhatsappLabel": "WhatsApp",
+    "participantEmailLabel": "Email",
+    "participantStatusLabel": "Status",
+    "eventTitleLabel": "Evento",
+    "eventCompanionsLabel": "Quantidade de Acompanhantes",
+    "eventRegistrationDateLabel": "Data de Inscrição",
+    "eventConfirmationDateLabel": "Data de Confirmação",
+    "eventCancellationDateLabel": "Data de Cancelamento",
+    "participantNotesTitle": "Observações do Participante",
+    "internalNotesTitle": "Observações Internas",
+    "backToRegistrations": "Voltar",
+    "backToEvents": "Voltar para Eventos",
+    "new": "Nova Inscrição",
+    "edit": "Editar Inscrição",
+    "create": "Cadastrar Inscrição",
+    "update": "Atualizar Inscrição",
+    "form.participantNotesLabel": "Observações do Participante",
+    "form.participantNotesPlaceholder": "Observações do participante",
+    "form.internalNotesLabel": "Observações Internas",
+    "form.internalNotesPlaceholder": "Observações internas (apenas para administradores)",
+    "form.companionsLabel": "Quantidade de Acompanhantes",
+    "form.statusLabel": "Status",
+    "stats.total": "Total",
+    "stats.confirmed": "Confirmadas",
+    "stats.pending": "Pendentes",
+    "stats.canceled": "Canceladas",
+    "stats.participants": "Participantes",
+    "filterByStatusLabel": "Filtrar por Status",
+    "newInlineTitle": "Nova Inscrição",
+    "loading": "Carregando inscrições...",
+    "loadingDetails": "Carregando inscrição...",
+    "notFound": "Inscrição não encontrada",
+    "emptyDescription": "Ajuste os filtros para ampliar o resultado ou aguarde novas inscrições.",
+    "eventEmptyDescription": "Novas inscrições aparecerão aqui conforme o evento receber respostas.",
+    "titleWithEvent": "Inscrições - {{event}}",
+    "eventFallback": "Evento",
+    "manageEventSubtitle": "Gerencie as inscrições deste evento",
+    "confirmAction": "Confirmar",
+    "cancelAction": "Cancelar",
+    "markPresentAction": "Marcar presença",
+    "deleteSuccess": "Inscrição excluída",
+    "cancelSuccess": "Inscrição cancelada",
+    "confirmSuccess": "Inscrição confirmada",
+    "markPresentSuccess": "Presença marcada",
+    "errorLoad": "Erro ao carregar inscrição",
+    "errorLoadEvent": "Erro ao carregar dados",
+    "errorDelete": "Erro ao excluir inscrição",
+    "errorCancel": "Erro ao cancelar inscrição",
+    "errorConfirm": "Erro ao confirmar inscrição",
+    "errorMarkPresent": "Erro ao marcar presença",
+    "publicForm": {
+      "title": "Inscrever-se no Evento",
+      "submit": "Inscrever-se",
+      "submitting": "Enviando...",
+      "success": "Inscrição realizada com sucesso! Aguarde a confirmação.",
+      "errorDefault": "Erro ao realizar inscrição",
+      "fields": {
+        "name": "Nome Completo",
+        "whatsApp": "WhatsApp",
+        "email": "Email",
+        "companions": "Quantidade de Acompanhantes",
+        "companionsHint": "Número de pessoas que virão junto com você",
+        "notes": "Observações"
+      },
+      "placeholders": {
+        "name": "Seu nome completo",
+        "email": "seu@email.com",
+        "notes": "Alguma informação adicional que gostaria de compartilhar?"
+      },
+      "validation": {
+        "nameRequired": "Nome é obrigatório",
+        "whatsAppRequired": "WhatsApp é obrigatório",
+        "whatsAppInvalid": "WhatsApp inválido. Use o formato (11) 99999-9999",
+        "emailInvalid": "Email inválido"
+      },
+      "errors": {
+        "alreadyStarted": "Este evento já iniciou e não aceita mais inscrições",
+        "duplicate": "Você já está inscrito neste evento",
+        "notFound": "Evento não encontrado"
+      }
+    }
+  },
+  "finance": {
+    "dashboard": {
+      "title": "Dashboard Financeiro",
+      "subtitle": "Visão geral das finanças",
+      "errorLoad": "Erro ao carregar dashboard financeiro",
+      "summary": {
+        "monthRevenues": "Receitas do Mês",
+        "monthRevenuesHint": "Total recebido este mês",
+        "monthExpenses": "Despesas do Mês",
+        "monthExpensesHint": "Total pago este mês",
+        "monthBalance": "Saldo do Mês",
+        "monthBalanceHint": "Receitas - Despesas",
+        "yearBalance": "Saldo do Ano",
+        "yearBalanceHint": "Receitas: {{revenues}} | Despesas: {{expenses}}"
+      },
+      "cashFlow": {
+        "title": "Fluxo de Caixa - Últimos 12 Meses",
+        "empty": "Nenhum dado disponível"
+      },
+      "byCategory": {
+        "revenuesTitle": "Receitas por Categoria (Mês)",
+        "revenuesEmpty": "Nenhuma receita este mês",
+        "expensesTitle": "Despesas por Categoria (Mês)",
+        "expensesEmpty": "Nenhuma despesa este mês",
+        "table": {
+          "category": "Categoria",
+          "value": "Valor",
+          "percent": "%"
+        }
+      },
+      "lastMovements": {
+        "title": "Últimas Movimentações",
+        "empty": "Nenhuma movimentação recente",
+        "table": {
+          "type": "Tipo",
+          "description": "Descrição",
+          "date": "Data",
+          "status": "Status",
+          "value": "Valor"
+        },
+        "type": {
+          "revenue": "Receita",
+          "expense": "Despesa"
+        }
+      }
+    },
+    "reports": {
+      "title": "Relatórios Financeiros",
+      "subtitle": "Gere relatórios detalhados das finanças",
+      "paramsTitle": "Parâmetros do Relatório",
+      "typeLabel": "Tipo de Relatório",
+      "type": {
+        "cashFlow": "Fluxo de Caixa",
+        "byCategory": "Por Categoria",
+        "byCostCenter": "Por Centro de Custo",
+        "byProject": "Por Projeto"
+      },
+      "startDate": "Data Início",
+      "endDate": "Data Fim",
+      "generateButton": "Gerar Relatório",
+      "generating": "Gerando...",
+      "generatingMessage": "Gerando relatório...",
+      "errorLoad": "Erro ao gerar relatório",
+      "errorSelectDates": "Selecione as datas de início e fim",
+      "success": "Relatório gerado com sucesso",
+      "periodLabel": "Período: {{start}} a {{end}}",
+      "cashFlow": {
+        "title": "Fluxo de Caixa",
+        "summary": {
+          "totalRevenues": "Total Receitas",
+          "totalExpenses": "Total Despesas",
+          "balance": "Saldo"
+        },
+        "table": {
+          "date": "Data",
+          "revenues": "Receitas",
+          "expenses": "Despesas",
+          "dayBalance": "Saldo do Dia",
+          "accumulatedBalance": "Saldo Acumulado"
+        }
+      },
+      "byCategory": {
+        "title": "Relatório por Categoria",
+        "revenuesTitle": "Receitas por Categoria",
+        "expensesTitle": "Despesas por Categoria",
+        "table": {
+          "category": "Categoria",
+          "value": "Valor",
+          "quantity": "Quantidade",
+          "percent": "%"
+        }
+      },
+      "byCostCenter": {
+        "title": "Relatório por Centro de Custo",
+        "empty": "Nenhum dado encontrado",
+        "table": {
+          "costCenter": "Centro de Custo",
+          "revenues": "Receitas",
+          "expenses": "Despesas",
+          "balance": "Saldo"
+        }
+      },
+      "byProject": {
+        "title": "Relatório por Projeto",
+        "empty": "Nenhum dado encontrado",
+        "table": {
+          "project": "Projeto",
+          "budget": "Orçamento",
+          "revenues": "Receitas",
+          "expenses": "Despesas",
+          "balance": "Saldo",
+          "usedPercent": "% Utilizado"
+        }
+      }
+    },
+    "common": {
+      "filters": "Filtros",
+      "searchByName": "Buscar por nome",
+      "searchByDescription": "Buscar por descrição",
+      "status": "Status",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "yes": "Sim",
+      "no": "Não",
+      "notCategorized": "Sem categoria",
+      "noCostCenter": "Sem centro de custo",
+      "noProject": "Sem projeto",
+      "emptyList": "Nenhum registro encontrado.",
+      "name": "Nome",
+      "description": "Descrição"
+    },
+    "revenues": {
+      "title": "Receitas",
+      "subtitle": "Gerencie as receitas",
+      "new": "Nova Receita",
+      "listTitle": "Lista de Receitas",
+      "loading": "Carregando receitas...",
+      "errorLoad": "Erro ao carregar receitas",
+      "emptyTitle": "Nenhuma receita encontrada",
+      "emptyMessage": "Nenhuma receita encontrada.",
+      "filters": {
+        "searchLabel": "Buscar por descrição",
+        "searchPlaceholder": "Digite a descrição da receita"
+      },
+      "table": {
+        "description": "Descrição",
+        "value": "Valor",
+        "date": "Data Recebimento",
+        "bankAccount": "Conta Bancária",
+        "costCenter": "Centro de Custo",
+        "project": "Projeto",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "status": {
+        "pending": "Pendente",
+        "received": "Recebido",
+        "canceled": "Cancelado"
+      },
+      "delete": {
+        "title": "Excluir Receita",
+        "description": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+        "confirm": "Excluir",
+        "cancel": "Cancelar",
+        "success": "Receita excluída com sucesso",
+        "error": "Erro ao excluir receita"
+      },
+      "form": {
+        "editTitle": "Editar Receita",
+        "newTitle": "Nova Receita",
+        "editSubtitle": "Atualize as informações da receita",
+        "newSubtitle": "Cadastre uma nova receita",
+        "cardTitle": "Dados da Receita",
+        "fields": {
+          "description": "Descrição",
+          "descriptionPlaceholder": "Descrição da receita",
+          "value": "Valor",
+          "date": "Data de Recebimento",
+          "status": "Status",
+          "category": "Categoria de Receita",
+          "bankAccount": "Conta Bancária",
+          "costCenter": "Centro de Custo",
+          "project": "Projeto",
+          "notes": "Observações",
+          "notesPlaceholder": "Observações sobre a receita",
+          "receiptUrl": "URL do Comprovante"
+        },
+        "validation": {
+          "descriptionRequired": "Descrição é obrigatória",
+          "valueRequired": "Valor é obrigatório",
+          "dateRequired": "Data de recebimento é obrigatória"
+        },
+        "saveSuccessEdit": "Receita atualizada com sucesso!",
+        "saveSuccessCreate": "Receita criada com sucesso!",
+        "saveError": "Erro ao salvar receita",
+        "loading": "Carregando receita..."
+      }
+    },
+    "expenses": {
+      "title": "Despesas",
+      "subtitle": "Gerencie as despesas",
+      "new": "Nova Despesa",
+      "listTitle": "Lista de Despesas",
+      "loading": "Carregando despesas...",
+      "errorLoad": "Erro ao carregar despesas",
+      "emptyTitle": "Nenhuma despesa encontrada",
+      "emptyMessage": "Nenhuma despesa encontrada.",
+      "filters": {
+        "searchLabel": "Buscar por descrição",
+        "searchPlaceholder": "Digite a descrição da despesa"
+      },
+      "table": {
+        "description": "Descrição",
+        "value": "Valor",
+        "dueDate": "Data Vencimento",
+        "supplier": "Fornecedor",
+        "category": "Categoria",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "status": {
+        "pending": "Pendente",
+        "paid": "Pago",
+        "canceled": "Cancelado"
+      },
+      "delete": {
+        "title": "Excluir Despesa",
+        "description": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+        "confirm": "Excluir",
+        "cancel": "Cancelar",
+        "success": "Despesa excluída com sucesso",
+        "error": "Erro ao excluir despesa"
+      },
+      "form": {
+        "editTitle": "Editar Despesa",
+        "newTitle": "Nova Despesa",
+        "editSubtitle": "Atualize as informações da despesa",
+        "newSubtitle": "Cadastre uma nova despesa",
+        "cardTitle": "Dados da Despesa",
+        "fields": {
+          "description": "Descrição",
+          "descriptionPlaceholder": "Descrição da despesa",
+          "value": "Valor",
+          "dueDate": "Data de Vencimento",
+          "status": "Status",
+          "supplier": "Fornecedor",
+          "category": "Categoria de Despesa",
+          "bankAccount": "Conta Bancária",
+          "costCenter": "Centro de Custo",
+          "project": "Projeto",
+          "notes": "Observações",
+          "notesPlaceholder": "Observações sobre a despesa",
+          "receiptUrl": "URL do Comprovante"
+        },
+        "validation": {
+          "descriptionRequired": "Descrição é obrigatória",
+          "valueRequired": "Valor é obrigatório",
+          "dueDateRequired": "Data de vencimento é obrigatória"
+        },
+        "saveSuccessEdit": "Despesa atualizada com sucesso!",
+        "saveSuccessCreate": "Despesa criada com sucesso!",
+        "saveError": "Erro ao salvar despesa",
+        "loading": "Carregando despesa..."
+      }
+    },
+    "revenueCategories": {
+      "title": "Categorias de Receitas",
+      "subtitle": "Gerencie as categorias de receitas",
+      "new": "Nova Categoria",
+      "listTitle": "Lista de Categorias",
+      "loading": "Carregando categorias de receitas...",
+      "errorLoad": "Erro ao carregar categorias de receitas",
+      "emptyMessage": "Nenhuma categoria encontrada.",
+      "deleteTitle": "Excluir Categoria de Receita",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Categoria de receita excluída com sucesso",
+      "deleteError": "Erro ao excluir categoria de receita",
+      "editTitle": "Editar Categoria de Receita",
+      "newTitle": "Nova Categoria de Receita",
+      "editSubtitle": "Atualize as informações da categoria",
+      "newSubtitle": "Cadastre uma nova categoria de receita",
+      "cardTitle": "Dados da Categoria",
+      "activeLabel": "Categoria ativa",
+      "statusActive": "Ativa",
+      "statusInactive": "Inativa",
+      "saveSuccessEdit": "Categoria atualizada com sucesso!",
+      "saveSuccessCreate": "Categoria criada com sucesso!",
+      "saveError": "Erro ao salvar categoria de receita",
+      "loadingForm": "Carregando categoria..."
+    },
+    "expenseCategories": {
+      "title": "Categorias de Despesas",
+      "subtitle": "Gerencie as categorias de despesas",
+      "new": "Nova Categoria",
+      "listTitle": "Lista de Categorias",
+      "loading": "Carregando categorias de despesas...",
+      "errorLoad": "Erro ao carregar categorias de despesas",
+      "emptyMessage": "Nenhuma categoria encontrada.",
+      "deleteTitle": "Excluir Categoria de Despesa",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Categoria de despesa excluída com sucesso",
+      "deleteError": "Erro ao excluir categoria de despesa",
+      "editTitle": "Editar Categoria de Despesa",
+      "newTitle": "Nova Categoria de Despesa",
+      "editSubtitle": "Atualize as informações da categoria",
+      "newSubtitle": "Cadastre uma nova categoria de despesa",
+      "cardTitle": "Dados da Categoria",
+      "activeLabel": "Categoria ativa",
+      "statusActive": "Ativa",
+      "statusInactive": "Inativa",
+      "saveSuccessEdit": "Categoria atualizada com sucesso!",
+      "saveSuccessCreate": "Categoria criada com sucesso!",
+      "saveError": "Erro ao salvar categoria de despesa",
+      "loadingForm": "Carregando categoria..."
+    },
+    "bankAccounts": {
+      "title": "Contas Bancárias",
+      "subtitle": "Gerencie as contas bancárias",
+      "new": "Nova Conta",
+      "listTitle": "Lista de Contas Bancárias",
+      "loading": "Carregando contas bancárias...",
+      "errorLoad": "Erro ao carregar contas bancárias",
+      "emptyMessage": "Nenhuma conta bancária encontrada.",
+      "deleteTitle": "Excluir Conta Bancária",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Conta bancária excluída com sucesso",
+      "deleteError": "Erro ao excluir conta bancária",
+      "editTitle": "Editar Conta Bancária",
+      "newTitle": "Nova Conta Bancária",
+      "editSubtitle": "Atualize as informações da conta",
+      "newSubtitle": "Cadastre uma nova conta bancária",
+      "cardTitle": "Dados da Conta Bancária",
+      "tableBank": "Banco",
+      "tableAgency": "Agência",
+      "tableAccount": "Conta",
+      "tableType": "Tipo",
+      "tableInitialBalance": "Saldo Inicial",
+      "activeLabel": "Conta ativa",
+      "fieldBank": "Banco",
+      "fieldAgency": "Agência",
+      "fieldAccount": "Conta",
+      "fieldType": "Tipo de Conta",
+      "fieldInitialBalance": "Saldo Inicial",
+      "typeCurrent": "Corrente",
+      "typeSavings": "Poupança",
+      "nameRequired": "Nome é obrigatório",
+      "initialBalanceRequired": "Saldo inicial é obrigatório",
+      "saveSuccessEdit": "Conta bancária atualizada com sucesso!",
+      "saveSuccessCreate": "Conta bancária criada com sucesso!",
+      "saveError": "Erro ao salvar conta bancária",
+      "loadingForm": "Carregando conta bancária..."
+    },
+    "costCenters": {
+      "title": "Centros de Custos",
+      "subtitle": "Gerencie os centros de custos",
+      "new": "Novo Centro de Custo",
+      "listTitle": "Lista de Centros de Custos",
+      "loading": "Carregando centros de custos...",
+      "errorLoad": "Erro ao carregar centros de custos",
+      "emptyMessage": "Nenhum centro de custo encontrado.",
+      "deleteTitle": "Excluir Centro de Custo",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Centro de custo excluído com sucesso",
+      "deleteError": "Erro ao excluir centro de custo",
+      "editTitle": "Editar Centro de Custo",
+      "newTitle": "Novo Centro de Custo",
+      "editSubtitle": "Atualize as informações do centro de custo",
+      "newSubtitle": "Cadastre um novo centro de custo",
+      "cardTitle": "Dados do Centro de Custo",
+      "activeLabel": "Centro de custo ativo",
+      "statusActive": "Ativo",
+      "statusInactive": "Inativo",
+      "saveSuccessEdit": "Centro de custo atualizado com sucesso!",
+      "saveSuccessCreate": "Centro de custo criado com sucesso!",
+      "saveError": "Erro ao salvar centro de custo",
+      "loadingForm": "Carregando centro de custo..."
+    },
+    "projects": {
+      "title": "Projetos",
+      "subtitle": "Gerencie os projetos",
+      "new": "Novo Projeto",
+      "listTitle": "Lista de Projetos",
+      "loading": "Carregando projetos...",
+      "errorLoad": "Erro ao carregar projetos",
+      "emptyMessage": "Nenhum projeto encontrado.",
+      "deleteTitle": "Excluir Projeto",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Projeto excluído com sucesso",
+      "deleteError": "Erro ao excluir projeto",
+      "editTitle": "Editar Projeto",
+      "newTitle": "Novo Projeto",
+      "editSubtitle": "Atualize as informações do projeto",
+      "newSubtitle": "Cadastre um novo projeto",
+      "cardTitle": "Dados do Projeto",
+      "tableBudget": "Orçamento",
+      "activeLabel": "Projeto ativo",
+      "statusActive": "Ativo",
+      "statusInactive": "Inativo",
+      "fieldBudget": "Orçamento",
+      "nameRequired": "Nome é obrigatório",
+      "saveSuccessEdit": "Projeto atualizado com sucesso!",
+      "saveSuccessCreate": "Projeto criado com sucesso!",
+      "saveError": "Erro ao salvar projeto",
+      "loadingForm": "Carregando projeto..."
+    },
+    "patrimonyCategories": {
+      "title": "Categorias de Patrimônio",
+      "subtitle": "Gerencie as categorias do patrimônio",
+      "new": "Nova Categoria",
+      "listTitle": "Lista de Categorias",
+      "loading": "Carregando categorias de patrimônio...",
+      "errorLoad": "Erro ao carregar categorias de patrimônio",
+      "emptyMessage": "Nenhuma categoria de patrimônio encontrada.",
+      "deleteTitle": "Excluir Categoria de Patrimônio",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Categoria de patrimônio excluída com sucesso",
+      "deleteError": "Erro ao excluir categoria de patrimônio",
+      "editTitle": "Editar Categoria de Patrimônio",
+      "newTitle": "Nova Categoria de Patrimônio",
+      "editSubtitle": "Atualize as informações da categoria",
+      "newSubtitle": "Cadastre uma nova categoria de patrimônio",
+      "cardTitle": "Dados da Categoria",
+      "activeLabel": "Categoria ativa",
+      "statusActive": "Ativa",
+      "statusInactive": "Inativa",
+      "nameRequired": "Nome é obrigatório",
+      "saveSuccessEdit": "Categoria de patrimônio atualizada com sucesso!",
+      "saveSuccessCreate": "Categoria de patrimônio criada com sucesso!",
+      "saveError": "Erro ao salvar categoria de patrimônio",
+      "loadingForm": "Carregando categoria..."
+    },
+    "patrimony": {
+      "title": "Patrimônio",
+      "subtitle": "Gerencie os bens da igreja",
+      "report": "Ver relatório",
+      "new": "Novo Bem",
+      "listTitle": "Lista de Bens",
+      "loading": "Carregando patrimônio...",
+      "loadingForm": "Carregando bem patrimonial...",
+      "errorLoad": "Erro ao carregar patrimônio",
+      "emptyMessage": "Nenhum bem patrimonial encontrado.",
+      "deleteTitle": "Excluir Bem Patrimonial",
+      "deleteDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Bem patrimonial excluído com sucesso",
+      "deleteError": "Erro ao excluir bem patrimonial",
+      "editTitle": "Editar Bem Patrimonial",
+      "newTitle": "Novo Bem Patrimonial",
+      "editSubtitle": "Atualize as informações do bem",
+      "newSubtitle": "Cadastre um novo bem patrimonial",
+      "detailsSubtitle": "Detalhes completos do bem patrimonial",
+      "loadingDetails": "Carregando detalhes do bem patrimonial...",
+      "notFound": "Bem patrimonial não encontrado",
+      "saveSuccessEdit": "Bem patrimonial atualizado com sucesso!",
+      "saveSuccessCreate": "Bem patrimonial criado com sucesso!",
+      "saveError": "Erro ao salvar bem patrimonial",
+      "summary": {
+        "totalItems": "Total de Bens",
+        "activeItems": "Bens Ativos",
+        "inMaintenance": "Em Manutenção",
+        "totalValue": "Valor Total"
+      },
+      "filters": {
+        "searchLabel": "Buscar por nome, código ou série",
+        "searchPlaceholder": "Digite o nome, código ou série",
+        "allCategories": "Todas as categorias",
+        "allStatus": "Todos os status"
+      },
+      "sections": {
+        "identification": "Identificação",
+        "location": "Localização e Responsabilidade",
+        "acquisition": "Aquisição e Vínculos",
+        "state": "Estado e Controle",
+        "notes": "Observações e Anexos"
+      },
+      "fields": {
+        "code": "Código patrimonial",
+        "name": "Nome do bem",
+        "category": "Categoria",
+        "quantity": "Quantidade",
+        "serialNumber": "Número de série",
+        "brand": "Marca",
+        "model": "Modelo",
+        "campus": "Campus/Unidade",
+        "location": "Localização",
+        "ministry": "Ministério/Área",
+        "responsible": "Responsável",
+        "acquisitionType": "Tipo de aquisição",
+        "acquisitionDate": "Data de aquisição",
+        "acquisitionValue": "Valor de aquisição",
+        "supplier": "Fornecedor",
+        "invoiceNumber": "Número da nota fiscal",
+        "expense": "Despesa vinculada",
+        "costCenter": "Centro de custo",
+        "project": "Projeto",
+        "status": "Status",
+        "conservationState": "Estado de conservação",
+        "lastEvaluation": "Data da última avaliação",
+        "hasWarranty": "Possui garantia",
+        "warrantyUntil": "Garantia até",
+        "lastMaintenance": "Última manutenção",
+        "nextMaintenance": "Próxima manutenção",
+        "photoUrl": "URL da foto",
+        "documentUrl": "URL do documento",
+        "notes": "Observações",
+        "active": "Bem ativo"
+      },
+      "table": {
+        "code": "Código",
+        "name": "Nome",
+        "category": "Categoria",
+        "location": "Local",
+        "responsible": "Responsável",
+        "status": "Status",
+        "value": "Valor"
+      },
+      "validation": {
+        "codeRequired": "Código é obrigatório",
+        "nameRequired": "Nome é obrigatório",
+        "categoryRequired": "Categoria é obrigatória"
+      },
+      "status": {
+        "inUse": "Em uso",
+        "inMaintenance": "Em manutenção",
+        "loaned": "Emprestado",
+        "idle": "Ocioso",
+        "disposed": "Baixado"
+      },
+      "acquisitionType": {
+        "purchased": "Comprado",
+        "donated": "Doado",
+        "manufactured": "Fabricado",
+        "assigned": "Cedido"
+      },
+      "conservationState": {
+        "new": "Novo",
+        "good": "Bom",
+        "fair": "Regular",
+        "poor": "Ruim",
+        "unusable": "Inutilizável"
+      }
+    },
+    "patrimonyReport": {
+      "title": "Relatório de Patrimônio",
+      "subtitle": "Visão consolidada dos bens por categoria, local e status",
+      "loading": "Carregando relatório patrimonial...",
+      "loadingCharts": "Carregando gráficos...",
+      "errorLoad": "Erro ao carregar relatório patrimonial",
+      "export": "Exportar CSV",
+      "backToList": "Voltar para Patrimônio",
+      "empty": "Nenhum item encontrado para os filtros informados.",
+      "noAlerts": "Nenhum alerta encontrado no período analisado.",
+      "notInformed": "Não informado",
+      "filters": {
+        "campusPlaceholder": "Filtrar por campus",
+        "locationPlaceholder": "Filtrar por localização"
+      },
+      "summary": {
+        "totalItems": "Itens filtrados",
+        "activeItems": "Bens ativos",
+        "totalValue": "Valor total",
+        "totalLocations": "Locais mapeados"
+      },
+      "sections": {
+        "byCategory": "Consolidado por categoria",
+        "byLocation": "Consolidado por local",
+        "byStatus": "Consolidado por status",
+        "warrantyAlerts": "Garantias a vencer em 30 dias",
+        "maintenanceAlerts": "Manutenções próximas ou vencidas",
+        "filteredItems": "Itens filtrados"
+      },
+      "charts": {
+        "byCategory": "Valor por categoria",
+        "byStatus": "Distribuição por status",
+        "byLocation": "Quantidade por local"
+      },
+      "units": {
+        "items": "itens"
+      },
+      "table": {
+        "category": "Categoria",
+        "campus": "Campus",
+        "location": "Localização",
+        "status": "Status",
+        "quantity": "Quantidade",
+        "value": "Valor"
+      }
+    },
+    "patrimonyMovements": {
+      "title": "Movimentações",
+      "new": "Nova Movimentação",
+      "newTitle": "Registrar Movimentação",
+      "emptyMessage": "Nenhuma movimentação registrada para este bem.",
+      "typeHint": "Alguns tipos atualizam automaticamente o status e a localização do bem.",
+      "saveSuccessCreate": "Movimentação registrada com sucesso!",
+      "saveError": "Erro ao registrar movimentação",
+      "filters": {
+        "allTypes": "Todos os tipos",
+        "startDate": "Data inicial",
+        "endDate": "Data final"
+      },
+      "validation": {
+        "typeRequired": "Tipo de movimentação é obrigatório"
+      },
+      "fields": {
+        "type": "Tipo de movimentação",
+        "date": "Data da movimentação",
+        "origin": "Origem",
+        "destination": "Destino",
+        "originResponsible": "Responsável de origem",
+        "destinationResponsible": "Responsável de destino",
+        "notes": "Observações"
+      },
+      "types": {
+        "initialRegistration": "Cadastro inicial",
+        "locationTransfer": "Transferência de local",
+        "responsibleChange": "Troca de responsável",
+        "maintenanceSend": "Envio para manutenção",
+        "maintenanceReturn": "Retorno de manutenção",
+        "loan": "Empréstimo",
+        "return": "Devolução",
+        "disposal": "Baixa"
+      }
+    }
+  },
+  "platformTenants": {
+    "title": "Tenants",
+    "subtitle": "Backoffice da plataforma. Tenant de origem: {{homeTenant}}. Tenant operacional atual: {{currentTenant}}.",
+    "new": "Novo tenant",
+    "loading": "Carregando tenants...",
+    "errorLoad": "Erro ao carregar tenants.",
+    "restricted": "Esta área é restrita ao backoffice da plataforma.",
+    "notAvailable": "n/d",
+    "listTitle": "Lista de tenants",
+    "searchPlaceholder": "Buscar por nome, exibição, slug ou domínio",
+    "stats": {
+      "total": "Tenants cadastrados",
+      "active": "Tenants ativos",
+      "inactive": "Tenants inativos",
+      "localAdmins": "Admins locais provisionados"
+    },
+    "filters": {
+      "all": "Todos",
+      "active": "Ativos",
+      "inactive": "Inativos",
+      "root": "Raiz"
+    },
+    "empty": {
+      "title": "Nenhum tenant encontrado",
+      "description": "Ajuste os filtros ou provisione a próxima igreja para ampliar a operação.",
+      "action": "Provisionar tenant"
+    },
+    "table": {
+      "name": "Nome",
+      "displayName": "Exibição",
+      "slug": "Slug",
+      "logo": "Logo",
+      "domain": "Domínio",
+      "support": "Suporte",
+      "status": "Status",
+      "lastActivity": "Última atividade",
+      "operations": "Operação"
+    },
+    "support": {
+      "users": "{{count}} usuários",
+      "people": "{{count}} pessoas",
+      "admins": "{{count}} admins"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "root": "Tenant raiz",
+      "activatedToast": "Tenant {{name}} ativado com sucesso.",
+      "deactivatedToast": "Tenant {{name}} inativado com sucesso.",
+      "errorToast": "Erro ao atualizar status do tenant.",
+      "toggleAria": "Alterar status do tenant {{name}}"
+    },
+    "operationalStatus": {
+      "inactive": "Inativo",
+      "initialValidation": "Homologação inicial",
+      "onboarding": "Onboarding",
+      "provisioned": "Provisionado",
+      "draft": "Rascunho",
+      "progressSummary": "{{completed}} de {{total}} itens · {{progress}}% do onboarding",
+      "localRead": "Leitura derivada localmente"
+    },
+    "actions": {
+      "details": "Detalhes",
+      "close": "Fechar",
+      "nextStep": "Próxima etapa"
+    },
+    "delete": {
+      "title": "Excluir tenant",
+      "description": "Tem certeza que deseja excluir o tenant \"{{name}}\"? Apenas tenants sem dados operacionais podem ser excluídos.",
+      "confirm": "Excluir",
+      "successToast": "Tenant {{name}} excluído com sucesso."
+    },
+    "logoUpload": {
+      "successToast": "Logo enviada com sucesso.",
+      "errorToast": "Erro ao enviar logo.",
+      "uploading": "Enviando logo...",
+      "hint": "Você pode colar uma URL/caminho ou enviar um arquivo.",
+      "noLogo": "Sem logo"
+    },
+    "validation": {
+      "nameRequired": "Informe o nome da igreja.",
+      "slugRequired": "Informe o slug do tenant.",
+      "primaryColorRequired": "Informe a cor primária.",
+      "secondaryColorRequired": "Informe a cor secundária.",
+      "adminNameRequired": "Informe o nome do admin inicial.",
+      "adminEmailRequired": "Informe o email do admin.",
+      "loginEmailRequired": "Informe o email de login.",
+      "passwordRequired": "Informe a senha inicial."
+    },
+    "fields": {
+      "churchName": "Nome da igreja",
+      "name": "Nome",
+      "displayName": "Exibição",
+      "slug": "Slug",
+      "id": "ID",
+      "domain": "Domínio",
+      "primaryDomain": "Domínio primário",
+      "primaryColor": "Cor primária",
+      "secondaryColor": "Cor secundária",
+      "logo": "Logo da igreja",
+      "favicon": "Favicon",
+      "adminName": "Nome do admin inicial",
+      "adminEmail": "Email do admin",
+      "phone": "Telefone",
+      "whatsApp": "WhatsApp",
+      "loginEmail": "Email de login",
+      "initialPassword": "Senha inicial",
+      "profile": "Perfil",
+      "adminPerson": "Pessoa admin",
+      "adminUser": "Usuário admin",
+      "email": "Email",
+      "login": "Login"
+    },
+    "placeholders": {
+      "churchName": "Igreja Exemplo",
+      "displayNameProvision": "MANG Alphaville",
+      "displayNameEdit": "MANG Guarulhos",
+      "slug": "igreja-exemplo",
+      "primaryDomain": "igreja.exemplo.com",
+      "logoUrl": "/uploads/tenants/slug/images/logo.png",
+      "faviconUrl": "/uploads/tenants/slug/images/favicon.png",
+      "adminName": "Pastor Responsável",
+      "email": "admin@igreja.com",
+      "phone": "(11) 0000-0000",
+      "whatsApp": "(11) 90000-0000",
+      "password": "Mínimo 6 caracteres"
+    },
+    "preview": {
+      "title": "Preview da identidade",
+      "defaultName": "Nome da igreja",
+      "defaultSlug": "slug-da-igreja",
+      "primary": "Primária",
+      "secondary": "Secundária"
+    },
+    "provision": {
+      "title": "Provisionar novo tenant",
+      "description": "Cria a igreja, o perfil administrativo padrão e o usuário inicial em um único fluxo.",
+      "stepIndicator": "Etapa {{current}} de {{total}}",
+      "action": "Provisionar tenant",
+      "provisioning": "Provisionando...",
+      "successToast": "Tenant {{name}} provisionado com sucesso.",
+      "errorToast": "Erro ao provisionar tenant.",
+      "steps": {
+        "identity": {
+          "title": "Identidade",
+          "description": "Nome, exibição e slug do tenant."
+        },
+        "branding": {
+          "title": "Branding",
+          "description": "Domínio, cores e identidade visual."
+        },
+        "admin": {
+          "title": "Admin inicial",
+          "description": "Pessoa e acesso inicial do tenant."
+        },
+        "review": {
+          "title": "Revisão",
+          "description": "Conferência final antes de provisionar."
+        }
+      },
+      "result": {
+        "title": "Provisionamento concluído",
+        "description": "O tenant foi criado com perfil administrativo e usuário inicial prontos para o onboarding.",
+        "tenantCreated": "Tenant criado",
+        "resources": "Recursos provisionados",
+        "nextStep": "Próximo passo recomendado: abrir o detalhe do tenant, revisar branding, validar acesso do admin inicial e seguir para o checklist de onboarding.",
+        "openDetails": "Abrir detalhe do tenant"
+      }
+    },
+    "review": {
+      "tenantCard": "Tenant",
+      "adminCard": "Admin inicial",
+      "description": "Ao continuar, o sistema criará a igreja, o perfil administrativo padrão, a pessoa do admin e o usuário inicial em um único fluxo."
+    },
+    "edit": {
+      "title": "Editar tenant",
+      "description": "Atualize os dados principais da igreja, domínio e identidade visual.",
+      "save": "Salvar alterações",
+      "successToast": "Tenant {{name}} atualizado com sucesso.",
+      "errorToast": "Erro ao atualizar tenant."
+    },
+    "details": {
+      "loading": "Carregando detalhes do tenant...",
+      "errorLoad": "Erro ao carregar detalhes do tenant.",
+      "notFound": "Tenant não encontrado.",
+      "backToList": "Voltar para tenants",
+      "backToOrigin": "Voltar ao tenant de origem",
+      "notConfigured": "não configurado",
+      "noActivity": "Sem atividade registrada",
+      "faviconLabel": "Favicon: {{value}}",
+      "headerSubtitle": "Slug {{slug}} · domínio {{domain}}",
+      "badges": {
+        "operatingNow": "Em operação agora",
+        "homeTenant": "Tenant de origem",
+        "operatingThisTenant": "Operando neste tenant",
+        "sessionOrigin": "Origem da sessão"
+      },
+      "metrics": {
+        "users": "Usuários",
+        "localAdmins": "Admins locais",
+        "people": "Pessoas",
+        "onboarding": "Onboarding mínimo",
+        "onboardingSummary": "{{completed}} de {{total}} itens concluídos",
+        "localSummary": "Resumo ainda calculado localmente para este registro"
+      },
+      "sections": {
+        "identity": "Identidade do tenant",
+        "domainStatus": "Domínio e estado",
+        "onboardingRead": "Onboarding e leitura operacional"
+      },
+      "fields": {
+        "internalName": "Nome interno",
+        "displayName": "Nome de exibição",
+        "createdAt": "Data de criação",
+        "operationalStatus": "Status operacional"
+      },
+      "operate": {
+        "title": "Operar este tenant",
+        "description": "Você vai entrar no contexto operacional de \"{{name}}\". As próximas ações administrativas usarão esse tenant até você voltar para a origem.",
+        "confirm": "Entrar no tenant",
+        "button": "Operar este tenant",
+        "goToCurrent": "Ir para operação atual",
+        "backToHome": "Voltar para origem"
+      },
+      "checklist": {
+        "title": "Checklist de onboarding",
+        "summary": "Status atual: {{status}} · {{completed}} de {{total}} entregas mínimas concluídas",
+        "completed": "Concluído",
+        "pending": "Pendente",
+        "items": {
+          "identidade": "Identidade básica validada",
+          "branding": "Branding mínimo configurado",
+          "dominio": "Domínio principal configurado",
+          "admin": "Admin local provisionado",
+          "operacao": "Base inicial operacional criada"
+        }
+      },
+      "sessionContext": {
+        "title": "Contexto da sessão",
+        "homeTenant": "Tenant de origem: {{value}}",
+        "currentTenant": "Tenant em operação: {{value}}"
+      },
+      "nextSteps": {
+        "title": "Próximos passos sugeridos",
+        "items": {
+          "branding": "Revisar branding e domínio do tenant.",
+          "adminAccess": "Validar acesso do admin inicial provisionado.",
+          "onboarding": "Seguir para checklist de onboarding assim que ele estiver disponível."
+        }
+      },
+      "audit": {
+        "title": "Investigação operacional",
+        "errorLoad": "Erro ao carregar sinais de auditoria do tenant em operação.",
+        "needsContext": "Esta leitura é tenant-scoped. Para ver auditoria e sinais reais deste tenant, primeiro entre no contexto operacional dele.",
+        "operateToInvestigate": "Operar este tenant para investigar",
+        "summary": "Ação mais recorrente: {{action}} · Entidade mais afetada: {{entity}}",
+        "metrics": {
+          "logs": "Logs últimos 7 dias",
+          "distinctUsers": "Usuários distintos",
+          "criticalActions": "Ações críticas",
+          "failures": "Falhas auditadas"
+        },
+        "links": {
+          "openAudit": "Abrir auditoria",
+          "logins": "Ver logins",
+          "passwordChanges": "Ver alterações de senha",
+          "deliveryErrors": "Ver erros de envio",
+          "adminTrail": "Ver trilha administrativa"
+        }
+      },
+      "safeActions": {
+        "title": "Ações seguras",
+        "activate": "Ativar tenant",
+        "deactivate": "Inativar tenant",
+        "activateDescription": "O tenant \"{{name}}\" voltará a ficar disponível para operação.",
+        "deactivateDescription": "O tenant \"{{name}}\" ficará indisponível para operação até ser reativado.",
+        "hint": "Operações sensíveis exigem contexto explícito. Use este bloco para evitar ações indiretas pela lista."
+      }
+    },
+    "alt": {
+      "logo": "Logo do tenant",
+      "logoWithName": "Logo {{name}}"
+    }
+  },
+  "language": {
+    "label": "Idioma",
+    "ptBR": "Português (Brasil)",
+    "enUS": "Inglês (EUA)",
+    "esES": "Espanhol"
+  }
+}

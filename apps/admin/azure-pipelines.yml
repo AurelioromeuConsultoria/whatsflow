@@ -1,0 +1,71 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- group: 'SWA_AppIgreja_Admin_Variables'
+- name: PNPM_HOME
+  value: $(Pipeline.Workspace)/pnpm
+- name: pnpm_config_cache
+  value: $(Pipeline.Workspace)/pnpm/store
+
+steps:
+# 1) Node.js (atualizado para 20.x LTS)
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Use Node.js 20'
+
+# 2) Instalar pnpm (conforme packageManager do package.json)
+- script: |
+    corepack enable
+    corepack prepare pnpm@10.4.1 --activate
+    pnpm config set store-dir $(pnpm_config_cache)
+  displayName: 'Instalar pnpm'
+  env:
+    PNPM_HOME: $(PNPM_HOME)
+
+# 3) Cache de dependências do pnpm (acelera builds futuros)
+- task: Cache@2
+  inputs:
+    key: 'pnpm-store | "$(Agent.OS)" | pnpm-lock.yaml'
+    restoreKeys: |
+      pnpm-store | "$(Agent.OS)"
+    path: $(pnpm_config_cache)
+  displayName: 'Cache pnpm store'
+
+- task: Cache@2
+  inputs:
+    key: 'node_modules | "$(Agent.OS)" | pnpm-lock.yaml'
+    restoreKeys: |
+      node_modules | "$(Agent.OS)"
+    path: node_modules
+  displayName: 'Cache node_modules'
+
+# 4) Instalar dependências
+- script: |
+    pnpm install --frozen-lockfile
+  displayName: 'Instalar dependências'
+  env:
+    PNPM_HOME: $(PNPM_HOME)
+
+# 5) Testes (falha o build se algum teste quebrar)
+- script: |
+    pnpm run test
+  displayName: 'Testes (Vitest)'
+
+# 6) Build do front
+- script: |
+    pnpm run build
+  displayName: 'Build do front'
+
+# 7) Deploy para Azure Static Web App
+- task: AzureStaticWebApp@0
+  displayName: 'Deploy para Azure Static Web App'
+  inputs:
+    app_location: '/'          # raiz do projeto
+    api_location: ''           # não tem API junto, então vazio
+    output_location: 'dist'    # pasta gerada pelo build (Vite/React)
+    azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
