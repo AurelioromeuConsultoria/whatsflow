@@ -79,11 +79,7 @@ public class PessoaRepository : IPessoaRepository
             q = q.Where(p => p.Ativo == ativo);
         }
 
-        if (query.Perfil.HasValue)
-        {
-            var perfil = query.Perfil.Value;
-            q = q.Where(p => p.Perfis.Any(pp => pp.DataFim == null && pp.Perfil == perfil));
-        }
+        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
         // Ordenação
         var sort = (query.Sort ?? "nome").Trim().ToLowerInvariant();
@@ -103,7 +99,6 @@ public class PessoaRepository : IPessoaRepository
         var total = await q.CountAsync();
 
         var items = await q
-            .Include(p => p.Perfis)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

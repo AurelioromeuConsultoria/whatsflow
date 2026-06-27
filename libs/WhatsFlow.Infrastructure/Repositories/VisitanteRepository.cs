@@ -28,7 +28,6 @@ public class VisitanteRepository : IVisitanteRepository
         var tenantId = await ResolveTenantIdAsync();
         return await _context.Visitantes
             .Include(v => v.Pessoa)
-                .ThenInclude(p => p.Perfis)
             .Where(v => v.TenantId == tenantId)
             .OrderByDescending(v => v.DataCadastro)
             .ToListAsync();
@@ -43,7 +42,6 @@ public class VisitanteRepository : IVisitanteRepository
         var q = _context.Visitantes
             .AsNoTracking()
             .Include(v => v.Pessoa)
-                .ThenInclude(p => p.Perfis)
             .Where(v => v.TenantId == tenantId)
             .AsQueryable();
 
@@ -103,7 +101,6 @@ public class VisitanteRepository : IVisitanteRepository
         var tenantId = await ResolveTenantIdAsync();
         return await _context.Visitantes
             .Include(v => v.Pessoa)
-                .ThenInclude(p => p.Perfis)
             .Include(v => v.MensagensAgendadas)
             .FirstOrDefaultAsync(v => v.Id == id && v.TenantId == tenantId);
     }

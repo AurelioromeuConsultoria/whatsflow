@@ -12,19 +12,13 @@ public class ComunicacaoAudienceResolver : IComunicacaoAudienceResolver
 {
     private readonly IVisitanteRepository _visitanteRepository;
     private readonly IPessoaRepository _pessoaRepository;
-    private readonly IVoluntarioRepository _voluntarioRepository;
-    private readonly IResponsavelCriancaRepository _responsavelCriancaRepository;
 
     public ComunicacaoAudienceResolver(
         IVisitanteRepository visitanteRepository,
-        IPessoaRepository pessoaRepository,
-        IVoluntarioRepository voluntarioRepository,
-        IResponsavelCriancaRepository responsavelCriancaRepository)
+        IPessoaRepository pessoaRepository)
     {
         _visitanteRepository = visitanteRepository;
         _pessoaRepository = pessoaRepository;
-        _voluntarioRepository = voluntarioRepository;
-        _responsavelCriancaRepository = responsavelCriancaRepository;
     }
 
     public async Task<IReadOnlyList<ComunicacaoDestinatario>> ResolveAsync(string publicoAlvo)
@@ -33,9 +27,7 @@ public class ComunicacaoAudienceResolver : IComunicacaoAudienceResolver
         return publico switch
         {
             "visitantes" => await ResolveVisitantesAsync(),
-            "membros" => await ResolvePessoasPorPerfilAsync(PerfilPessoa.Membro),
-            "voluntarios" => await ResolveVoluntariosAsync(),
-            "responsaveis-kids" => await ResolveResponsaveisKidsAsync(),
+            // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
             "pessoas" => await ResolvePessoasAtivasAsync(),
             _ => []
         };
@@ -69,40 +61,7 @@ public class ComunicacaoAudienceResolver : IComunicacaoAudienceResolver
             .ToList();
     }
 
-    private async Task<IReadOnlyList<ComunicacaoDestinatario>> ResolvePessoasPorPerfilAsync(PerfilPessoa perfil)
-    {
-        var pessoas = await _pessoaRepository.GetAllAsync();
-        return pessoas
-            .Where(p => p.Ativo && p.Perfis.Any(pp => pp.DataFim == null && pp.Perfil == perfil))
-            .Select(MapPessoa)
-            .ToList();
-    }
-
-    private async Task<IReadOnlyList<ComunicacaoDestinatario>> ResolveVoluntariosAsync()
-    {
-        var voluntarios = await _voluntarioRepository.GetAllAsync();
-        return voluntarios
-            .Where(v => v.Pessoa != null && v.Pessoa.Ativo)
-            .Select(v => MapPessoa(v.Pessoa))
-            .GroupBy(d => d.PessoaId)
-            .Select(g => g.First())
-            .ToList();
-    }
-
-    private async Task<IReadOnlyList<ComunicacaoDestinatario>> ResolveResponsaveisKidsAsync()
-    {
-        var responsavelIds = (await _responsavelCriancaRepository.GetResponsavelIdsAtivosAsync()).ToHashSet();
-        if (responsavelIds.Count == 0)
-        {
-            return [];
-        }
-
-        var pessoas = await _pessoaRepository.GetAllAsync();
-        return pessoas
-            .Where(p => p.Ativo && responsavelIds.Contains(p.Id))
-            .Select(MapPessoa)
-            .ToList();
-    }
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
     private static ComunicacaoDestinatario MapPessoa(Pessoa pessoa)
     {

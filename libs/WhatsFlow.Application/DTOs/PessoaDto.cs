@@ -18,7 +18,7 @@ public class PessoaDto
     public string TipoPessoaDescricao { get; set; } = string.Empty;
     public bool Ativo { get; set; }
     public DateTime DataCriacao { get; set; }
-    public List<PessoaPerfilDto> Perfis { get; set; } = new();
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 }
 
 public class AniversarianteDto

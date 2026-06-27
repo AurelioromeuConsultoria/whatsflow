@@ -14,7 +14,7 @@ public class PessoaPagedQuery
     public string? Telefone { get; init; }
     public string? WhatsApp { get; init; }
 
-    public PerfilPessoa? Perfil { get; init; }
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
     public TipoPessoa? TipoPessoa { get; init; }
     public bool? Ativo { get; init; }
 }

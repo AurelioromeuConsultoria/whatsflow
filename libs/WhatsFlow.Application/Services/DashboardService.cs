@@ -16,26 +16,17 @@ public class DashboardService : IDashboardService
     private readonly IMensagemAgendadaRepository _mensagemAgendadaRepository;
     private readonly IConfiguracaoMensagemRepository _configuracaoMensagemRepository;
     private readonly IPessoaRepository _pessoaRepository;
-    private readonly IEventoRepository _eventoRepository;
-    private readonly IInscricaoEventoRepository _inscricaoEventoRepository;
-    private readonly IVoluntarioRepository _voluntarioRepository;
 
     public DashboardService(
         IVisitanteRepository visitanteRepository,
         IMensagemAgendadaRepository mensagemAgendadaRepository,
         IConfiguracaoMensagemRepository configuracaoMensagemRepository,
-        IPessoaRepository pessoaRepository,
-        IEventoRepository eventoRepository,
-        IInscricaoEventoRepository inscricaoEventoRepository,
-        IVoluntarioRepository voluntarioRepository)
+        IPessoaRepository pessoaRepository)
     {
         _visitanteRepository = visitanteRepository;
         _mensagemAgendadaRepository = mensagemAgendadaRepository;
         _configuracaoMensagemRepository = configuracaoMensagemRepository;
         _pessoaRepository = pessoaRepository;
-        _eventoRepository = eventoRepository;
-        _inscricaoEventoRepository = inscricaoEventoRepository;
-        _voluntarioRepository = voluntarioRepository;
     }
 
     public async Task<DashboardDto> GetEstatisticasAsync()
@@ -45,11 +36,9 @@ public class DashboardService : IDashboardService
         var mensagensEnviadas = await _mensagemAgendadaRepository.GetMensagensPorStatusAsync(StatusMensagem.Enviada);
         var configuracoesAtivas = await _configuracaoMensagemRepository.GetAtivasAsync();
         var pessoas = await _pessoaRepository.GetAllAsync();
-        var eventos = await _eventoRepository.GetAllAsync();
-        var inscricoes = await _inscricaoEventoRepository.GetAllAsync();
-        var voluntarios = await _voluntarioRepository.GetAllAsync();
         var aniversariantes = CalcularAniversariantes(pessoas, 30, 5).ToList();
 
+        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
         return new DashboardDto
         {
             TotalVisitantes = visitantes.Count(),
@@ -57,9 +46,6 @@ public class DashboardService : IDashboardService
             MensagensEnviadas = mensagensEnviadas.Count(),
             ConfiguracoesAtivas = configuracoesAtivas.Count(),
             TotalPessoas = pessoas.Count(),
-            TotalEventos = eventos.Count(),
-            TotalInscricoes = inscricoes.Count(),
-            TotalVoluntarios = voluntarios.Select(v => v.PessoaId).Distinct().Count(),
             TotalAniversariantesProximos = aniversariantes.Count,
             ProximosAniversariantes = aniversariantes
         };
@@ -71,9 +57,6 @@ public class DashboardService : IDashboardService
 
         var pessoas = await _pessoaRepository.GetAllAsync();
         var visitantes = await _visitanteRepository.GetAllAsync();
-        var voluntarios = await _voluntarioRepository.GetAllAsync();
-        var eventos = await _eventoRepository.GetAllAsync();
-        var inscricoes = await _inscricaoEventoRepository.GetAllAsync();
         var enviadas = await _mensagemAgendadaRepository.GetMensagensPorStatusAsync(StatusMensagem.Enviada);
 
         string[] abrev = { "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez" };
@@ -86,15 +69,13 @@ public class DashboardService : IDashboardService
             var inicioMes = primeiroMesAtual.AddMonths(-i);
             var inicioProximo = inicioMes.AddMonths(1);
 
+            // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
             pontos.Add(new DashboardSeriePontoDto
             {
                 Mes = $"{abrev[inicioMes.Month - 1]}/{inicioMes.Year % 100:00}",
                 // Cumulativo (total até o fim do mês) — bate com os totais dos cards no último ponto.
                 Pessoas = pessoas.Count(p => p.DataCriacao < inicioProximo),
                 Visitantes = visitantes.Count(v => v.DataCadastro < inicioProximo),
-                Voluntarios = voluntarios.Where(v => v.DataCadastro < inicioProximo).Select(v => v.PessoaId).Distinct().Count(),
-                Eventos = eventos.Count(e => e.DataCriacao < inicioProximo),
-                Inscricoes = inscricoes.Count(x => x.DataInscricao < inicioProximo),
                 // Por mês (atividade do período).
                 MensagensEnviadas = enviadas.Count(m => m.DataEnvio >= inicioMes && m.DataEnvio < inicioProximo)
             });

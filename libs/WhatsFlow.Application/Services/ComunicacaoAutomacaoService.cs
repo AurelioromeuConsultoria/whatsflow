@@ -11,7 +11,7 @@ namespace WhatsFlow.Application.Services;
 public interface IComunicacaoAutomacaoService
 {
     Task<ComunicacaoAutomacaoExecucaoResumoDto> ExecutarNovoVisitanteAsync(int visitanteId, CancellationToken cancellationToken = default);
-    Task<CampanhaAniversarioProcessamentoResultadoDto> ExecutarAniversariosDoDiaAsync(CancellationToken cancellationToken = default);
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
     Task<int> ExecutarLembretesOperacionaisAsync(IEnumerable<ComunicacaoLembreteOperacionalRequest> lembretes, CancellationToken cancellationToken = default);
     Task<int> ExecutarAvisoContextualKidsAsync(ComunicacaoAvisoContextualKidsRequest request, CancellationToken cancellationToken = default);
     Task<PagedResultDto<ComunicacaoAutomacaoHistoricoItemDto>> GetHistoricoAsync(ComunicacaoAutomacaoHistoricoQueryDto query);
@@ -21,42 +21,30 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
 {
     private readonly IVisitanteRepository _visitanteRepository;
     private readonly IConfiguracaoMensagemRepository _configuracaoMensagemRepository;
-    private readonly IConfiguracaoCampanhaAniversarioRepository _configuracaoCampanhaAniversarioRepository;
-    private readonly IEnvioCampanhaAniversarioRepository _envioCampanhaAniversarioRepository;
-    private readonly IPessoaRepository _pessoaRepository;
     private readonly IComunicacaoCampanhaRepository _campanhaRepository;
     private readonly IComunicacaoEntregaRepository _entregaRepository;
     private readonly IComunicacaoPreferenciaService _preferenciaService;
     private readonly IComunicacaoProcessamentoService _processamentoService;
     private readonly IAuditLogService _auditLogService;
-    private readonly BirthdayCampaignSchedulerSettings _birthdaySchedulerSettings;
     private readonly ILogger<ComunicacaoAutomacaoService> _logger;
 
     public ComunicacaoAutomacaoService(
         IVisitanteRepository visitanteRepository,
         IConfiguracaoMensagemRepository configuracaoMensagemRepository,
-        IConfiguracaoCampanhaAniversarioRepository configuracaoCampanhaAniversarioRepository,
-        IEnvioCampanhaAniversarioRepository envioCampanhaAniversarioRepository,
-        IPessoaRepository pessoaRepository,
         IComunicacaoCampanhaRepository campanhaRepository,
         IComunicacaoEntregaRepository entregaRepository,
         IComunicacaoPreferenciaService preferenciaService,
         IComunicacaoProcessamentoService processamentoService,
         IAuditLogService auditLogService,
-        IOptions<BirthdayCampaignSchedulerSettings> birthdaySchedulerSettings,
         ILogger<ComunicacaoAutomacaoService> logger)
     {
         _visitanteRepository = visitanteRepository;
         _configuracaoMensagemRepository = configuracaoMensagemRepository;
-        _configuracaoCampanhaAniversarioRepository = configuracaoCampanhaAniversarioRepository;
-        _envioCampanhaAniversarioRepository = envioCampanhaAniversarioRepository;
-        _pessoaRepository = pessoaRepository;
         _campanhaRepository = campanhaRepository;
         _entregaRepository = entregaRepository;
         _preferenciaService = preferenciaService;
         _processamentoService = processamentoService;
         _auditLogService = auditLogService;
-        _birthdaySchedulerSettings = birthdaySchedulerSettings.Value;
         _logger = logger;
     }
 
@@ -123,120 +111,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         return resultado;
     }
 
-    public async Task<CampanhaAniversarioProcessamentoResultadoDto> ExecutarAniversariosDoDiaAsync(CancellationToken cancellationToken = default)
-    {
-        var configuracao = await _configuracaoCampanhaAniversarioRepository.GetAsync();
-        var resultado = new CampanhaAniversarioProcessamentoResultadoDto();
-
-        if (!configuracao.Ativo || string.IsNullOrWhiteSpace(configuracao.MensagemTemplate))
-        {
-            return resultado;
-        }
-
-        var agoraLocal = GetAgoraLocal();
-        if (agoraLocal.TimeOfDay < configuracao.HorarioEnvio)
-        {
-            return resultado;
-        }
-
-        var pessoas = await _pessoaRepository.GetAllAsync();
-        var aniversariantes = pessoas
-            .Where(p => p.Ativo && p.DataNascimento.HasValue && EhAniversarioHoje(p.DataNascimento.Value.Date, agoraLocal.Date))
-            .OrderBy(p => p.Nome)
-            .Take(_birthdaySchedulerSettings.MaxPessoasPorExecucao)
-            .ToList();
-
-        resultado.TotalElegiveis = aniversariantes.Count;
-
-        foreach (var pessoa in aniversariantes)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var envioExistente = await _envioCampanhaAniversarioRepository.GetByPessoaAnoAsync(pessoa.Id, agoraLocal.Year);
-            if (envioExistente?.Status == StatusEnvioCampanhaAniversario.Enviado)
-            {
-                resultado.TotalIgnorados++;
-                continue;
-            }
-
-            var envio = envioExistente ?? await _envioCampanhaAniversarioRepository.CreateAsync(new EnvioCampanhaAniversario
-            {
-                PessoaId = pessoa.Id,
-                Pessoa = pessoa,
-                AnoReferencia = agoraLocal.Year,
-                DataAniversario = agoraLocal.Date,
-                Status = StatusEnvioCampanhaAniversario.Pendente,
-                DataCriacao = DateTime.Now
-            });
-
-            envio.Status = StatusEnvioCampanhaAniversario.EmProcessamento;
-            envio.Tentativas += 1;
-            envio.DataUltimaTentativa = DateTime.Now;
-            envio.WhatsAppUtilizado = pessoa.WhatsApp;
-            envio.ImagemUrlUtilizada = configuracao.ImagemUrl;
-            envio.MensagemUtilizada = RenderizarMensagem(configuracao.MensagemTemplate, pessoa.Nome);
-            envio.LogErro = null;
-            await _envioCampanhaAniversarioRepository.UpdateAsync(envio);
-
-            var campanha = await _campanhaRepository.CreateAsync(new ComunicacaoCampanha
-            {
-                Nome = $"Automação aniversário - {pessoa.Nome}",
-                Objetivo = "aniversario",
-                PublicoAlvo = "pessoas",
-                Origem = TipoOrigemComunicacao.Automatica,
-                Status = StatusComunicacaoCampanha.Processando,
-                DataAgendamento = agoraLocal,
-                DataCriacao = DateTime.UtcNow,
-                Canais =
-                [
-                    new ComunicacaoCampanhaCanal
-                    {
-                        Canal = CanalComunicacao.WhatsApp,
-                        Prioridade = 1
-                    }
-                ]
-            });
-
-            var entrega = await _entregaRepository.CreateAsync(await CriarEntregaAniversarioAsync(campanha, pessoa, configuracao));
-            var sucesso = entrega.Status != StatusComunicacaoEntrega.Falhou &&
-                entrega.Status != StatusComunicacaoEntrega.IgnoradoPorPreferencia &&
-                await _processamentoService.ProcessarEntregaAsync(entrega.Id, cancellationToken);
-
-            if (sucesso)
-            {
-                envio.Status = StatusEnvioCampanhaAniversario.Enviado;
-                envio.DataEnvioSucesso = DateTime.Now;
-                envio.LogErro = null;
-                await _envioCampanhaAniversarioRepository.UpdateAsync(envio);
-                resultado.TotalEnviados++;
-            }
-            else
-            {
-                var entregaAtualizada = await _entregaRepository.GetByIdAsync(entrega.Id);
-                envio.Status = StatusEnvioCampanhaAniversario.Erro;
-                envio.LogErro = entregaAtualizada?.Erro ?? $"Entrega bloqueada: {pessoa.Nome} não possui WhatsApp válido.";
-                await _envioCampanhaAniversarioRepository.UpdateAsync(envio);
-                resultado.TotalFalhas++;
-            }
-        }
-
-        _logger.LogInformation(
-            "{EventName} Gatilho=aniversario Elegiveis={Elegiveis} Enviados={Enviados} Falhas={Falhas} Ignorados={Ignorados}",
-            ComunicacaoObservability.Events.CampanhaCriada,
-            resultado.TotalElegiveis,
-            resultado.TotalEnviados,
-            resultado.TotalFalhas,
-            resultado.TotalIgnorados);
-        await _auditLogService.RecordAsync("ComunicacaoAutomacao", agoraLocal.Date.ToString("yyyy-MM-dd"), "ExecutarAniversariosDoDia", new
-        {
-            resultado.TotalElegiveis,
-            resultado.TotalEnviados,
-            resultado.TotalFalhas,
-            resultado.TotalIgnorados
-        });
-
-        return resultado;
-    }
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
     public async Task<int> ExecutarLembretesOperacionaisAsync(IEnumerable<ComunicacaoLembreteOperacionalRequest> lembretes, CancellationToken cancellationToken = default)
     {
@@ -473,81 +348,7 @@ public class ComunicacaoAutomacaoService : IComunicacaoAutomacaoService
         };
     }
 
-    private async Task<ComunicacaoEntrega> CriarEntregaAniversarioAsync(ComunicacaoCampanha campanha, Pessoa pessoa, ConfiguracaoCampanhaAniversario configuracao)
-    {
-        if (await _preferenciaService.EstaBloqueadoAsync(pessoa.Id, CanalComunicacao.WhatsApp))
-        {
-            return new ComunicacaoEntrega
-            {
-                ComunicacaoCampanhaId = campanha.Id,
-                DestinatarioPessoaId = pessoa.Id,
-                Canal = CanalComunicacao.WhatsApp,
-                DestinoResolvido = $"pessoa:{pessoa.Id}",
-                RemetenteResolvido = campanha.Nome,
-                ConteudoFinal = campanha.Nome,
-                MidiaUrl = configuracao.ImagemUrl,
-                Status = StatusComunicacaoEntrega.IgnoradoPorPreferencia,
-                Erro = $"Entrega ignorada: {pessoa.Nome} bloqueou o canal {CanalComunicacao.WhatsApp}.",
-                ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{pessoa.Id}:0:preferencia",
-                DataCriacao = DateTime.UtcNow
-            };
-        }
-
-        if (string.IsNullOrWhiteSpace(pessoa.WhatsApp))
-        {
-            return new ComunicacaoEntrega
-            {
-                ComunicacaoCampanhaId = campanha.Id,
-                DestinatarioPessoaId = pessoa.Id,
-                Canal = CanalComunicacao.WhatsApp,
-                DestinoResolvido = $"pessoa:{pessoa.Id}",
-                RemetenteResolvido = campanha.Nome,
-                ConteudoFinal = campanha.Nome,
-                MidiaUrl = configuracao.ImagemUrl,
-                Status = StatusComunicacaoEntrega.Falhou,
-                Erro = $"Entrega bloqueada: {pessoa.Nome} não possui WhatsApp válido.",
-                ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{pessoa.Id}:0",
-                DataCriacao = DateTime.UtcNow
-            };
-        }
-
-        return new ComunicacaoEntrega
-        {
-            ComunicacaoCampanhaId = campanha.Id,
-            DestinatarioPessoaId = pessoa.Id,
-            Canal = CanalComunicacao.WhatsApp,
-            DestinoResolvido = pessoa.WhatsApp,
-            RemetenteResolvido = campanha.Nome,
-            ConteudoFinal = RenderizarMensagem(configuracao.MensagemTemplate, pessoa.Nome),
-            MidiaUrl = configuracao.ImagemUrl,
-            Status = StatusComunicacaoEntrega.Pendente,
-            ChaveDedupe = $"{campanha.Id}:{CanalComunicacao.WhatsApp}:{pessoa.Id}:0",
-            DataCriacao = DateTime.UtcNow
-        };
-    }
-
-    private DateTime GetAgoraLocal()
-    {
-        try
-        {
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(_birthdaySchedulerSettings.TimeZoneId);
-            return TimeZoneInfo.ConvertTime(DateTimeOffset.UtcNow, timeZone).DateTime;
-        }
-        catch
-        {
-            return DateTime.Now;
-        }
-    }
-
-    private static bool EhAniversarioHoje(DateTime dataNascimento, DateTime dataReferencia)
-    {
-        if (dataNascimento.Month == 2 && dataNascimento.Day == 29 && !DateTime.IsLeapYear(dataReferencia.Year))
-        {
-            return dataReferencia.Month == 2 && dataReferencia.Day == 28;
-        }
-
-        return dataNascimento.Month == dataReferencia.Month && dataNascimento.Day == dataReferencia.Day;
-    }
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
     private static string RenderizarMensagem(string template, string nome)
     {

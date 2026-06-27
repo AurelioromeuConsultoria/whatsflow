@@ -57,37 +57,18 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<ITenantContext>(sp => sp.GetRequiredService<TenantScopeOverride>());
 
         services.AddScoped<IPessoaRepository, PessoaRepository>();
-        services.AddScoped<IPessoaPerfilRepository, PessoaPerfilRepository>();
         services.AddScoped<IVisitanteRepository, VisitanteRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IConfiguracaoMensagemRepository, ConfiguracaoMensagemRepository>();
         services.AddScoped<IMensagemAgendadaRepository, MensagemAgendadaRepository>();
-        services.AddScoped<IEquipeRepository, EquipeRepository>();
-        services.AddScoped<ICargoRepository, CargoRepository>();
-        services.AddScoped<IVoluntarioRepository, VoluntarioRepository>();
-        services.AddScoped<IEventoRepository, EventoRepository>();
-        services.AddScoped<IEventoOcorrenciaRepository, EventoOcorrenciaRepository>();
-        services.AddScoped<IEscalaRepository, EscalaRepository>();
-        services.AddScoped<IConfiguracaoCampanhaAniversarioRepository, ConfiguracaoCampanhaAniversarioRepository>();
-        services.AddScoped<IEnvioCampanhaAniversarioRepository, EnvioCampanhaAniversarioRepository>();
 
         services.AddScoped<IVisitanteService, VisitanteService>();
         services.AddScoped<IConfiguracaoMensagemService, ConfiguracaoMensagemService>();
         services.AddScoped<IMensagemAgendadaService, MensagemAgendadaService>();
-        services.AddScoped<IEquipeService, EquipeService>();
-        services.AddScoped<ICargoService, CargoService>();
-        services.AddScoped<IVoluntarioService, VoluntarioService>();
-        services.AddScoped<IEventoOcorrenciaService, EventoOcorrenciaService>();
-        services.AddScoped<IEscalaService, EscalaService>();
-        services.AddScoped<ICampanhaAniversarioService, CampanhaAniversarioService>();
         services.AddSingleton<ISchedulerExecutionMonitor, SchedulerExecutionMonitor>();
 
         services.Configure<MessageSchedulerSettings>(
             ctx.Configuration.GetSection(MessageSchedulerSettings.SectionName));
-        services.Configure<EscalaSchedulerSettings>(
-            ctx.Configuration.GetSection(EscalaSchedulerSettings.SectionName));
-        services.Configure<BirthdayCampaignSchedulerSettings>(
-            ctx.Configuration.GetSection(BirthdayCampaignSchedulerSettings.SectionName));
         services.Configure<EvolutionApiSettings>(
             ctx.Configuration.GetSection("EvolutionApi"));
         services.Configure<PublicAppUrlSettings>(
@@ -106,18 +87,13 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<IBillingCycleService, BillingCycleService>();
 
         // ==========================
-        // Grafo do EscalaService (lembretes de escala no EscalaSchedulerService).
-        // O EscalaService depende de auditoria + automação de comunicação, que por
-        // sua vez puxam repositórios/serviços de comunicação. Sem isto, o scheduler
-        // falha ao resolver IEscalaService ("No constructor can be instantiated").
+        // Grafo de comunicação consumido pelos schedulers (lembretes/processamento).
         // O canal Push é exclusivo da API (Firebase) e não é registrado aqui.
         // ==========================
         services.AddScoped<ICurrentUserContext, WorkerCurrentUserContext>();
         services.AddScoped<IAuditLogService, AuditLogService>();
 
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        services.AddScoped<IEscalaModeloRepository, EscalaModeloRepository>();
-        services.AddScoped<IIndisponibilidadeVoluntarioRepository, IndisponibilidadeVoluntarioRepository>();
         services.AddScoped<INotificacaoUsuarioRepository, NotificacaoUsuarioRepository>();
         services.AddScoped<IComunicacaoCampanhaRepository, ComunicacaoCampanhaRepository>();
         services.AddScoped<IComunicacaoEntregaRepository, ComunicacaoEntregaRepository>();
@@ -133,8 +109,6 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<IComunicacaoCanalProvider, ComunicacaoNotificacaoInternaCanalProvider>();
 
         services.AddHostedService<MessageSchedulerService>();
-        services.AddHostedService<EscalaSchedulerService>();
-        services.AddHostedService<BirthdayCampaignSchedulerService>();
         services.AddHostedService<BillingSchedulerService>();
     })
     .ConfigureLogging((ctx, log) =>

@@ -18,7 +18,6 @@ using WhatsFlow.Infrastructure.Repositories;
 using WhatsFlow.Application.Services;
 using WhatsFlow.Infrastructure.Services;
 using WhatsFlow.Application.Configuration;
-using FinanceiroQueryService = WhatsFlow.Infrastructure.Services.FinanceiroQueryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,16 +73,8 @@ builder.Services
         name: "email_configuration",
         failureStatus: HealthStatus.Degraded,
         tags: ["ready", "config"])
-    .AddCheck<PushConfigurationHealthCheck>(
-        name: "push_configuration",
-        failureStatus: HealthStatus.Degraded,
-        tags: ["ready", "config"])
     .AddCheck<MessageSchedulerConfigurationHealthCheck>(
         name: "message_scheduler_configuration",
-        failureStatus: HealthStatus.Unhealthy,
-        tags: ["ready", "config"])
-    .AddCheck<EscalaSchedulerConfigurationHealthCheck>(
-        name: "escala_scheduler_configuration",
         failureStatus: HealthStatus.Unhealthy,
         tags: ["ready", "config"]);
 
@@ -91,12 +82,9 @@ builder.Services
 // DEPENDENCY INJECTION
 // ==========================
 
+// TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 // Repositories
 builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
-builder.Services.AddScoped<IPessoaPerfilRepository, PessoaPerfilRepository>();
-builder.Services.AddScoped<IConsentimentoRegistroRepository, ConsentimentoRegistroRepository>();
-builder.Services.AddScoped<IDadosPessoaisService, DadosPessoaisService>();
-builder.Services.AddScoped<ISolicitacaoTitularService, SolicitacaoTitularService>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<IBillingCycleService, BillingCycleService>();
 builder.Services.AddScoped<ISignupService, SignupService>();
@@ -109,64 +97,14 @@ builder.Services.AddScoped<IComunicacaoCampanhaRepository, ComunicacaoCampanhaRe
 builder.Services.AddScoped<IComunicacaoEntregaRepository, ComunicacaoEntregaRepository>();
 builder.Services.AddScoped<IComunicacaoPreferenciaRepository, ComunicacaoPreferenciaRepository>();
 builder.Services.AddScoped<IComunicacaoSegmentoRepository, ComunicacaoSegmentoRepository>();
-builder.Services.AddScoped<IEquipeRepository, EquipeRepository>();
-builder.Services.AddScoped<IHubCasaRepository, HubCasaRepository>();
-builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
-builder.Services.AddScoped<ICategoriaDespesaRepository, CategoriaDespesaRepository>();
-builder.Services.AddScoped<ICategoriaReceitaRepository, CategoriaReceitaRepository>();
-builder.Services.AddScoped<IDoacoesRepository, DoacoesRepository>();
-builder.Services.AddScoped<IContaBancariaRepository, ContaBancariaRepository>();
-builder.Services.AddScoped<ICentroCustoRepository, CentroCustoRepository>();
-builder.Services.AddScoped<IProjetoRepository, ProjetoRepository>();
-builder.Services.AddScoped<ICategoriaPatrimonioRepository, CategoriaPatrimonioRepository>();
-builder.Services.AddScoped<IPatrimonioItemRepository, PatrimonioItemRepository>();
-builder.Services.AddScoped<IPatrimonioMovimentacaoRepository, PatrimonioMovimentacaoRepository>();
-builder.Services.AddScoped<IDespesaRepository, DespesaRepository>();
-builder.Services.AddScoped<IReceitaRepository, ReceitaRepository>();
-builder.Services.AddScoped<IOrcamentoCategoriaRepository, OrcamentoCategoriaRepository>();
-builder.Services.AddScoped<ICargoRepository, CargoRepository>();
-builder.Services.AddScoped<IVoluntarioRepository, VoluntarioRepository>();
-builder.Services.AddScoped<IEventoRepository, EventoRepository>();
-builder.Services.AddScoped<IEventoRecorrenciaRepository, EventoRecorrenciaRepository>();
-builder.Services.AddScoped<IEventoOcorrenciaRepository, EventoOcorrenciaRepository>();
-builder.Services.AddScoped<IEscalaRepository, EscalaRepository>();
-builder.Services.AddScoped<IEscalaModeloRepository, EscalaModeloRepository>();
-builder.Services.AddScoped<IIndisponibilidadeVoluntarioRepository, IndisponibilidadeVoluntarioRepository>();
-builder.Services.AddScoped<ISolicitacaoTrocaEscalaRepository, SolicitacaoTrocaEscalaRepository>();
-builder.Services.AddScoped<IDestaqueSiteRepository, DestaqueSiteRepository>();
-builder.Services.AddScoped<ICategoriaNoticiaRepository, CategoriaNoticiaRepository>();
-builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
-builder.Services.AddScoped<IInscricaoEventoRepository, InscricaoEventoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<INotificacaoUsuarioRepository, NotificacaoUsuarioRepository>();
 builder.Services.AddScoped<IPerfilAcessoRepository, PerfilAcessoRepository>();
-builder.Services.AddScoped<ICategoriaMidiaRepository, CategoriaMidiaRepository>();
-builder.Services.AddScoped<IGaleriaFotoRepository, GaleriaFotoRepository>();
-builder.Services.AddScoped<IGaleriaFotoItemRepository, GaleriaFotoItemRepository>();
-builder.Services.AddScoped<IEnqueteRepository, EnqueteRepository>();
-builder.Services.AddScoped<IConfiguracaoPortalRepository, ConfiguracaoPortalRepository>();
-builder.Services.AddScoped<IConfiguracaoCampanhaAniversarioRepository, ConfiguracaoCampanhaAniversarioRepository>();
-builder.Services.AddScoped<IEnvioCampanhaAniversarioRepository, EnvioCampanhaAniversarioRepository>();
 builder.Services.AddScoped<ISecretProtector, DataProtectionSecretProtector>();
-
-// Kids
-builder.Services.AddScoped<ICriancaDetalheRepository, CriancaDetalheRepository>();
-builder.Services.AddScoped<IResponsavelCriancaRepository, ResponsavelCriancaRepository>();
-builder.Services.AddScoped<IKidsCheckinRepository, KidsCheckinRepository>();
-builder.Services.AddScoped<IKidsPreCheckinRepository, KidsPreCheckinRepository>();
-builder.Services.AddScoped<IKidsConteudoAulaRepository, KidsConteudoAulaRepository>();
-builder.Services.AddScoped<IKidsConteudoAulaAnexoRepository, KidsConteudoAulaAnexoRepository>();
-builder.Services.AddScoped<IKidsNotificacaoRepository, KidsNotificacaoRepository>();
-builder.Services.AddScoped<IKidsDeviceTokenRepository, KidsDeviceTokenRepository>();
-builder.Services.AddScoped<IKidsOcorrenciaRepository, KidsOcorrenciaRepository>();
-builder.Services.AddScoped<IKidsEstruturaRepository, KidsEstruturaRepository>();
 
 // Services
 builder.Services.AddScoped<IPessoaService, PessoaService>();
-builder.Services.AddScoped<IPessoaPerfilService, PessoaPerfilService>();
-builder.Services.AddScoped<IMembroCadastroService, MembroCadastroService>();
-builder.Services.AddScoped<ICadastroMembroNotificationService, CadastroMembroNotificationService>();
 builder.Services.AddScoped<IVisitanteService, VisitanteService>();
 builder.Services.AddScoped<IConfiguracaoMensagemService, ConfiguracaoMensagemService>();
 builder.Services.AddScoped<IMensagemAgendadaService, MensagemAgendadaService>();
@@ -181,75 +119,22 @@ builder.Services.AddScoped<IComunicacaoAutomacaoService, ComunicacaoAutomacaoSer
 builder.Services.AddScoped<IComunicacaoCanalProvider, ComunicacaoWhatsAppCanalProvider>();
 builder.Services.AddScoped<IComunicacaoCanalProvider, ComunicacaoEmailCanalProvider>();
 builder.Services.AddScoped<IComunicacaoCanalProvider, ComunicacaoNotificacaoInternaCanalProvider>();
-builder.Services.AddScoped<IComunicacaoCanalProvider, ComunicacaoPushCanalProvider>();
 builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.AddScoped<ICurrentUserContext, HttpCurrentUserContext>();
 builder.Services.AddScoped<TenantScopeOverride>();
 builder.Services.AddScoped<ITenantContext, HttpTenantContext>();
 builder.Services.AddScoped<AuditSaveChangesInterceptor>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
-builder.Services.AddScoped<IEquipeService, EquipeService>();
-builder.Services.AddScoped<IHubCasaService, HubCasaService>();
-builder.Services.AddScoped<IFornecedorService, FornecedorService>();
-builder.Services.AddScoped<ICategoriaDespesaService, CategoriaDespesaService>();
-builder.Services.AddScoped<ICategoriaReceitaService, CategoriaReceitaService>();
-builder.Services.AddScoped<IDoacoesService, DoacoesService>();
-builder.Services.AddHttpClient<IAsaasPaymentService, AsaasPaymentService>();
 builder.Services.AddHttpClient<IAsaasBillingClient, AsaasBillingClient>();
-builder.Services.AddScoped<IContaBancariaService, ContaBancariaService>();
-builder.Services.AddScoped<ICentroCustoService, CentroCustoService>();
-builder.Services.AddScoped<IProjetoService, ProjetoService>();
-builder.Services.AddScoped<ICategoriaPatrimonioService, CategoriaPatrimonioService>();
-builder.Services.AddScoped<IPatrimonioItemService, PatrimonioItemService>();
-builder.Services.AddScoped<IPatrimonioMovimentacaoService, PatrimonioMovimentacaoService>();
-builder.Services.AddScoped<IDespesaService, DespesaService>();
-builder.Services.AddScoped<IReceitaService, ReceitaService>();
-builder.Services.AddScoped<IOrcamentoCategoriaService, OrcamentoCategoriaService>();
-builder.Services.AddScoped<ICargoService, CargoService>();
-builder.Services.AddScoped<IVoluntarioService, VoluntarioService>();
-builder.Services.AddScoped<IEventoService, EventoService>();
-builder.Services.AddScoped<IEventoRecorrenciaService, EventoRecorrenciaService>();
-builder.Services.AddScoped<IEventoOcorrenciaService, EventoOcorrenciaService>();
-builder.Services.AddScoped<IEscalaService, EscalaService>();
-builder.Services.AddScoped<IEscalaModeloService, EscalaModeloService>();
-builder.Services.AddScoped<IIndisponibilidadeVoluntarioService, IndisponibilidadeVoluntarioService>();
-builder.Services.AddScoped<ISolicitacaoTrocaEscalaService, SolicitacaoTrocaEscalaService>();
-builder.Services.AddScoped<IDestaqueSiteService, DestaqueSiteService>();
-builder.Services.AddScoped<ICategoriaNoticiaService, CategoriaNoticiaService>();
-builder.Services.AddScoped<INoticiaService, NoticiaService>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
-builder.Services.AddScoped<IInscricaoEventoService, InscricaoEventoService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<INotificacaoUsuarioService, NotificacaoUsuarioService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IKidsRegistrationService, KidsRegistrationService>();
 builder.Services.AddScoped<IPerfilAcessoService, PerfilAcessoService>();
 builder.Services.AddScoped<ITenantManagementService, TenantManagementService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddSingleton<ISchedulerExecutionMonitor, SchedulerExecutionMonitor>();
-builder.Services.AddScoped<ICategoriaMidiaService, CategoriaMidiaService>();
-builder.Services.AddScoped<IGaleriaFotoService, GaleriaFotoService>();
-builder.Services.AddScoped<IEnqueteService, EnqueteService>();
-builder.Services.AddScoped<IConfiguracaoPortalService, ConfiguracaoPortalService>();
-builder.Services.AddScoped<ICampanhaAniversarioService, CampanhaAniversarioService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
-builder.Services.AddScoped<IFinanceiroQueryService, FinanceiroQueryService>();
-builder.Services.AddScoped<IDashboardFinanceiroService, DashboardFinanceiroService>();
-builder.Services.AddScoped<IRelatorioFinanceiroService, RelatorioFinanceiroService>();
-builder.Services.AddScoped<IKidsService, KidsService>();
-builder.Services.AddScoped<IKidsAuthorizationService, KidsAuthorizationService>();
-builder.Services.AddScoped<IKidsPreCheckinService, KidsPreCheckinService>();
-builder.Services.AddScoped<IKidsConteudoAulaService, KidsConteudoAulaService>();
-builder.Services.AddScoped<IKidsNotificacaoService, KidsNotificacaoService>();
-builder.Services.AddScoped<IKidsRetiradaService, KidsRetiradaService>();
-builder.Services.AddScoped<IKidsPainelService, KidsPainelService>();
-builder.Services.AddScoped<IKidsOcorrenciaService, KidsOcorrenciaService>();
-builder.Services.AddScoped<IKidsEstruturaService, KidsEstruturaService>();
-builder.Services.AddScoped<IKidsIndicadoresService, KidsIndicadoresService>();
-builder.Services.AddScoped<IKidsPushNotificationService, KidsPushNotificationService>();
-
-builder.Services.Configure<FirebaseKidsPushOptions>(
-    builder.Configuration.GetSection(FirebaseKidsPushOptions.SectionName));
 
 builder.Services.Configure<EvolutionApiSettings>(
     builder.Configuration.GetSection("EvolutionApi"));
@@ -264,12 +149,6 @@ builder.Services.Configure<AsaasBillingSettings>(
 builder.Services.Configure<MessageSchedulerSettings>(
     builder.Configuration.GetSection(MessageSchedulerSettings.SectionName));
 
-builder.Services.Configure<BirthdayCampaignSchedulerSettings>(
-    builder.Configuration.GetSection(BirthdayCampaignSchedulerSettings.SectionName));
-
-builder.Services.Configure<EscalaSchedulerSettings>(
-    builder.Configuration.GetSection(EscalaSchedulerSettings.SectionName));
-
 builder.Services.Configure<PublicAppUrlSettings>(
     builder.Configuration.GetSection(PublicAppUrlSettings.SectionName));
 
@@ -277,7 +156,6 @@ builder.Services.AddHttpClient<IEvolutionApiService, EvolutionApiService>();
 builder.Services.AddScoped<IEmailService, SmtpEmailService>();
 
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<NoticiaUrlExtractorService>();
 
 // ==========================
 // STORAGE DE ARQUIVOS

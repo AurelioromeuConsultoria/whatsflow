@@ -4,11 +4,10 @@ public static class PermissionResourceMap
 {
     private static readonly Dictionary<string, string> ResourceByPath = new()
     {
+        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
         ["/api/dashboard"] = "dashboard",
         ["/api/usuarios"] = "usuarios",
-        ["/api/solicitacoestitular"] = "pessoas",
         ["/api/pessoas"] = "pessoas",
-        ["/api/pessoasperfis"] = "perfis",
         ["/api/visitantes"] = "visitantes",
         ["/api/configuracoesmensagens"] = "configuracoes-mensagens",
         ["/api/mensagensagendadas"] = "mensagens-agendadas",
@@ -19,22 +18,7 @@ public static class PermissionResourceMap
         ["/api/comunicacaoautomacoes"] = "comunicacao",
         ["/api/comunicacaopreferencias"] = "comunicacao",
         ["/api/comunicacaosegmentos"] = "comunicacao",
-        ["/api/equipes"] = "equipes",
-        ["/api/cargos"] = "cargos",
-        ["/api/voluntarios"] = "voluntarios",
-        ["/api/eventos"] = "eventos",
-        ["/api/inscricoeseventos"] = "inscricoes-eventos",
-        ["/api/categoriasnoticias"] = "categorias-noticias",
-        ["/api/noticias"] = "noticias",
         ["/api/contatos"] = "contatos",
-        ["/api/destaquessite"] = "destaques-site",
-        ["/api/configuracaoportal"] = "portal",
-        ["/api/categoriasmidias"] = "categorias-midias",
-        ["/api/galeriasfotos"] = "galerias-fotos",
-        ["/api/enquetes"] = "enquetes",
-        ["/api/kids"] = "kids",
-        ["/api/hub"] = "hub",
-        ["/api/fornecedores"] = "fornecedores",
         ["/api/perfis-acesso"] = "perfis-acesso",
         ["/api/auditlogs"] = "usuarios"
     };

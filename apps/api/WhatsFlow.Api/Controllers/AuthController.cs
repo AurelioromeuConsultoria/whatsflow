@@ -13,12 +13,10 @@ namespace WhatsFlow.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly IKidsRegistrationService _registrationService;
 
-    public AuthController(IAuthService authService, IKidsRegistrationService registrationService)
+    public AuthController(IAuthService authService)
     {
         _authService = authService;
-        _registrationService = registrationService;
     }
 
     [HttpPost("login")]
@@ -94,28 +92,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpPost("registrar-responsavel")]
-    [EnableRateLimiting("login")]
-    public async Task<ActionResult<LoginResponseDto>> RegistrarResponsavel(RegistrarResponsavelDto dto)
-    {
-        try
-        {
-            var result = await _registrationService.RegistrarResponsavelAsync(dto);
-            return Ok(result);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 }
 
 

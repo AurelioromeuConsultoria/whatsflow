@@ -7,7 +7,7 @@ public class Pessoa360Dto
 {
     public PessoaDto Pessoa { get; set; } = null!;
     public List<VisitanteDto> Visitantes { get; set; } = new();
-    public List<VoluntarioDto> Voluntarios { get; set; } = new();
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
     public UsuarioResumoDto? Usuario { get; set; }
 }
 

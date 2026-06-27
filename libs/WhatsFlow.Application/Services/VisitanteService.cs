@@ -23,7 +23,6 @@ public class VisitanteService : IVisitanteService
     private readonly IVisitanteRepository _visitanteRepository;
     private readonly IComunicacaoAutomacaoService _comunicacaoAutomacaoService;
     private readonly IPessoaRepository _pessoaRepository;
-    private readonly IPessoaPerfilRepository _pessoaPerfilRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ITenantContext _tenantContext;
     private readonly ILogger<VisitanteService> _logger;
@@ -32,10 +31,9 @@ public class VisitanteService : IVisitanteService
         IVisitanteRepository visitanteRepository,
         IComunicacaoAutomacaoService comunicacaoAutomacaoService,
         IPessoaRepository pessoaRepository,
-        IPessoaPerfilRepository pessoaPerfilRepository,
         IUnitOfWork unitOfWork,
         ILogger<VisitanteService> logger)
-        : this(visitanteRepository, comunicacaoAutomacaoService, pessoaRepository, pessoaPerfilRepository, unitOfWork, new DefaultTenantContext(), logger)
+        : this(visitanteRepository, comunicacaoAutomacaoService, pessoaRepository, unitOfWork, new DefaultTenantContext(), logger)
     {
     }
 
@@ -43,7 +41,6 @@ public class VisitanteService : IVisitanteService
         IVisitanteRepository visitanteRepository,
         IComunicacaoAutomacaoService comunicacaoAutomacaoService,
         IPessoaRepository pessoaRepository,
-        IPessoaPerfilRepository pessoaPerfilRepository,
         IUnitOfWork unitOfWork,
         ITenantContext tenantContext,
         ILogger<VisitanteService> logger)
@@ -51,7 +48,6 @@ public class VisitanteService : IVisitanteService
         _visitanteRepository = visitanteRepository;
         _comunicacaoAutomacaoService = comunicacaoAutomacaoService;
         _pessoaRepository = pessoaRepository;
-        _pessoaPerfilRepository = pessoaPerfilRepository;
         _unitOfWork = unitOfWork;
         _tenantContext = tenantContext;
         _logger = logger;
@@ -98,14 +94,7 @@ public class VisitanteService : IVisitanteService
     {
         var visitante = await _visitanteRepository.GetByIdAsync(id);
         if (visitante == null) return null;
-        
-        // Garantir que perfis estão carregados
-        if (visitante.Pessoa != null && (visitante.Pessoa.Perfis == null || !visitante.Pessoa.Perfis.Any()))
-        {
-            var perfis = await _pessoaPerfilRepository.GetPerfisPorPessoaAsync(visitante.PessoaId);
-            visitante.Pessoa.Perfis = perfis.ToList();
-        }
-        
+
         return MapToDto(visitante);
     }
 
@@ -196,21 +185,7 @@ public class VisitanteService : IVisitanteService
 
             pessoaId = pessoa.Id;
 
-            // 3. Garantir perfil Visitante
-            var perfilAtivo = await _pessoaPerfilRepository.GetPerfilAtivoAsync(pessoa.Id, PerfilPessoa.Visitante);
-            if (perfilAtivo == null)
-            {
-                var novoPerfil = new PessoaPerfil
-                {
-                    TenantId = _tenantContext.TenantId ?? Tenant.InitialTenantId,
-                    PessoaId = pessoa.Id,
-                    Perfil = PerfilPessoa.Visitante,
-                    DataInicio = AgoraSemFuso(),
-                    DataFim = null
-                };
-                await _pessoaPerfilRepository.CreateWithoutSaveAsync(novoPerfil);
-                perfilVisitanteCriado = true;
-            }
+            // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
             // 4. Criar registro de Visitante (histórico de visita)
             var visitante = new Visitante
@@ -356,9 +331,7 @@ public class VisitanteService : IVisitanteService
         if (visitanteCompleto == null)
             throw new InvalidOperationException("Visitante não encontrado após criação");
 
-        var perfis = await _pessoaPerfilRepository.GetPerfisPorPessoaAsync(visitanteCompleto.PessoaId);
-        var perfisNomes = perfis.Select(p => p.Perfil.ToString()).ToList();
-
+        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
         return new VisitanteResponse
         {
             VisitanteId = visitanteCompleto.Id,
@@ -368,8 +341,7 @@ public class VisitanteService : IVisitanteService
             Telefone = visitanteCompleto.Pessoa?.Telefone,
             WhatsApp = visitanteCompleto.Pessoa?.WhatsApp,
             DataVisita = visitanteCompleto.DataVisita,
-            Observacoes = visitanteCompleto.Observacoes,
-            Perfis = perfisNomes
+            Observacoes = visitanteCompleto.Observacoes
         };
     }
 
@@ -439,11 +411,8 @@ public class VisitanteService : IVisitanteService
             Email = visitante.Pessoa?.Email,
             DataVisita = visitante.DataVisita,
             Observacoes = visitante.Observacoes,
-            DataCadastro = visitante.DataCadastro,
-            Perfis = visitante.Pessoa?.Perfis?
-                .Where(p => p.DataFim == null)
-                .Select(p => p.Perfil.ToString())
-                .ToList() ?? new List<string>()
+            DataCadastro = visitante.DataCadastro
+            // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
         };
     }
 }

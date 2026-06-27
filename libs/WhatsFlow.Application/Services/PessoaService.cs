@@ -23,37 +23,29 @@ public interface IPessoaService
 public class PessoaService : IPessoaService
 {
     private readonly IPessoaRepository _repository;
-    private readonly IPessoaPerfilRepository _perfilRepository;
     private readonly IVisitanteService _visitanteService;
-    private readonly IVoluntarioService _voluntarioService;
     private readonly IUsuarioService _usuarioService;
     private readonly ITenantContext _tenantContext;
     private readonly ILogger<PessoaService> _logger;
 
     public PessoaService(
         IPessoaRepository repository,
-        IPessoaPerfilRepository perfilRepository,
         IVisitanteService visitanteService,
-        IVoluntarioService voluntarioService,
         IUsuarioService usuarioService,
         ILogger<PessoaService> logger)
-        : this(repository, perfilRepository, visitanteService, voluntarioService, usuarioService, new DefaultTenantContext(), logger)
+        : this(repository, visitanteService, usuarioService, new DefaultTenantContext(), logger)
     {
     }
 
     public PessoaService(
         IPessoaRepository repository,
-        IPessoaPerfilRepository perfilRepository,
         IVisitanteService visitanteService,
-        IVoluntarioService voluntarioService,
         IUsuarioService usuarioService,
         ITenantContext tenantContext,
         ILogger<PessoaService> logger)
     {
         _repository = repository;
-        _perfilRepository = perfilRepository;
         _visitanteService = visitanteService;
-        _voluntarioService = voluntarioService;
         _usuarioService = usuarioService;
         _tenantContext = tenantContext;
         _logger = logger;
@@ -62,28 +54,13 @@ public class PessoaService : IPessoaService
     public async Task<IEnumerable<PessoaDto>> GetAllAsync()
     {
         var pessoas = await _repository.GetAllAsync();
-        var pessoasDto = new List<PessoaDto>();
-
-        foreach (var pessoa in pessoas)
-        {
-            var perfis = await _perfilRepository.GetPerfisPorPessoaAsync(pessoa.Id);
-            pessoasDto.Add(MapToDto(pessoa, perfis));
-        }
-
-        return pessoasDto;
+        return pessoas.Select(MapToDto).ToList();
     }
 
     public async Task<PagedResultDto<PessoaDto>> GetPagedAsync(PessoaPagedQueryDto queryDto)
     {
         var page = queryDto.Page <= 0 ? 1 : queryDto.Page;
         var pageSize = queryDto.PageSize <= 0 ? 20 : Math.Min(queryDto.PageSize, 200);
-
-        PerfilPessoa? perfil = null;
-        if (!string.IsNullOrWhiteSpace(queryDto.Perfil) &&
-            Enum.TryParse<PerfilPessoa>(queryDto.Perfil.Trim(), ignoreCase: true, out var perfilParsed))
-        {
-            perfil = perfilParsed;
-        }
 
         TipoPessoa? tipoPessoa = null;
         if (!string.IsNullOrWhiteSpace(queryDto.TipoPessoa) &&
@@ -102,17 +79,14 @@ public class PessoaService : IPessoaService
             Email = queryDto.Email,
             Telefone = queryDto.Telefone,
             WhatsApp = queryDto.WhatsApp,
-            Perfil = perfil,
+            // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
             TipoPessoa = tipoPessoa,
             Ativo = queryDto.Ativo
         };
 
         var (items, total) = await _repository.GetPagedAsync(query);
 
-        // Perfis já vêm carregados via Include no repo.
-        var dtos = items
-            .Select(p => MapToDto(p, p.Perfis ?? Array.Empty<PessoaPerfil>()))
-            .ToList();
+        var dtos = items.Select(MapToDto).ToList();
 
         return new PagedResultDto<PessoaDto>
         {
@@ -128,8 +102,7 @@ public class PessoaService : IPessoaService
         var pessoa = await _repository.GetByIdAsync(id);
         if (pessoa == null) return null;
 
-        var perfis = await _perfilRepository.GetPerfisPorPessoaAsync(pessoa.Id);
-        return MapToDto(pessoa, perfis);
+        return MapToDto(pessoa);
     }
 
     public async Task<Pessoa360Dto?> Get360Async(int id)
@@ -137,18 +110,16 @@ public class PessoaService : IPessoaService
         var pessoa = await _repository.GetByIdAsync(id);
         if (pessoa == null) return null;
 
-        var perfis = await _perfilRepository.GetPerfisPorPessoaAsync(pessoa.Id);
-        var pessoaDto = MapToDto(pessoa, perfis);
+        var pessoaDto = MapToDto(pessoa);
 
         var visitantes = await _visitanteService.GetVisitantesPorPessoaAsync(id);
-        var voluntarios = await _voluntarioService.GetVoluntariosPorPessoaAsync(id);
         var usuario = await _usuarioService.GetByPessoaIdAsync(id);
 
+        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
         return new Pessoa360Dto
         {
             Pessoa = pessoaDto,
             Visitantes = visitantes.OrderByDescending(v => v.DataVisita).ToList(),
-            Voluntarios = voluntarios.ToList(),
             Usuario = usuario != null ? new UsuarioResumoDto
             {
                 Id = usuario.Id,
@@ -189,8 +160,7 @@ public class PessoaService : IPessoaService
             created.Id,
             created.TipoPessoa,
             created.Ativo);
-        var perfis = await _perfilRepository.GetPerfisPorPessoaAsync(created.Id);
-        return MapToDto(created, perfis);
+        return MapToDto(created);
     }
 
     public async Task<PessoaDto> UpdateAsync(int id, AtualizarPessoaDto dto)
@@ -220,8 +190,7 @@ public class PessoaService : IPessoaService
             updated.Id,
             updated.TipoPessoa,
             updated.Ativo);
-        var perfis = await _perfilRepository.GetPerfisPorPessoaAsync(updated.Id);
-        return MapToDto(updated, perfis);
+        return MapToDto(updated);
     }
 
     public async Task<PessoaDto> UpdateMinhaPessoaAsync(int id, AtualizarMinhaPessoaDto dto)
@@ -248,8 +217,7 @@ public class PessoaService : IPessoaService
             "Pessoa atualizou o proprio cadastro. PessoaId={PessoaId} TipoPessoa={TipoPessoa}",
             updated.Id,
             updated.TipoPessoa);
-        var perfis = await _perfilRepository.GetPerfisPorPessoaAsync(updated.Id);
-        return MapToDto(updated, perfis);
+        return MapToDto(updated);
     }
 
     public async Task DeleteAsync(int id)
@@ -320,7 +288,8 @@ public class PessoaService : IPessoaService
             .ToList();
     }
 
-    private static PessoaDto MapToDto(Pessoa pessoa, IEnumerable<PessoaPerfil> perfis)
+    // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
+    private static PessoaDto MapToDto(Pessoa pessoa)
     {
         return new PessoaDto
         {
@@ -333,18 +302,7 @@ public class PessoaService : IPessoaService
             TipoPessoa = pessoa.TipoPessoa,
             TipoPessoaDescricao = GetTipoPessoaDescricao(pessoa.TipoPessoa),
             Ativo = pessoa.Ativo,
-            DataCriacao = pessoa.DataCriacao,
-            Perfis = perfis.Select(p => new PessoaPerfilDto
-            {
-                Id = p.Id,
-                PessoaId = p.PessoaId,
-                NomePessoa = pessoa.Nome,
-                Perfil = p.Perfil,
-                PerfilDescricao = GetPerfilDescricao(p.Perfil),
-                DataInicio = p.DataInicio,
-                DataFim = p.DataFim,
-                Ativo = p.DataFim == null
-            }).ToList()
+            DataCriacao = pessoa.DataCriacao
         };
     }
 
@@ -354,20 +312,6 @@ public class PessoaService : IPessoaService
         {
             TipoPessoa.Adulto => "Adulto",
             TipoPessoa.Crianca => "Criança",
-            _ => "Desconhecido"
-        };
-    }
-
-    private static string GetPerfilDescricao(PerfilPessoa perfil)
-    {
-        return perfil switch
-        {
-            PerfilPessoa.Visitante => "Visitante",
-            PerfilPessoa.Membro => "Membro",
-            PerfilPessoa.Voluntario => "Voluntário",
-            PerfilPessoa.Lider => "Líder",
-            PerfilPessoa.Kids => "Kids",
-            PerfilPessoa.Admin => "Administrador",
             _ => "Desconhecido"
         };
     }

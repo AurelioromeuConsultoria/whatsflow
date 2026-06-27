@@ -20,7 +20,6 @@ public class SignupService : ISignupService
     private readonly WhatsFlowDbContext _context;
     private readonly ITenantManagementService _tenantManagement;
     private readonly IBillingService _billing;
-    private readonly IConsentimentoRegistroRepository _consentimentoRepository;
     private readonly IUsuarioRepository _usuarioRepository;
     private readonly IEmailService _emailService;
     private readonly PublicAppUrlSettings _appUrl;
@@ -31,7 +30,6 @@ public class SignupService : ISignupService
         WhatsFlowDbContext context,
         ITenantManagementService tenantManagement,
         IBillingService billing,
-        IConsentimentoRegistroRepository consentimentoRepository,
         IUsuarioRepository usuarioRepository,
         IEmailService emailService,
         IOptions<PublicAppUrlSettings> appUrl,
@@ -41,7 +39,6 @@ public class SignupService : ISignupService
         _context = context;
         _tenantManagement = tenantManagement;
         _billing = billing;
-        _consentimentoRepository = consentimentoRepository;
         _usuarioRepository = usuarioRepository;
         _emailService = emailService;
         _appUrl = appUrl.Value;
@@ -94,20 +91,7 @@ public class SignupService : ISignupService
             DataCriacao = agora
         });
 
-        // 3) Consentimento (Termos + Política).
-        foreach (var tipo in new[] { TipoConsentimento.PoliticaPrivacidade, TipoConsentimento.TermosDeUso })
-        {
-            await _consentimentoRepository.CreateWithoutSaveAsync(new ConsentimentoRegistro
-            {
-                TenantId = prov.Tenant.Id,
-                PessoaId = prov.PessoaId,
-                Tipo = tipo,
-                VersaoDocumento = dto.AceiteTermosVersao.Trim(),
-                AceitoEm = agora,
-                Origem = "signup",
-                ConcedidoPorPessoaId = prov.PessoaId
-            });
-        }
+        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
         await _context.SaveChangesAsync();
 

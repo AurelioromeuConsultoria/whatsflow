@@ -66,37 +66,7 @@ public class SearchService : ISearchService
             })
             .ToListAsync();
 
-        var eventosTask = _db.Eventos
-            .AsNoTracking()
-            .Where(e =>
-                e.Titulo.ToLower().Contains(qLower) ||
-                (e.Descricao != null && e.Descricao.ToLower().Contains(qLower)))
-            .OrderByDescending(e => e.DataInicio)
-            .Take(perType)
-            .Select(e => new GlobalSearchItemDto
-            {
-                Type = "Evento",
-                Id = e.Id,
-                Title = e.Titulo,
-                Subtitle = $"{e.DataInicio:yyyy-MM-dd} → {e.DataFim:yyyy-MM-dd}"
-            })
-            .ToListAsync();
-
-        var noticiasTask = _db.Noticias
-            .AsNoTracking()
-            .Where(n =>
-                n.Titulo.ToLower().Contains(qLower) ||
-                (n.Descricao != null && n.Descricao.ToLower().Contains(qLower)))
-            .OrderByDescending(n => n.Data)
-            .Take(perType)
-            .Select(n => new GlobalSearchItemDto
-            {
-                Type = "Noticia",
-                Id = n.Id,
-                Title = n.Titulo,
-                Subtitle = n.Data.ToString("yyyy-MM-dd")
-            })
-            .ToListAsync();
+        // TODO(WhatsFlow Etapa 4): rever público-alvo (Tag/Segmento + Contato)
 
         var usuariosTask = _db.Usuarios
             .AsNoTracking()
@@ -114,13 +84,11 @@ public class SearchService : ISearchService
             })
             .ToListAsync();
 
-        await Task.WhenAll(pessoasTask, visitantesTask, eventosTask, noticiasTask, usuariosTask);
+        await Task.WhenAll(pessoasTask, visitantesTask, usuariosTask);
 
         var all = new List<GlobalSearchItemDto>(takeTotal);
         all.AddRange(pessoasTask.Result);
         all.AddRange(visitantesTask.Result);
-        all.AddRange(eventosTask.Result);
-        all.AddRange(noticiasTask.Result);
         all.AddRange(usuariosTask.Result);
 
         return all.Take(takeTotal).ToList();
