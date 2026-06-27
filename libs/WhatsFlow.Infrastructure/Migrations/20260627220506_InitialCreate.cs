@@ -822,7 +822,7 @@ namespace WhatsFlow.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Tenants",
                 columns: new[] { "Id", "Ativo", "CorPrimaria", "CorSecundaria", "DataAtualizacao", "DataCriacao", "Documento", "Email", "FaviconUrl", "FusoHorario", "IsRootTenant", "LimiteContatos", "LimiteMensalMensagens", "LogoUrl", "Nome", "NomeExibicao", "PlanoId", "Slug", "Status", "Telefone" },
-                values: new object[] { 1, true, "#111827", "#374151", null, new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Utc), null, null, null, "America/Sao_Paulo", true, 0, 0, null, "Mang Guarulhos", "Mang Guarulhos", null, "mang-guarulhos", 1, null });
+                values: new object[] { 1, true, "#25D366", "#075E54", null, new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Utc), null, null, null, "America/Sao_Paulo", true, 0, 0, null, "WhatsFlow Demo", "WhatsFlow Demo", null, "demo", 1, null });
 
             migrationBuilder.InsertData(
                 table: "ConfiguracoesMensagens",

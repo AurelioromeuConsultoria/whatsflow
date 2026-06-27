@@ -12,34 +12,16 @@ namespace WhatsFlow.Infrastructure.Services;
 public class TenantManagementService : ITenantManagementService
 {
     private static readonly Regex SlugRegex = new("^[a-z0-9]+(?:-[a-z0-9]+)*$", RegexOptions.Compiled);
-    private static readonly string[] DefaultAdminResources =
+    /// <summary>Recursos RBAC do WhatsFlow concedidos ao perfil Administrador do tenant.</summary>
+    public static readonly string[] DefaultAdminResources =
     [
         "dashboard",
         "usuarios",
         "perfis-acesso",
-        "pessoas",
-        "perfis",
-        "visitantes",
         "configuracoes-mensagens",
         "mensagens-agendadas",
         "comunicacao",
-        "equipes",
-        "cargos",
-        "voluntarios",
-        "eventos",
-        "inscricoes-eventos",
-        "portal",
-        "noticias",
-        "categorias-noticias",
-        "contatos",
-        "destaques-site",
-        "categorias-midias",
-        "galerias-fotos",
-        "enquetes",
-        "kids",
-        "hub",
-        "financeiro",
-        "fornecedores"
+        "contatos"
     ];
 
     private readonly WhatsFlowDbContext _context;

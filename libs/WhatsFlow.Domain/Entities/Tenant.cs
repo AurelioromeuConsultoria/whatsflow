@@ -5,8 +5,8 @@ namespace WhatsFlow.Domain.Entities;
 public class Tenant
 {
     public const int InitialTenantId = 1;
-    public const string InitialTenantName = "Mang Guarulhos";
-    public const string InitialTenantSlug = "mang-guarulhos";
+    public const string InitialTenantName = "WhatsFlow Demo";
+    public const string InitialTenantSlug = "demo";
 
     public int Id { get; set; }
 

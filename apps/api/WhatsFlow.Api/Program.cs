@@ -339,6 +339,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Migrations + seed do tenant demo (admin + conta WhatsApp Fake). Idempotente; gated por config.
+await WhatsFlow.API.Data.DemoDataSeeder.RunAsync(app.Services, app.Configuration,
+    app.Services.GetRequiredService<ILogger<Program>>());
+
 // Middleware CORS explícito - garante headers em TODA resposta (evita falhas com proxy/ordem)
 app.Use(async (context, next) =>
 {

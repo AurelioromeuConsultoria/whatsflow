@@ -1232,16 +1232,16 @@ namespace WhatsFlow.Infrastructure.Migrations
                         {
                             Id = 1,
                             Ativo = true,
-                            CorPrimaria = "#111827",
-                            CorSecundaria = "#374151",
+                            CorPrimaria = "#25D366",
+                            CorSecundaria = "#075E54",
                             DataCriacao = new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Utc),
                             FusoHorario = "America/Sao_Paulo",
                             IsRootTenant = true,
                             LimiteContatos = 0,
                             LimiteMensalMensagens = 0,
-                            Nome = "Mang Guarulhos",
-                            NomeExibicao = "Mang Guarulhos",
-                            Slug = "mang-guarulhos",
+                            Nome = "WhatsFlow Demo",
+                            NomeExibicao = "WhatsFlow Demo",
+                            Slug = "demo",
                             Status = 1
                         });
                 });

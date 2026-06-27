@@ -104,8 +104,10 @@ public class WhatsFlowDbContext : DbContext
                 Slug = Tenant.InitialTenantSlug,
                 LogoUrl = null,
                 FaviconUrl = null,
-                CorPrimaria = "#111827",
-                CorSecundaria = "#374151",
+                CorPrimaria = "#25D366",
+                CorSecundaria = "#075E54",
+                Status = TenantStatus.Active,
+                FusoHorario = "America/Sao_Paulo",
                 IsRootTenant = true,
                 Ativo = true,
                 DataCriacao = new DateTime(2026, 4, 9, 0, 0, 0, DateTimeKind.Utc)
