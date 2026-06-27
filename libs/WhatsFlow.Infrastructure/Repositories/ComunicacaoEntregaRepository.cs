@@ -133,6 +133,8 @@ public class ComunicacaoEntregaRepository : IComunicacaoEntregaRepository
                 // Pendentes de campanhas Pausadas/Canceladas não são reservadas (Feature 3: pausa honrada).
                 ids = await _context.ComunicacaoEntregas
                     .Where(e => e.Status == StatusComunicacaoEntrega.Pendente)
+                    // Honra backoff de retentativa (AgendadoPara) por entrega.
+                    .Where(e => !e.AgendadoPara.HasValue || e.AgendadoPara.Value <= DateTime.UtcNow)
                     .Where(e => e.ComunicacaoCampanha == null || !e.ComunicacaoCampanha.DataAgendamento.HasValue || e.ComunicacaoCampanha.DataAgendamento.Value <= DateTime.Now)
                     .Where(e => e.ComunicacaoCampanha == null ||
                         (e.ComunicacaoCampanha.Status != StatusComunicacaoCampanha.Pausada &&

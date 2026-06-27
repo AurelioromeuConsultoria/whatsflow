@@ -23,4 +23,20 @@ public class MessageSchedulerSettings
     /// Quantidade máxima de mensagens reservadas por execução (batch).
     /// </summary>
     public int BatchSizeReserva { get; set; } = 50;
+
+    /// <summary>
+    /// Número máximo de tentativas de envio antes de marcar a entrega como Falhou.
+    /// </summary>
+    public int MaxTentativas { get; set; } = 3;
+
+    /// <summary>
+    /// Backoff base entre tentativas, em minutos. O atraso efetivo é RetryBackoffMinutes * Tentativas.
+    /// </summary>
+    public int RetryBackoffMinutes { get; set; } = 5;
+
+    /// <summary>
+    /// Atraso entre envios consecutivos dentro do batch, em milissegundos (rate limit simples).
+    /// 0 = sem atraso. Para rate limit distribuído, usar Redis no futuro.
+    /// </summary>
+    public int DelayBetweenSendsMs { get; set; } = 0;
 }

@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using WhatsFlow.Application.Configuration;
 using WhatsFlow.Application.DTOs;
 using WhatsFlow.Application.Interfaces;
 using WhatsFlow.Domain.Entities;
@@ -11,8 +13,8 @@ public interface IComunicacaoEntregaService
     Task<IReadOnlyList<ComunicacaoEntregaResumoDto>> GetByCampanhaIdAsync(int campanhaId);
     Task<ComunicacaoEntregaResumoDto?> GetByIdAsync(int entregaId);
     Task<IReadOnlyList<ComunicacaoEntregaResumoDto>> ReservarPendentesAsync(int limit);
-    Task MarcarComoEnviadaAsync(int entregaId);
-    Task MarcarComoFalhaAsync(int entregaId, string erro);
+    Task MarcarComoEnviadaAsync(int entregaId, string? providerMessageId = null);
+    Task MarcarComoFalhaAsync(int entregaId, string erro, string? errorCode = null);
     Task<ComunicacaoEntregaResumoDto> PrepararReprocessamentoAsync(int entregaId);
 }
 
@@ -22,17 +24,20 @@ public class ComunicacaoEntregaService : IComunicacaoEntregaService
     private readonly IComunicacaoCampanhaRepository _campanhaRepository;
     private readonly ILogger<ComunicacaoEntregaService> _logger;
     private readonly IAuditLogService _auditLogService;
+    private readonly MessageSchedulerSettings _settings;
 
     public ComunicacaoEntregaService(
         IComunicacaoEntregaRepository repository,
         IComunicacaoCampanhaRepository campanhaRepository,
         ILogger<ComunicacaoEntregaService> logger,
-        IAuditLogService auditLogService)
+        IAuditLogService auditLogService,
+        IOptions<MessageSchedulerSettings> settings)
     {
         _repository = repository;
         _campanhaRepository = campanhaRepository;
         _logger = logger;
         _auditLogService = auditLogService;
+        _settings = settings.Value;
     }
 
     public async Task<PagedResultDto<ComunicacaoEntregaResumoDto>> GetPagedAsync(ComunicacaoEntregaPagedQueryDto query)
@@ -76,46 +81,64 @@ public class ComunicacaoEntregaService : IComunicacaoEntregaService
         return items.Select(MapResumo).ToList();
     }
 
-    public async Task MarcarComoEnviadaAsync(int entregaId)
+    public async Task MarcarComoEnviadaAsync(int entregaId, string? providerMessageId = null)
     {
         var entrega = await _repository.GetByIdAsync(entregaId) ?? throw new ArgumentException("Entrega não encontrada");
         entrega.Status = StatusComunicacaoEntrega.Enviado;
-        entrega.EntregueEm = DateTime.UtcNow;
+        // Enviado != Entregue: EntregueEm/LidoEm são preenchidos pelo webhook do provider.
         entrega.ProcessadoEm = DateTime.UtcNow;
+        entrega.AtualizadoEm = DateTime.UtcNow;
+        if (!string.IsNullOrWhiteSpace(providerMessageId))
+        {
+            entrega.ProviderMessageId = providerMessageId;
+        }
         entrega.Tentativas += 1;
         await _repository.UpdateAsync(entrega);
         await AtualizarCampanhaAsync(entrega);
 
         _logger.LogInformation(
-            "{EventName} EntregaId={EntregaId} Canal={Canal}",
+            "{EventName} EntregaId={EntregaId} Canal={Canal} ProviderMessageId={ProviderMessageId}",
             ComunicacaoObservability.Events.EntregaEnviada,
             entrega.Id,
-            entrega.Canal);
+            entrega.Canal,
+            entrega.ProviderMessageId);
     }
 
-    public async Task MarcarComoFalhaAsync(int entregaId, string erro)
+    public async Task MarcarComoFalhaAsync(int entregaId, string erro, string? errorCode = null)
     {
         var entrega = await _repository.GetByIdAsync(entregaId) ?? throw new ArgumentException("Entrega não encontrada");
-        entrega.Status = StatusComunicacaoEntrega.Falhou;
-        entrega.Erro = erro;
-        entrega.ProcessadoEm = DateTime.UtcNow;
         entrega.Tentativas += 1;
+        entrega.Erro = erro;
+        entrega.ErrorCode = errorCode;
+        entrega.ProcessadoEm = DateTime.UtcNow;
+        entrega.AtualizadoEm = DateTime.UtcNow;
+
+        if (entrega.Tentativas < _settings.MaxTentativas)
+        {
+            // Retentativa com backoff: volta para Pendente agendada no futuro.
+            entrega.Status = StatusComunicacaoEntrega.Pendente;
+            entrega.AgendadoPara = DateTime.UtcNow.AddMinutes(_settings.RetryBackoffMinutes * entrega.Tentativas);
+            _logger.LogWarning(
+                "EntregaId={EntregaId} falhou (tentativa {Tentativa}/{Max}); reagendada p/ {Agendado}. Erro={Erro}",
+                entrega.Id, entrega.Tentativas, _settings.MaxTentativas, entrega.AgendadoPara, erro);
+        }
+        else
+        {
+            entrega.Status = StatusComunicacaoEntrega.Falhou;
+            _logger.LogWarning(
+                "{EventName} EntregaId={EntregaId} Canal={Canal} Erro={Erro} (esgotou tentativas)",
+                ComunicacaoObservability.Events.EntregaFalhou, entrega.Id, entrega.Canal, erro);
+
+            await _auditLogService.RecordAsync("ComunicacaoEntrega", entrega.Id.ToString(), "Falha", new
+            {
+                entrega.Canal,
+                entrega.DestinoResolvido,
+                entrega.Erro
+            });
+        }
+
         await _repository.UpdateAsync(entrega);
         await AtualizarCampanhaAsync(entrega);
-
-        _logger.LogWarning(
-            "{EventName} EntregaId={EntregaId} Canal={Canal} Erro={Erro}",
-            ComunicacaoObservability.Events.EntregaFalhou,
-            entrega.Id,
-            entrega.Canal,
-            erro);
-
-        await _auditLogService.RecordAsync("ComunicacaoEntrega", entrega.Id.ToString(), "Falha", new
-        {
-            entrega.Canal,
-            entrega.DestinoResolvido,
-            entrega.Erro
-        });
     }
 
     public async Task<ComunicacaoEntregaResumoDto> PrepararReprocessamentoAsync(int entregaId)

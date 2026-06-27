@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using WhatsFlow.Application.Configuration;
 using WhatsFlow.Application.Interfaces;
 using WhatsFlow.Domain.Entities;
 
@@ -16,23 +18,27 @@ public class ComunicacaoProcessamentoService : IComunicacaoProcessamentoService
     private readonly IComunicacaoEntregaRepository _entregaRepository;
     private readonly IReadOnlyDictionary<CanalComunicacao, IComunicacaoCanalProvider> _providers;
     private readonly ILogger<ComunicacaoProcessamentoService> _logger;
+    private readonly MessageSchedulerSettings _settings;
 
     public ComunicacaoProcessamentoService(
         IComunicacaoEntregaService entregaService,
         IComunicacaoEntregaRepository entregaRepository,
         IEnumerable<IComunicacaoCanalProvider> providers,
-        ILogger<ComunicacaoProcessamentoService> logger)
+        ILogger<ComunicacaoProcessamentoService> logger,
+        IOptions<MessageSchedulerSettings> settings)
     {
         _entregaService = entregaService;
         _entregaRepository = entregaRepository;
         _providers = providers.ToDictionary(x => x.Canal);
         _logger = logger;
+        _settings = settings.Value;
     }
 
     public async Task<int> ProcessarPendentesAsync(int limit, CancellationToken cancellationToken = default)
     {
         var reservadas = await _entregaService.ReservarPendentesAsync(limit);
         var processadas = 0;
+        var primeira = true;
 
         foreach (var entregaResumo in reservadas)
         {
@@ -44,9 +50,24 @@ public class ComunicacaoProcessamentoService : IComunicacaoProcessamentoService
                     continue;
                 }
 
-                await ProcessarEntregaAsync(entrega, cancellationToken);
-                await _entregaService.MarcarComoEnviadaAsync(entrega.Id);
-                processadas++;
+                // Rate limit simples entre envios (DelayBetweenSendsMs).
+                if (!primeira && _settings.DelayBetweenSendsMs > 0)
+                {
+                    await Task.Delay(_settings.DelayBetweenSendsMs, cancellationToken);
+                }
+                primeira = false;
+
+                var resultado = await ProcessarEntregaAsync(entrega, cancellationToken);
+                if (resultado.Sucesso)
+                {
+                    await _entregaService.MarcarComoEnviadaAsync(entrega.Id, resultado.ProviderMessageId);
+                    processadas++;
+                }
+                else
+                {
+                    await _entregaService.MarcarComoFalhaAsync(
+                        entrega.Id, resultado.Mensagem ?? "Falha no envio", resultado.ErrorCode);
+                }
             }
             catch (Exception ex)
             {
@@ -68,9 +89,15 @@ public class ComunicacaoProcessamentoService : IComunicacaoProcessamentoService
 
         try
         {
-            await ProcessarEntregaAsync(entrega, cancellationToken);
-            await _entregaService.MarcarComoEnviadaAsync(entregaId);
-            return true;
+            var resultado = await ProcessarEntregaAsync(entrega, cancellationToken);
+            if (resultado.Sucesso)
+            {
+                await _entregaService.MarcarComoEnviadaAsync(entregaId, resultado.ProviderMessageId);
+                return true;
+            }
+
+            await _entregaService.MarcarComoFalhaAsync(entregaId, resultado.Mensagem ?? "Falha no envio", resultado.ErrorCode);
+            return false;
         }
         catch (Exception ex)
         {
@@ -80,7 +107,11 @@ public class ComunicacaoProcessamentoService : IComunicacaoProcessamentoService
         }
     }
 
-    private async Task ProcessarEntregaAsync(ComunicacaoEntrega entrega, CancellationToken cancellationToken)
+    /// <summary>
+    /// Despacha a entrega pelo provider do canal. Lança apenas em erro de configuração/canal;
+    /// falha de envio é retornada no resultado (para o chamador decidir retry/falha).
+    /// </summary>
+    private async Task<ComunicacaoCanalEnvioResultado> ProcessarEntregaAsync(ComunicacaoEntrega entrega, CancellationToken cancellationToken)
     {
         if (!_providers.TryGetValue(entrega.Canal, out var provider))
         {
@@ -93,10 +124,6 @@ public class ComunicacaoProcessamentoService : IComunicacaoProcessamentoService
             throw new InvalidOperationException(diagnostico.Mensagem ?? $"Canal {provider.Nome} não configurado.");
         }
 
-        var resultado = await provider.EnviarAsync(entrega, cancellationToken);
-        if (!resultado.Sucesso)
-        {
-            throw new InvalidOperationException(resultado.Mensagem ?? $"Falha ao enviar entrega pelo canal {provider.Nome}.");
-        }
+        return await provider.EnviarAsync(entrega, cancellationToken);
     }
 }
