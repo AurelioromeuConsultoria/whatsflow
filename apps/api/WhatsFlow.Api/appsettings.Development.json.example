@@ -1,0 +1,61 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=sistemaigreja_dev;Username=postgres;Password=SUA_SENHA_AQUI"
+  },
+  "Database": {
+    "Provider": "PostgreSQL",
+    "RunMigrations": true
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Cors": {
+    "AllowedOrigins": [
+      "http://localhost:5174",
+      "http://localhost:5175",
+      "http://localhost:3000",
+      "http://localhost:4173"
+    ]
+  },
+  "Jwt": {
+    "Key": "sua-chave-secreta-super-segura-com-pelo-menos-32-caracteres-para-jwt",
+    "Issuer": "SistemaIgreja",
+    "Audience": "SistemaIgreja",
+    "ExpirationHours": 1
+  },
+  "EvolutionApi": {
+    "BaseUrl": "https://evolution.kingdombr.com.br",
+    "ApiKey": "SUA_API_KEY_AQUI",
+    "InstanceName": "teste",
+    "TimeoutSeconds": 30,
+    "MaxRetries": 3,
+    "RetryDelaySeconds": 5,
+    "CodigoPaisPadrao": "55"
+  },
+  "Email": {
+    "Enabled": false,
+    "Host": "smtp.seudominio.com",
+    "Port": 587,
+    "Username": "usuario",
+    "Password": "senha",
+    "UseSsl": true,
+    "FromAddress": "naoresponda@seudominio.com",
+    "FromName": "Sistema Igreja"
+  },
+  "Scheduler": {
+    "Enabled": true
+  },
+  "MessageScheduler": {
+    "BaseIntervalMinutes": 5,
+    "JitterSecondsMax": 20,
+    "BatchSizeReserva": 50
+  },
+  "ProductionUploadSync": {
+    "BaseUrl": "https://api.kingdombr.com.br",
+    "ApiKey": "MESMO-SEGREDO-CONFIGURADO-EM-PRODUCAO"
+  }
+}
