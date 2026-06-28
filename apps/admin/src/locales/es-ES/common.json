@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Sistema Iglesia",
-    "tagline": "Sistema de gestión para iglesias",
+    "name": "WhatsFlow",
+    "tagline": "Conversaciones que convierten.",
     "developedBy": "Desarrollado por Malach Digital"
   },
   "menu": {
@@ -75,7 +75,10 @@
     "kidsStructure": "Estructura",
     "kidsHistory": "Historial",
     "kidsLessonContent": "Contenidos de la clase",
-    "kidsCheckins": "Check-ins"
+    "kidsCheckins": "Check-ins",
+    "tags": "Etiquetas",
+    "messageLogs": "Registros de mensajes",
+    "whatsappAccounts": "Cuenta de WhatsApp"
   },
   "layout": {
     "expandAll": "Expandir todos los menús",
@@ -91,7 +94,7 @@
     "visitors": "Visitantes",
     "profiles": "Perfiles",
     "messageSettings": "Configuración de mensajes",
-      "scheduledMessages": "Cola de Comunicación",
+    "scheduledMessages": "Cola de Comunicación",
     "teams": "Equipos",
     "roles": "Cargos",
     "volunteers": "Voluntarios",
@@ -2125,10 +2128,10 @@
     "theme": "Tema",
     "light": "Claro",
     "dark": "Oscuro",
-    "verboTheme": "Verbo+",
+    "verboTheme": "WhatsFlow",
     "themeLightDescription": "Visual actual claro, neutro y limpio.",
     "themeDarkDescription": "Visual oscuro actual para ambientes con poca luz.",
-    "themeVerboDescription": "Paleta de la marca Verbo+ con morado, azul y cian.",
+    "themeVerboDescription": "Paleta de la marca WhatsFlow con tonos verdes.",
     "themeHint": "El tema elegido queda guardado en este navegador. El icono superior alterna rápidamente claro y oscuro.",
     "avatarTitle": "Foto de perfil",
     "avatarSubtitle": "Personalice su foto",
@@ -3705,19 +3708,35 @@
         "yearBalance": "Saldo del Año",
         "yearBalanceHint": "Ingresos: {{revenues}} | Gastos: {{expenses}}"
       },
-      "cashFlow": { "title": "Flujo de Caja - Últimos 12 Meses", "empty": "Sin datos disponibles" },
+      "cashFlow": {
+        "title": "Flujo de Caja - Últimos 12 Meses",
+        "empty": "Sin datos disponibles"
+      },
       "byCategory": {
         "revenuesTitle": "Ingresos por Categoría (Mes)",
         "revenuesEmpty": "Ningún ingreso este mes",
         "expensesTitle": "Gastos por Categoría (Mes)",
         "expensesEmpty": "Ningún gasto este mes",
-        "table": { "category": "Categoría", "value": "Valor", "percent": "%" }
+        "table": {
+          "category": "Categoría",
+          "value": "Valor",
+          "percent": "%"
+        }
       },
       "lastMovements": {
         "title": "Últimas Movimentaciones",
         "empty": "Ninguna movimentación reciente",
-        "table": { "type": "Tipo", "description": "Descripción", "date": "Fecha", "status": "Estado", "value": "Valor" },
-        "type": { "revenue": "Ingreso", "expense": "Gasto" }
+        "table": {
+          "type": "Tipo",
+          "description": "Descripción",
+          "date": "Fecha",
+          "status": "Estado",
+          "value": "Valor"
+        },
+        "type": {
+          "revenue": "Ingreso",
+          "expense": "Gasto"
+        }
       }
     },
     "reports": {
@@ -3725,7 +3744,12 @@
       "subtitle": "Genere informes detallados de finanzas",
       "paramsTitle": "Parámetros del Informe",
       "typeLabel": "Tipo de Informe",
-      "type": { "cashFlow": "Flujo de Caja", "byCategory": "Por Categoría", "byCostCenter": "Por Centro de Costo", "byProject": "Por Proyecto" },
+      "type": {
+        "cashFlow": "Flujo de Caja",
+        "byCategory": "Por Categoría",
+        "byCostCenter": "Por Centro de Costo",
+        "byProject": "Por Proyecto"
+      },
       "startDate": "Fecha Inicio",
       "endDate": "Fecha Fin",
       "generateButton": "Generar Informe",
@@ -3737,19 +3761,69 @@
       "periodLabel": "Período: {{start}} a {{end}}",
       "cashFlow": {
         "title": "Flujo de Caja",
-        "summary": { "totalRevenues": "Total Ingresos", "totalExpenses": "Total Gastos", "balance": "Saldo" },
-        "table": { "date": "Fecha", "revenues": "Ingresos", "expenses": "Gastos", "dayBalance": "Saldo del Día", "accumulatedBalance": "Saldo Acumulado" }
+        "summary": {
+          "totalRevenues": "Total Ingresos",
+          "totalExpenses": "Total Gastos",
+          "balance": "Saldo"
+        },
+        "table": {
+          "date": "Fecha",
+          "revenues": "Ingresos",
+          "expenses": "Gastos",
+          "dayBalance": "Saldo del Día",
+          "accumulatedBalance": "Saldo Acumulado"
+        }
       },
       "byCategory": {
         "title": "Informe por Categoría",
         "revenuesTitle": "Ingresos por Categoría",
         "expensesTitle": "Gastos por Categoría",
-        "table": { "category": "Categoría", "value": "Valor", "quantity": "Cantidad", "percent": "%" }
+        "table": {
+          "category": "Categoría",
+          "value": "Valor",
+          "quantity": "Cantidad",
+          "percent": "%"
+        }
       },
-      "byCostCenter": { "title": "Informe por Centro de Costo", "empty": "No se encontraron datos", "table": { "costCenter": "Centro de Costo", "revenues": "Ingresos", "expenses": "Gastos", "balance": "Saldo" } },
-      "byProject": { "title": "Informe por Proyecto", "empty": "No se encontraron datos", "table": { "project": "Proyecto", "budget": "Presupuesto", "revenues": "Ingresos", "expenses": "Gastos", "balance": "Saldo", "usedPercent": "% Utilizado" } }
+      "byCostCenter": {
+        "title": "Informe por Centro de Costo",
+        "empty": "No se encontraron datos",
+        "table": {
+          "costCenter": "Centro de Costo",
+          "revenues": "Ingresos",
+          "expenses": "Gastos",
+          "balance": "Saldo"
+        }
+      },
+      "byProject": {
+        "title": "Informe por Proyecto",
+        "empty": "No se encontraron datos",
+        "table": {
+          "project": "Proyecto",
+          "budget": "Presupuesto",
+          "revenues": "Ingresos",
+          "expenses": "Gastos",
+          "balance": "Saldo",
+          "usedPercent": "% Utilizado"
+        }
+      }
     },
-    "common": { "filters": "Filtros", "searchByName": "Buscar por nombre", "searchByDescription": "Buscar por descripción", "status": "Estado", "active": "Activo", "inactive": "Inactivo", "yes": "Sí", "no": "No", "notCategorized": "Sin categoría", "noCostCenter": "Sin centro de costo", "noProject": "Sin proyecto", "emptyList": "No se encontraron registros.", "name": "Nombre", "description": "Descripción" },
+    "common": {
+      "filters": "Filtros",
+      "searchByName": "Buscar por nombre",
+      "searchByDescription": "Buscar por descripción",
+      "status": "Estado",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "yes": "Sí",
+      "no": "No",
+      "notCategorized": "Sin categoría",
+      "noCostCenter": "Sin centro de costo",
+      "noProject": "Sin proyecto",
+      "emptyList": "No se encontraron registros.",
+      "name": "Nombre",
+      "description": "Descripción"
+    },
     "revenues": {
       "title": "Ingresos",
       "subtitle": "Gestione los ingresos",
@@ -3759,18 +3833,58 @@
       "errorLoad": "Error al cargar ingresos",
       "emptyTitle": "No se encontraron ingresos",
       "emptyMessage": "No se encontraron ingresos.",
-      "filters": { "searchLabel": "Buscar por descripción", "searchPlaceholder": "Descripción del ingreso" },
-      "table": { "description": "Descripción", "value": "Valor", "date": "Fecha de Recepción", "bankAccount": "Cuenta Bancaria", "costCenter": "Centro de Costo", "project": "Proyecto", "status": "Estado", "actions": "Acciones" },
-      "status": { "pending": "Pendiente", "received": "Recibido", "canceled": "Cancelado" },
-      "delete": { "title": "Eliminar Ingreso", "description": "¿Está seguro de eliminar \"{{name}}\"? Esta acción no se puede deshacer.", "confirm": "Eliminar", "cancel": "Cancelar", "success": "Ingreso eliminado correctamente", "error": "Error al eliminar ingreso" },
+      "filters": {
+        "searchLabel": "Buscar por descripción",
+        "searchPlaceholder": "Descripción del ingreso"
+      },
+      "table": {
+        "description": "Descripción",
+        "value": "Valor",
+        "date": "Fecha de Recepción",
+        "bankAccount": "Cuenta Bancaria",
+        "costCenter": "Centro de Costo",
+        "project": "Proyecto",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "received": "Recibido",
+        "canceled": "Cancelado"
+      },
+      "delete": {
+        "title": "Eliminar Ingreso",
+        "description": "¿Está seguro de eliminar \"{{name}}\"? Esta acción no se puede deshacer.",
+        "confirm": "Eliminar",
+        "cancel": "Cancelar",
+        "success": "Ingreso eliminado correctamente",
+        "error": "Error al eliminar ingreso"
+      },
       "form": {
         "editTitle": "Editar Ingreso",
         "newTitle": "Nuevo Ingreso",
         "editSubtitle": "Actualice la información del ingreso",
         "newSubtitle": "Registrar un nuevo ingreso",
         "cardTitle": "Datos del Ingreso",
-        "fields": { "description": "Descripción", "descriptionPlaceholder": "Descripción del ingreso", "value": "Valor", "date": "Fecha de Recepción", "status": "Estado", "category": "Categoría de Ingreso", "bankAccount": "Cuenta Bancaria", "costCenter": "Centro de Costo", "project": "Proyecto", "notes": "Observaciones", "notesPlaceholder": "Observaciones sobre el ingreso", "receiptUrl": "URL del Comprobante" },
-        "validation": { "descriptionRequired": "La descripción es obligatoria", "valueRequired": "El valor es obligatorio", "dateRequired": "La fecha de recepción es obligatoria" },
+        "fields": {
+          "description": "Descripción",
+          "descriptionPlaceholder": "Descripción del ingreso",
+          "value": "Valor",
+          "date": "Fecha de Recepción",
+          "status": "Estado",
+          "category": "Categoría de Ingreso",
+          "bankAccount": "Cuenta Bancaria",
+          "costCenter": "Centro de Costo",
+          "project": "Proyecto",
+          "notes": "Observaciones",
+          "notesPlaceholder": "Observaciones sobre el ingreso",
+          "receiptUrl": "URL del Comprobante"
+        },
+        "validation": {
+          "descriptionRequired": "La descripción es obligatoria",
+          "valueRequired": "El valor es obligatorio",
+          "dateRequired": "La fecha de recepción es obligatoria"
+        },
         "saveSuccessEdit": "¡Ingreso actualizado correctamente!",
         "saveSuccessCreate": "¡Ingreso creado correctamente!",
         "saveError": "Error al guardar ingreso",
@@ -3786,18 +3900,58 @@
       "errorLoad": "Error al cargar gastos",
       "emptyTitle": "No se encontraron gastos",
       "emptyMessage": "No se encontraron gastos.",
-      "filters": { "searchLabel": "Buscar por descripción", "searchPlaceholder": "Descripción del gasto" },
-      "table": { "description": "Descripción", "value": "Valor", "dueDate": "Fecha Vencimiento", "supplier": "Proveedor", "category": "Categoría", "status": "Estado", "actions": "Acciones" },
-      "status": { "pending": "Pendiente", "paid": "Pagado", "canceled": "Cancelado" },
-      "delete": { "title": "Eliminar Gasto", "description": "¿Está seguro de eliminar \"{{name}}\"? Esta acción no se puede deshacer.", "confirm": "Eliminar", "cancel": "Cancelar", "success": "Gasto eliminado correctamente", "error": "Error al eliminar gasto" },
+      "filters": {
+        "searchLabel": "Buscar por descripción",
+        "searchPlaceholder": "Descripción del gasto"
+      },
+      "table": {
+        "description": "Descripción",
+        "value": "Valor",
+        "dueDate": "Fecha Vencimiento",
+        "supplier": "Proveedor",
+        "category": "Categoría",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "paid": "Pagado",
+        "canceled": "Cancelado"
+      },
+      "delete": {
+        "title": "Eliminar Gasto",
+        "description": "¿Está seguro de eliminar \"{{name}}\"? Esta acción no se puede deshacer.",
+        "confirm": "Eliminar",
+        "cancel": "Cancelar",
+        "success": "Gasto eliminado correctamente",
+        "error": "Error al eliminar gasto"
+      },
       "form": {
         "editTitle": "Editar Gasto",
         "newTitle": "Nuevo Gasto",
         "editSubtitle": "Actualice la información del gasto",
         "newSubtitle": "Registrar un nuevo gasto",
         "cardTitle": "Datos del Gasto",
-        "fields": { "description": "Descripción", "descriptionPlaceholder": "Descripción del gasto", "value": "Valor", "dueDate": "Fecha de Vencimiento", "status": "Estado", "supplier": "Proveedor", "category": "Categoría de Gasto", "bankAccount": "Cuenta Bancaria", "costCenter": "Centro de Costo", "project": "Proyecto", "notes": "Observaciones", "notesPlaceholder": "Observaciones sobre el gasto", "receiptUrl": "URL del Comprobante" },
-        "validation": { "descriptionRequired": "La descripción es obligatoria", "valueRequired": "El valor es obligatorio", "dueDateRequired": "La fecha de vencimiento es obligatoria" },
+        "fields": {
+          "description": "Descripción",
+          "descriptionPlaceholder": "Descripción del gasto",
+          "value": "Valor",
+          "dueDate": "Fecha de Vencimiento",
+          "status": "Estado",
+          "supplier": "Proveedor",
+          "category": "Categoría de Gasto",
+          "bankAccount": "Cuenta Bancaria",
+          "costCenter": "Centro de Costo",
+          "project": "Proyecto",
+          "notes": "Observaciones",
+          "notesPlaceholder": "Observaciones sobre el gasto",
+          "receiptUrl": "URL del Comprobante"
+        },
+        "validation": {
+          "descriptionRequired": "La descripción es obligatoria",
+          "valueRequired": "El valor es obligatorio",
+          "dueDateRequired": "La fecha de vencimiento es obligatoria"
+        },
         "saveSuccessEdit": "¡Gasto actualizado correctamente!",
         "saveSuccessCreate": "¡Gasto creado correctamente!",
         "saveError": "Error al guardar gasto",

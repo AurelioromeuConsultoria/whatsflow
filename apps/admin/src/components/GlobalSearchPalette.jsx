@@ -15,10 +15,7 @@ import { searchApi } from '@/lib/api';
 
 function getTypeMeta(t) {
   return {
-    Pessoa: { label: t('globalSearch.types.Pessoa'), icon: Users, to: (id) => `/pessoas/${id}` },
-    Visitante: { label: t('globalSearch.types.Visitante'), icon: User, to: (id) => `/visitantes/${id}` },
-    Evento: { label: t('globalSearch.types.Evento'), icon: Calendar, to: (id) => `/eventos/${id}/editar` },
-    Noticia: { label: t('globalSearch.types.Noticia'), icon: FileText, to: (id) => `/noticias/${id}/editar` },
+    Contato: { label: t('globalSearch.types.Contato', { defaultValue: 'Contato' }), icon: Users, to: (id) => `/contatos/${id}/editar` },
     Usuario: { label: t('globalSearch.types.Usuario'), icon: User, to: () => `/usuarios` },
   };
 }

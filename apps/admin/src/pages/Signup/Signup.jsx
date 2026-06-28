@@ -104,11 +104,11 @@ export default function Signup() {
       <div className="flex min-h-screen items-center justify-center bg-slate-50 px-6 py-10">
         <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-sm">
           <div className="mb-6 flex items-center justify-center gap-3">
-            <img src="/verbo-brand/verbo-mark-light-transparent.png" alt="" className="h-12 w-14 object-contain" aria-hidden="true" />
-            <span className="text-2xl font-bold tracking-tight text-slate-950">Verbo+</span>
+            <span className="text-3xl" aria-hidden="true">💬</span>
+            <span className="text-2xl font-bold tracking-tight text-slate-950">WhatsFlow</span>
           </div>
           <h1 className="text-2xl font-bold text-[#1e4f82]">Comece grátis</h1>
-          <p className="mt-2 mb-6 text-sm text-slate-500">Crie a conta da sua igreja. Sem cartão para iniciar o período de teste.</p>
+          <p className="mt-2 mb-6 text-sm text-slate-500">Crie a conta do seu workspace. Sem cartão para iniciar o período de teste.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">

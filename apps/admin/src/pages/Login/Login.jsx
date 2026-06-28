@@ -71,15 +71,15 @@ export default function Login() {
           <div className="relative flex h-full w-full max-w-xl flex-col items-center px-10 py-14">
             <div className="flex flex-1 flex-col items-center justify-center text-center">
               <div className="mb-10 flex items-center justify-center gap-5">
-                <img
-                  src="/verbo-brand/verbo-mark-transparent.png"
-                  alt=""
-                  className="h-24 w-32 object-contain drop-shadow-2xl"
+                <span
+                  className="flex h-24 w-24 items-center justify-center rounded-3xl bg-white/10 text-6xl drop-shadow-2xl"
                   aria-hidden="true"
-                />
+                >
+                  💬
+                </span>
                 <div className="text-left">
-                  <p className="text-6xl font-bold leading-none tracking-tight">Verbo+</p>
-                  <p className="mt-3 bg-[linear-gradient(90deg,#8b5cf6,#0ea5e9,#06b6d4)] bg-clip-text text-lg font-semibold text-transparent">
+                  <p className="text-6xl font-bold leading-none tracking-tight">WhatsFlow</p>
+                  <p className="mt-3 bg-[linear-gradient(90deg,#25d366,#128c7e,#075e54)] bg-clip-text text-lg font-semibold text-transparent">
                     {t('login.heroDescription')}
                   </p>
                 </div>
@@ -111,8 +111,8 @@ export default function Login() {
             <section className="w-full max-w-[430px]">
               <div className="mb-10 flex justify-center lg:hidden">
                 <div className="flex items-center gap-3">
-                  <img src="/verbo-brand/verbo-mark-light-transparent.png" alt="" className="h-14 w-16 object-contain" aria-hidden="true" />
-                  <span className="text-3xl font-bold tracking-tight text-slate-950">Verbo+</span>
+                  <span className="text-4xl" aria-hidden="true">💬</span>
+                  <span className="text-3xl font-bold tracking-tight text-slate-950">WhatsFlow</span>
                 </div>
               </div>
 

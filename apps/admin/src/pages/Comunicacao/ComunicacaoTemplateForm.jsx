@@ -184,6 +184,9 @@ export default function ComunicacaoTemplateForm() {
                     <option value={1}>{t('communicationTemplateForm.status.draft')}</option>
                     <option value={2}>{t('communicationTemplateForm.status.active')}</option>
                     <option value={3}>{t('communicationTemplateForm.status.archived')}</option>
+                    <option value={4}>Pendente de aprovação</option>
+                    <option value={5}>Aprovado</option>
+                    <option value={6}>Rejeitado</option>
                   </select>
                 </div>
               )}

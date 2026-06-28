@@ -45,11 +45,11 @@ const THEME_OPTIONS = [
     swatches: ['#171717', '#333333', '#f5f5f5'],
   },
   {
-    value: 'verbo',
+    value: 'whatsflow',
     labelKey: 'verboTheme',
     descriptionKey: 'themeVerboDescription',
     Icon: Sparkles,
-    swatches: ['#7c3aed', '#2563eb', '#06b6d4'],
+    swatches: ['#25d366', '#128c7e', '#075e54'],
   },
 ];
 

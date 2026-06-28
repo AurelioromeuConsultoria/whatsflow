@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Verbo+",
-    "tagline": "Organize your church. Transform lives.",
+    "name": "WhatsFlow",
+    "tagline": "Conversations that convert.",
     "developedBy": "Developed by Malach Digital"
   },
   "menu": {
@@ -75,7 +75,10 @@
     "kidsStructure": "Structure",
     "kidsHistory": "History",
     "kidsLessonContent": "Lesson content",
-    "kidsCheckins": "Check-ins"
+    "kidsCheckins": "Check-ins",
+    "tags": "Tags",
+    "messageLogs": "Message logs",
+    "whatsappAccounts": "WhatsApp account"
   },
   "layout": {
     "expandAll": "Expand all menus",
@@ -2125,10 +2128,10 @@
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "verboTheme": "Verbo+",
+    "verboTheme": "WhatsFlow",
     "themeLightDescription": "Current light, neutral, and clean look.",
     "themeDarkDescription": "Current dark look for low-light environments.",
-    "themeVerboDescription": "Verbo+ brand palette with purple, blue, and cyan.",
+    "themeVerboDescription": "WhatsFlow brand palette with green tones.",
     "themeHint": "Your chosen theme is saved in this browser. The top icon quickly toggles light and dark.",
     "avatarTitle": "Profile photo",
     "avatarSubtitle": "Personalize your photo",
@@ -3705,19 +3708,35 @@
         "yearBalance": "Year Balance",
         "yearBalanceHint": "Revenues: {{revenues}} | Expenses: {{expenses}}"
       },
-      "cashFlow": { "title": "Cash Flow - Last 12 Months", "empty": "No data available" },
+      "cashFlow": {
+        "title": "Cash Flow - Last 12 Months",
+        "empty": "No data available"
+      },
       "byCategory": {
         "revenuesTitle": "Revenues by Category (Month)",
         "revenuesEmpty": "No revenues this month",
         "expensesTitle": "Expenses by Category (Month)",
         "expensesEmpty": "No expenses this month",
-        "table": { "category": "Category", "value": "Value", "percent": "%" }
+        "table": {
+          "category": "Category",
+          "value": "Value",
+          "percent": "%"
+        }
       },
       "lastMovements": {
         "title": "Recent Transactions",
         "empty": "No recent transactions",
-        "table": { "type": "Type", "description": "Description", "date": "Date", "status": "Status", "value": "Value" },
-        "type": { "revenue": "Revenue", "expense": "Expense" }
+        "table": {
+          "type": "Type",
+          "description": "Description",
+          "date": "Date",
+          "status": "Status",
+          "value": "Value"
+        },
+        "type": {
+          "revenue": "Revenue",
+          "expense": "Expense"
+        }
       }
     },
     "reports": {
@@ -3725,7 +3744,12 @@
       "subtitle": "Generate detailed finance reports",
       "paramsTitle": "Report Parameters",
       "typeLabel": "Report Type",
-      "type": { "cashFlow": "Cash Flow", "byCategory": "By Category", "byCostCenter": "By Cost Center", "byProject": "By Project" },
+      "type": {
+        "cashFlow": "Cash Flow",
+        "byCategory": "By Category",
+        "byCostCenter": "By Cost Center",
+        "byProject": "By Project"
+      },
       "startDate": "Start Date",
       "endDate": "End Date",
       "generateButton": "Generate Report",
@@ -3737,19 +3761,69 @@
       "periodLabel": "Period: {{start}} to {{end}}",
       "cashFlow": {
         "title": "Cash Flow",
-        "summary": { "totalRevenues": "Total Revenues", "totalExpenses": "Total Expenses", "balance": "Balance" },
-        "table": { "date": "Date", "revenues": "Revenues", "expenses": "Expenses", "dayBalance": "Day Balance", "accumulatedBalance": "Accumulated Balance" }
+        "summary": {
+          "totalRevenues": "Total Revenues",
+          "totalExpenses": "Total Expenses",
+          "balance": "Balance"
+        },
+        "table": {
+          "date": "Date",
+          "revenues": "Revenues",
+          "expenses": "Expenses",
+          "dayBalance": "Day Balance",
+          "accumulatedBalance": "Accumulated Balance"
+        }
       },
       "byCategory": {
         "title": "Report by Category",
         "revenuesTitle": "Revenues by Category",
         "expensesTitle": "Expenses by Category",
-        "table": { "category": "Category", "value": "Value", "quantity": "Quantity", "percent": "%" }
+        "table": {
+          "category": "Category",
+          "value": "Value",
+          "quantity": "Quantity",
+          "percent": "%"
+        }
       },
-      "byCostCenter": { "title": "Report by Cost Center", "empty": "No data found", "table": { "costCenter": "Cost Center", "revenues": "Revenues", "expenses": "Expenses", "balance": "Balance" } },
-      "byProject": { "title": "Report by Project", "empty": "No data found", "table": { "project": "Project", "budget": "Budget", "revenues": "Revenues", "expenses": "Expenses", "balance": "Balance", "usedPercent": "% Used" } }
+      "byCostCenter": {
+        "title": "Report by Cost Center",
+        "empty": "No data found",
+        "table": {
+          "costCenter": "Cost Center",
+          "revenues": "Revenues",
+          "expenses": "Expenses",
+          "balance": "Balance"
+        }
+      },
+      "byProject": {
+        "title": "Report by Project",
+        "empty": "No data found",
+        "table": {
+          "project": "Project",
+          "budget": "Budget",
+          "revenues": "Revenues",
+          "expenses": "Expenses",
+          "balance": "Balance",
+          "usedPercent": "% Used"
+        }
+      }
     },
-    "common": { "filters": "Filters", "searchByName": "Search by name", "searchByDescription": "Search by description", "status": "Status", "active": "Active", "inactive": "Inactive", "yes": "Yes", "no": "No", "notCategorized": "Uncategorized", "noCostCenter": "No cost center", "noProject": "No project", "emptyList": "No records found.", "name": "Name", "description": "Description" },
+    "common": {
+      "filters": "Filters",
+      "searchByName": "Search by name",
+      "searchByDescription": "Search by description",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "yes": "Yes",
+      "no": "No",
+      "notCategorized": "Uncategorized",
+      "noCostCenter": "No cost center",
+      "noProject": "No project",
+      "emptyList": "No records found.",
+      "name": "Name",
+      "description": "Description"
+    },
     "revenues": {
       "title": "Revenues",
       "subtitle": "Manage revenues",
@@ -3759,18 +3833,58 @@
       "errorLoad": "Error loading revenues",
       "emptyTitle": "No revenue found",
       "emptyMessage": "No revenues found.",
-      "filters": { "searchLabel": "Search by description", "searchPlaceholder": "Enter revenue description" },
-      "table": { "description": "Description", "value": "Value", "date": "Receipt Date", "bankAccount": "Bank Account", "costCenter": "Cost Center", "project": "Project", "status": "Status", "actions": "Actions" },
-      "status": { "pending": "Pending", "received": "Received", "canceled": "Canceled" },
-      "delete": { "title": "Delete Revenue", "description": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.", "confirm": "Delete", "cancel": "Cancel", "success": "Revenue deleted successfully", "error": "Error deleting revenue" },
+      "filters": {
+        "searchLabel": "Search by description",
+        "searchPlaceholder": "Enter revenue description"
+      },
+      "table": {
+        "description": "Description",
+        "value": "Value",
+        "date": "Receipt Date",
+        "bankAccount": "Bank Account",
+        "costCenter": "Cost Center",
+        "project": "Project",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "pending": "Pending",
+        "received": "Received",
+        "canceled": "Canceled"
+      },
+      "delete": {
+        "title": "Delete Revenue",
+        "description": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel",
+        "success": "Revenue deleted successfully",
+        "error": "Error deleting revenue"
+      },
       "form": {
         "editTitle": "Edit Revenue",
         "newTitle": "New Revenue",
         "editSubtitle": "Update revenue information",
         "newSubtitle": "Register a new revenue",
         "cardTitle": "Revenue Data",
-        "fields": { "description": "Description", "descriptionPlaceholder": "Revenue description", "value": "Value", "date": "Receipt Date", "status": "Status", "category": "Revenue Category", "bankAccount": "Bank Account", "costCenter": "Cost Center", "project": "Project", "notes": "Notes", "notesPlaceholder": "Notes about the revenue", "receiptUrl": "Receipt URL" },
-        "validation": { "descriptionRequired": "Description is required", "valueRequired": "Value is required", "dateRequired": "Receipt date is required" },
+        "fields": {
+          "description": "Description",
+          "descriptionPlaceholder": "Revenue description",
+          "value": "Value",
+          "date": "Receipt Date",
+          "status": "Status",
+          "category": "Revenue Category",
+          "bankAccount": "Bank Account",
+          "costCenter": "Cost Center",
+          "project": "Project",
+          "notes": "Notes",
+          "notesPlaceholder": "Notes about the revenue",
+          "receiptUrl": "Receipt URL"
+        },
+        "validation": {
+          "descriptionRequired": "Description is required",
+          "valueRequired": "Value is required",
+          "dateRequired": "Receipt date is required"
+        },
         "saveSuccessEdit": "Revenue updated successfully!",
         "saveSuccessCreate": "Revenue created successfully!",
         "saveError": "Error saving revenue",
@@ -3786,18 +3900,58 @@
       "errorLoad": "Error loading expenses",
       "emptyTitle": "No expense found",
       "emptyMessage": "No expenses found.",
-      "filters": { "searchLabel": "Search by description", "searchPlaceholder": "Enter expense description" },
-      "table": { "description": "Description", "value": "Value", "dueDate": "Due Date", "supplier": "Supplier", "category": "Category", "status": "Status", "actions": "Actions" },
-      "status": { "pending": "Pending", "paid": "Paid", "canceled": "Canceled" },
-      "delete": { "title": "Delete Expense", "description": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.", "confirm": "Delete", "cancel": "Cancel", "success": "Expense deleted successfully", "error": "Error deleting expense" },
+      "filters": {
+        "searchLabel": "Search by description",
+        "searchPlaceholder": "Enter expense description"
+      },
+      "table": {
+        "description": "Description",
+        "value": "Value",
+        "dueDate": "Due Date",
+        "supplier": "Supplier",
+        "category": "Category",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "pending": "Pending",
+        "paid": "Paid",
+        "canceled": "Canceled"
+      },
+      "delete": {
+        "title": "Delete Expense",
+        "description": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel",
+        "success": "Expense deleted successfully",
+        "error": "Error deleting expense"
+      },
       "form": {
         "editTitle": "Edit Expense",
         "newTitle": "New Expense",
         "editSubtitle": "Update expense information",
         "newSubtitle": "Register a new expense",
         "cardTitle": "Expense Data",
-        "fields": { "description": "Description", "descriptionPlaceholder": "Expense description", "value": "Value", "dueDate": "Due Date", "status": "Status", "supplier": "Supplier", "category": "Expense Category", "bankAccount": "Bank Account", "costCenter": "Cost Center", "project": "Project", "notes": "Notes", "notesPlaceholder": "Notes about the expense", "receiptUrl": "Receipt URL" },
-        "validation": { "descriptionRequired": "Description is required", "valueRequired": "Value is required", "dueDateRequired": "Due date is required" },
+        "fields": {
+          "description": "Description",
+          "descriptionPlaceholder": "Expense description",
+          "value": "Value",
+          "dueDate": "Due Date",
+          "status": "Status",
+          "supplier": "Supplier",
+          "category": "Expense Category",
+          "bankAccount": "Bank Account",
+          "costCenter": "Cost Center",
+          "project": "Project",
+          "notes": "Notes",
+          "notesPlaceholder": "Notes about the expense",
+          "receiptUrl": "Receipt URL"
+        },
+        "validation": {
+          "descriptionRequired": "Description is required",
+          "valueRequired": "Value is required",
+          "dueDateRequired": "Due date is required"
+        },
         "saveSuccessEdit": "Expense updated successfully!",
         "saveSuccessCreate": "Expense created successfully!",
         "saveError": "Error saving expense",

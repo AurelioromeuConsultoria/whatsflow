@@ -376,7 +376,7 @@ export function Header({ onMenuClick }) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              {t('header.switchTheme', { defaultValue: 'Alternar tema' })} · {isVerbo ? 'Verbo+' : isDark ? t('header.useDarkTheme') : t('header.useLightTheme')}
+              {t('header.switchTheme', { defaultValue: 'Alternar tema' })} · {isVerbo ? 'WhatsFlow' : isDark ? t('header.useDarkTheme') : t('header.useLightTheme')}
             </TooltipContent>
           </Tooltip>
 

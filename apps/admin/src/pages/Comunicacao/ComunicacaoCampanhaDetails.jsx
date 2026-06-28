@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, Play, Mail, MessageSquare, AlertTriangle, CheckCircle2, RotateCcw, Save } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Square, RefreshCw, Mail, MessageSquare, AlertTriangle, CheckCircle2, RotateCcw, Save } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -185,6 +185,23 @@ export default function ComunicacaoCampanhaDetails() {
     }
   };
 
+  const [lifecycleBusy, setLifecycleBusy] = useState(false);
+
+  const executarAcaoCiclo = async (acao, label) => {
+    if (!campanha) return;
+    try {
+      setLifecycleBusy(true);
+      const response = await comunicacaoCampanhasApi[acao](campanha.id);
+      if (response.data) setCampanha(response.data);
+      toast.success(`Campanha: ${label}.`);
+      await load({ silent: true });
+    } catch (err) {
+      toast.error(getApiErrorMessage(err, `Erro ao executar ação (${label}).`));
+    } finally {
+      setLifecycleBusy(false);
+    }
+  };
+
   const reprocessarEntrega = async (entregaId) => {
     try {
       const response = await comunicacaoEntregasApi.reprocessar(entregaId);
@@ -247,11 +264,28 @@ export default function ComunicacaoCampanhaDetails() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <PageRefreshButton onClick={() => load({ silent: true })} refreshing={refreshing} />
-          <Button variant="outline" asChild>
-            <Link to="/comunicacao/preferencias">{t('communicationCampaignDetails.actions.preferences')}</Link>
-          </Button>
+          {[1, 2].includes(Number(campanha.status)) && (
+            <Button variant="outline" onClick={() => executarAcaoCiclo('iniciar', 'iniciada')} disabled={lifecycleBusy}>
+              <Play className="w-4 h-4 mr-2" /> Iniciar
+            </Button>
+          )}
+          {Number(campanha.status) === 3 && (
+            <Button variant="outline" onClick={() => executarAcaoCiclo('pausar', 'pausada')} disabled={lifecycleBusy}>
+              <Pause className="w-4 h-4 mr-2" /> Pausar
+            </Button>
+          )}
+          {[2, 7].includes(Number(campanha.status)) && (
+            <Button variant="outline" onClick={() => executarAcaoCiclo('retomar', 'retomada')} disabled={lifecycleBusy}>
+              <RefreshCw className="w-4 h-4 mr-2" /> Retomar
+            </Button>
+          )}
+          {![4, 6].includes(Number(campanha.status)) && (
+            <Button variant="outline" onClick={() => executarAcaoCiclo('cancelar', 'cancelada')} disabled={lifecycleBusy}>
+              <Square className="w-4 h-4 mr-2" /> Cancelar
+            </Button>
+          )}
           <Button onClick={processarPendentes} disabled={processing}>
             <Play className="w-4 h-4 mr-2" />
             {processing ? t('communicationCampaignDetails.actions.processing') : t('communicationCampaignDetails.actions.processPending')}

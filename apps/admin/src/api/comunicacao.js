@@ -8,6 +8,10 @@ export const comunicacaoCampanhasApi = {
   getEntregas: (id) => api.get(`/comunicacaocampanhas/${id}/entregas`),
   create: (payload) => api.post('/comunicacaocampanhas', payload),
   update: (id, payload) => api.put(`/comunicacaocampanhas/${id}`, payload),
+  iniciar: (id) => api.post(`/comunicacaocampanhas/${id}/iniciar`),
+  pausar: (id) => api.post(`/comunicacaocampanhas/${id}/pausar`),
+  cancelar: (id) => api.post(`/comunicacaocampanhas/${id}/cancelar`),
+  retomar: (id) => api.post(`/comunicacaocampanhas/${id}/retomar`),
 };
 
 export const comunicacaoTemplatesApi = {

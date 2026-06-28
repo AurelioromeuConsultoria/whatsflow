@@ -111,52 +111,52 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* Tema Verbo+ — "Violeta Profundo": sidebar violeta da marca (não preto) +
-   conteúdo lavanda suave (não branco puro). Paleta: #7C3AED / #2563EB / #06B6D4. */
-:root[data-theme="verbo"] {
-  /* Conteúdo: lavanda suave com cards brancos */
-  --background: #f4f3fb;
-  --foreground: #1e1b2e;
+/* Tema WhatsFlow — "Verde Profundo": sidebar verde-petróleo da marca (não preto) +
+   conteúdo claro esverdeado (não branco puro). Paleta: #25D366 / #075E54 / #128C7E. */
+:root[data-theme="whatsflow"] {
+  /* Conteúdo: claro com leve tom esverdeado e cards brancos */
+  --background: #f3f7f5;
+  --foreground: #11201c;
   --card: #ffffff;
-  --card-foreground: #1e1b2e;
+  --card-foreground: #11201c;
   --popover: #ffffff;
-  --popover-foreground: #1e1b2e;
+  --popover-foreground: #11201c;
 
-  /* Roxo primário da marca */
-  --primary: #7c3aed;
+  /* Verde primário da marca */
+  --primary: #075e54;
   --primary-foreground: #ffffff;
 
-  --secondary: #efecfa;
-  --secondary-foreground: #4c3a8c;
-  --muted: #efecfa;
-  --muted-foreground: #6b6790;
+  --secondary: #e7f3ee;
+  --secondary-foreground: #0b4a43;
+  --muted: #e7f3ee;
+  --muted-foreground: #5c7068;
 
-  /* Acento na família roxo da marca */
-  --accent: #ede9fe;
-  --accent-foreground: #6d28d9;
+  /* Acento na família verde da marca */
+  --accent: #d9f2e3;
+  --accent-foreground: #075e54;
 
   --destructive: #ef4444;
 
-  --border: #e5e1f3;
-  --input: #e5e1f3;
-  --ring: #7c3aed;
+  --border: #dde9e3;
+  --input: #dde9e3;
+  --ring: #25d366;
 
-  /* Gráficos: gradiente da marca (roxo → azul → ciano) */
-  --chart-1: #7c3aed;
-  --chart-2: #2563eb;
-  --chart-3: #06b6d4;
-  --chart-4: #8b5cf6;
+  /* Gráficos: gradiente da marca (verde claro → verde-azulado → petróleo) */
+  --chart-1: #25d366;
+  --chart-2: #128c7e;
+  --chart-3: #075e54;
+  --chart-4: #34d399;
   --chart-5: #334155;
 
-  /* Sidebar: violeta profundo da marca (não preto) com acentos vibrantes */
-  --sidebar: #261c4e;
-  --sidebar-foreground: #e9e5ff;
-  --sidebar-primary: #8b5cf6;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #392c6b;
+  /* Sidebar: verde-petróleo profundo da marca (não preto) com acentos vibrantes */
+  --sidebar: #0b3d36;
+  --sidebar-foreground: #e3f5ec;
+  --sidebar-primary: #25d366;
+  --sidebar-primary-foreground: #07261f;
+  --sidebar-accent: #115249;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #06b6d4;
+  --sidebar-ring: #25d366;
 }
 
 @layer base {

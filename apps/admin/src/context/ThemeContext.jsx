@@ -2,11 +2,13 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext(null);
 const THEME_STORAGE_KEY = 'admin-theme';
-// Ordem do rodízio do botão de tema. Verbo+ é o padrão (marca em primeiro).
-const THEMES = ['verbo', 'light', 'dark'];
-const DEFAULT_THEME = 'verbo';
+// Ordem do rodízio do botão de tema. WhatsFlow é o padrão (marca em primeiro).
+const THEMES = ['whatsflow', 'light', 'dark'];
+const DEFAULT_THEME = 'whatsflow';
 
 function normalizeTheme(theme) {
+  // Compatibilidade com o tema legado "verbo".
+  if (theme === 'verbo') return 'whatsflow';
   return THEMES.includes(theme) ? theme : DEFAULT_THEME;
 }
 
@@ -33,7 +35,7 @@ export function ThemeProvider({ children }) {
   };
 
   const toggleTheme = () => {
-    // Rodízio entre os três temas: verbo → light → dark → verbo.
+    // Rodízio entre os três temas: whatsflow → light → dark → whatsflow.
     const currentIndex = THEMES.indexOf(theme);
     const nextTheme = THEMES[(currentIndex + 1) % THEMES.length];
     updateTheme(nextTheme);
@@ -43,7 +45,9 @@ export function ThemeProvider({ children }) {
     theme,
     setTheme: updateTheme,
     isDark: theme === 'dark',
-    isVerbo: theme === 'verbo',
+    isWhatsflow: theme === 'whatsflow',
+    // Alias legado para componentes que ainda referenciam isVerbo.
+    isVerbo: theme === 'whatsflow',
     toggleTheme,
     themes: THEMES,
   };

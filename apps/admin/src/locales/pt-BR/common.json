@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Verbo+",
-    "tagline": "Organize sua igreja. Transforme vidas.",
+    "name": "WhatsFlow",
+    "tagline": "Conversas que convertem.",
     "developedBy": "Desenvolvido por Malach Digital"
   },
   "menu": {
@@ -75,7 +75,10 @@
     "kidsStructure": "Estrutura",
     "kidsHistory": "Histórico",
     "kidsLessonContent": "Conteúdos da aula",
-    "kidsCheckins": "Check-ins"
+    "kidsCheckins": "Check-ins",
+    "tags": "Tags",
+    "messageLogs": "Logs de mensagens",
+    "whatsappAccounts": "Conta WhatsApp"
   },
   "layout": {
     "expandAll": "Expandir todos os menus",
@@ -2124,10 +2127,10 @@
     "theme": "Tema",
     "light": "Claro",
     "dark": "Escuro",
-    "verboTheme": "Verbo+",
+    "verboTheme": "WhatsFlow",
     "themeLightDescription": "Visual atual claro, neutro e limpo.",
     "themeDarkDescription": "Visual escuro atual para ambientes com pouca luz.",
-    "themeVerboDescription": "Paleta da marca Verbo+ com roxo, azul e ciano.",
+    "themeVerboDescription": "Paleta da marca WhatsFlow com tons de verde.",
     "themeHint": "O tema escolhido fica salvo neste navegador. O ícone no topo alterna rapidamente entre claro e escuro.",
     "avatarTitle": "Foto de perfil",
     "avatarSubtitle": "Personalize sua foto",

@@ -31,6 +31,24 @@ const getCanalLabel = (canal, t) => {
   }
 };
 
+const STATUS_LABEL = {
+  1: 'Rascunho',
+  2: 'Ativo',
+  3: 'Arquivado',
+  4: 'Pendente de aprovação',
+  5: 'Aprovado',
+  6: 'Rejeitado',
+};
+
+const STATUS_VARIANT = {
+  1: 'secondary',
+  2: 'default',
+  3: 'outline',
+  4: 'secondary',
+  5: 'default',
+  6: 'destructive',
+};
+
 export default function ComunicacaoTemplatesList() {
   const { t } = useTranslation();
   const [templates, setTemplates] = useState([]);
@@ -111,6 +129,9 @@ export default function ComunicacaoTemplatesList() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <Badge variant={STATUS_VARIANT[Number(template.status)] || 'secondary'}>
+                    {STATUS_LABEL[Number(template.status)] || `Status ${template.status}`}
+                  </Badge>
                   <Badge variant="secondary">v{template.versao}</Badge>
                   <Button variant="outline" size="sm" asChild>
                     <Link to={`/comunicacao/templates/${template.id}/editar`}>{t('actions.edit')}</Link>

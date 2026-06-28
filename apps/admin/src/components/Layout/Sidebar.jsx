@@ -54,9 +54,16 @@ const menuItems = [
     permission: RESOURCES.DASHBOARD,
   },
   {
-    titleKey: 'menu.mySchedules',
-    href: '/minhas-escalas',
-    icon: ClipboardCheck,
+    titleKey: 'menu.contacts',
+    href: '/contatos',
+    icon: Contact,
+    permission: RESOURCES.CONTATOS,
+  },
+  {
+    titleKey: 'menu.tags',
+    href: '/tags',
+    icon: Tag,
+    permission: RESOURCES.CONTATOS,
   },
   {
     title: 'Assinatura',
@@ -73,43 +80,6 @@ const menuItems = [
 
 const menuGroups = [
   {
-    titleKey: 'menu.people',
-    icon: Users,
-    items: [
-      {
-        titleKey: 'menu.people',
-        href: '/pessoas',
-        icon: Users,
-        permission: RESOURCES.PESSOAS,
-      },
-      {
-        titleKey: 'menu.birthdays',
-        href: '/pessoas/aniversariantes',
-        icon: CalendarDays,
-        permission: RESOURCES.PESSOAS,
-      },
-      {
-        titleKey: 'menu.birthdayCampaign',
-        href: '/pessoas/aniversariantes/campanha',
-        icon: Gift,
-        permission: RESOURCES.PESSOAS,
-      },
-      {
-        title: 'Solicitações LGPD',
-        href: '/pessoas/solicitacoes-lgpd',
-        icon: Shield,
-        permission: RESOURCES.PESSOAS,
-      },
-      {
-        titleKey: 'menu.visitors',
-        href: '/visitantes',
-        icon: Users,
-        permission: RESOURCES.VISITANTES,
-        adminOnly: true,
-      },
-    ],
-  },
-  {
     titleKey: 'menu.communication',
     icon: MessageSquare,
     items: [
@@ -118,12 +88,6 @@ const menuGroups = [
         href: '/comunicacao/campanhas',
         icon: MessageSquare,
         permission: RESOURCES.COMUNICACAO,
-      },
-      {
-        titleKey: 'menu.scheduledMessages',
-        href: '/mensagens-agendadas',
-        icon: CalendarDays,
-        permission: RESOURCES.MENSAGENS_AGENDADAS,
       },
       {
         titleKey: 'menu.communicationTemplates',
@@ -138,351 +102,34 @@ const menuGroups = [
         permission: RESOURCES.COMUNICACAO,
       },
       {
-        titleKey: 'menu.communicationPreferences',
-        href: '/comunicacao/preferencias',
-        icon: Shield,
+        titleKey: 'menu.scheduledMessages',
+        href: '/mensagens-agendadas',
+        icon: CalendarDays,
+        permission: RESOURCES.MENSAGENS_AGENDADAS,
+      },
+      {
+        titleKey: 'menu.messageLogs',
+        href: '/comunicacao/logs',
+        icon: ClipboardList,
         permission: RESOURCES.COMUNICACAO,
+      },
+    ],
+  },
+  {
+    titleKey: 'menu.messageSettings',
+    icon: Cog,
+    items: [
+      {
+        titleKey: 'menu.whatsappAccounts',
+        href: '/whatsapp/contas',
+        icon: MessageSquare,
+        permission: RESOURCES.CONFIG_MENSAGENS,
       },
       {
         titleKey: 'menu.messageSettings',
         href: '/configuracoes-mensagens',
         icon: Cog,
         permission: RESOURCES.CONFIG_MENSAGENS,
-      },
-    ],
-  },
-  {
-    titleKey: 'menu.volunteering',
-    icon: Handshake,
-    items: [
-      {
-        titleKey: 'menu.volunteers',
-        href: '/voluntarios',
-        icon: Handshake,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.teams',
-        href: '/equipes',
-        icon: Group,
-        permission: RESOURCES.EQUIPES,
-      },
-      {
-        titleKey: 'menu.roles',
-        href: '/cargos',
-        icon: Briefcase,
-        permission: RESOURCES.CARGOS,
-      },
-      {
-        titleKey: 'menu.schedules',
-        href: '/voluntariado/escalas',
-        icon: CalendarDays,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.monthlyPlanning',
-        href: '/voluntariado/planejamento-mensal',
-        icon: Calendar,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.coveragePanel',
-        href: '/voluntariado/painel-cobertura',
-        icon: ClipboardCheck,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.swapRequests',
-        href: '/voluntariado/solicitacoes-troca',
-        icon: ClipboardCheck,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.unavailabilities',
-        href: '/voluntariado/indisponibilidades',
-        icon: CalendarOff,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.scheduleModels',
-        href: '/voluntariado/modelos-escala',
-        icon: ClipboardList,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.volunteerHistory',
-        href: '/voluntariado/historico',
-        icon: ClipboardCheck,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-      {
-        titleKey: 'menu.linksReport',
-        href: '/voluntariado/relatorio-vinculos',
-        icon: ArrowRightLeft,
-        permission: RESOURCES.VOLUNTARIOS,
-      },
-    ],
-  },
-  {
-    titleKey: 'menu.events',
-    icon: Calendar,
-    items: [
-      {
-        titleKey: 'menu.events',
-        href: '/eventos',
-        icon: Calendar,
-        permission: RESOURCES.EVENTOS,
-      },
-      {
-        titleKey: 'menu.occurrences',
-        href: '/eventos/ocorrencias',
-        icon: Calendar,
-        permission: RESOURCES.EVENTOS,
-      },
-      {
-        titleKey: 'menu.registrations',
-        href: '/inscricoes-eventos',
-        icon: ClipboardList,
-        permission: RESOURCES.INSCRICOES_EVENTOS,
-      },
-    ],
-  },
-  {
-    titleKey: 'menu.kids',
-    icon: Baby,
-    items: [
-      {
-        titleKey: 'menu.kidsPanel',
-        href: '/kids/painel',
-        icon: ActivitySquare,
-        permission: RESOURCES.KIDS,
-      },
-      {
-        titleKey: 'menu.kidsChildren',
-        href: '/kids/criancas',
-        icon: Users,
-        permission: RESOURCES.KIDS,
-      },
-      {
-        titleKey: 'menu.kidsCheckins',
-        href: '/kids/checkins',
-        icon: LogIn,
-        permission: RESOURCES.KIDS,
-      },
-      {
-        titleKey: 'menu.kidsHistory',
-        href: '/kids/historico',
-        icon: ClipboardList,
-        permission: RESOURCES.KIDS,
-      },
-      {
-        titleKey: 'menu.kidsLessonContent',
-        href: '/kids/conteudos',
-        icon: Folder,
-        permission: RESOURCES.KIDS,
-      },
-      {
-        titleKey: 'menu.kidsStructure',
-        href: '/kids/estrutura',
-        icon: Cog,
-        permission: RESOURCES.KIDS,
-      },
-    ],
-  },
-  {
-    titleKey: 'menu.hub',
-    icon: Home,
-    items: [
-      {
-        titleKey: 'menu.houses',
-        href: '/hub/casas',
-        icon: Home,
-      },
-    ],
-  },
-  {
-    titleKey: 'menu.finance',
-    icon: Briefcase,
-    items: [
-      {
-        titleKey: 'menu.financeDashboard',
-        href: '/financeiro/dashboard',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.revenues',
-        href: '/financeiro/receitas',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'Dízimos e Ofertas',
-        href: '/financeiro/dizimos',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.expenses',
-        href: '/financeiro/despesas',
-        icon: Briefcase,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'Contas a Pagar',
-        href: '/financeiro/contas-a-pagar',
-        icon: Briefcase,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.financeReports',
-        href: '/financeiro/relatorios',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'Contribuições por membro',
-        href: '/financeiro/relatorio-contribuicoes',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'Orçamento Anual',
-        href: '/financeiro/orcamento',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'DRE',
-        href: '/financeiro/dre',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'Doações recebidas',
-        href: '/doacoes',
-        icon: HeartHandshake,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'Finalidades de doação',
-        href: '/doacoes/finalidades',
-        icon: HeartHandshake,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        title: 'Configuração Asaas',
-        href: '/doacoes/configuracao-asaas',
-        icon: Shield,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.bankAccounts',
-        href: '/financeiro/contas-bancarias',
-        icon: Briefcase,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.suppliers',
-        href: '/financeiro/fornecedores',
-        icon: Contact,
-        permission: RESOURCES.FORNECEDORES,
-      },
-      {
-        titleKey: 'menu.costCenters',
-        href: '/financeiro/centros-custos',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.projects',
-        href: '/financeiro/projetos',
-        icon: Calendar,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.revenueCategories',
-        href: '/financeiro/categorias-receitas',
-        icon: Tag,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.expenseCategories',
-        href: '/financeiro/categorias-despesas',
-        icon: Tag,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.patrimony',
-        href: '/financeiro/patrimonio',
-        icon: Package,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.patrimonyCategories',
-        href: '/financeiro/patrimonio/categorias',
-        icon: Tag,
-        permission: RESOURCES.FINANCEIRO,
-      },
-      {
-        titleKey: 'menu.patrimonyReport',
-        href: '/financeiro/patrimonio/relatorio-geral',
-        icon: BarChart3,
-        permission: RESOURCES.FINANCEIRO,
-      },
-    ],
-  },
-  {
-    titleKey: 'menu.portal',
-    icon: Globe,
-    items: [
-      {
-        titleKey: 'menu.siteHighlights',
-        href: '/destaques-site',
-        icon: Star,
-        permission: RESOURCES.DESTAQUES_SITE,
-      },
-      {
-        titleKey: 'menu.newsCategories',
-        href: '/categorias-noticias',
-        icon: Tag,
-        permission: RESOURCES.CATEGORIAS_NOTICIAS,
-      },
-      {
-        titleKey: 'menu.news',
-        href: '/noticias',
-        icon: Newspaper,
-        permission: RESOURCES.NOTICIAS,
-      },
-      {
-        titleKey: 'menu.polls',
-        href: '/enquetes',
-        icon: BarChart3,
-        permission: RESOURCES.ENQUETES,
-      },
-      {
-        titleKey: 'menu.contactMessages',
-        href: '/contatos',
-        icon: Contact,
-        permission: RESOURCES.CONTATOS,
-      },
-      {
-        titleKey: 'menu.photoGalleries',
-        href: '/galerias-fotos',
-        icon: Images,
-        permission: RESOURCES.GALERIAS_FOTOS,
-      },
-      {
-        titleKey: 'menu.mediaCategories',
-        href: '/categorias-midias',
-        icon: Folder,
-        permission: RESOURCES.MIDIA,
-      },
-      {
-        titleKey: 'menu.portalConfig',
-        href: '/configuracao-portal',
-        icon: Cog,
-        permission: RESOURCES.PORTAL,
       },
     ],
   },
@@ -672,11 +319,12 @@ export function Sidebar({
         'relative flex h-16 items-center justify-center border-b border-sidebar-border px-3'
       )}>
         <div className="flex items-center min-w-0 gap-2">
-          <img
-            src="/verbo-brand/verbo-mark-transparent.png"
-            alt={t('app.name')}
-            className={cn('shrink-0 object-contain', isIconOnly ? 'h-9 w-9' : 'h-10 w-10')}
-          />
+          <span
+            aria-label={t('app.name')}
+            className={cn('flex shrink-0 items-center justify-center', isIconOnly ? 'h-9 w-9 text-2xl' : 'h-10 w-10 text-3xl')}
+          >
+            💬
+          </span>
           {!isIconOnly && (
             <span className="truncate text-xl font-semibold text-sidebar-foreground">
               {t('app.name')}
@@ -834,7 +482,7 @@ export function Sidebar({
           isIconOnly && 'hidden'
         )}>
           <div className="font-medium">{currentTenant?.slug || 'tenant-indefinido'}</div>
-          <div>{isPlatformAdmin ? 'Backoffice da plataforma' : 'Contexto da igreja atual'}</div>
+          <div>{isPlatformAdmin ? 'Backoffice da plataforma' : 'Workspace atual'}</div>
         </div>
         <a
           href="https://malachdigital.com.br/"
