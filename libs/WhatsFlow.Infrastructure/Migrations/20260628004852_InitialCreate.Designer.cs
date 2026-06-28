@@ -12,7 +12,7 @@ using WhatsFlow.Infrastructure.Data;
 namespace WhatsFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(WhatsFlowDbContext))]
-    [Migration("20260627220506_InitialCreate")]
+    [Migration("20260628004852_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,16 +34,16 @@ namespace WhatsFlow.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CanceladaEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Ciclo")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("GatewayCustomerId")
                         .HasMaxLength(120)
@@ -54,7 +54,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(120)");
 
                     b.Property<DateTime?>("InadimplenteDesde")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("MetodoPagamento")
                         .HasColumnType("integer");
@@ -63,28 +63,28 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("ProximaCobranca")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("SuspensaEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("TrialAvisoEnviadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("TrialFim")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("VigenciaInicio")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -114,7 +114,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("EntityId")
                         .IsRequired()
@@ -168,7 +168,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("DelayMinutos")
                         .HasColumnType("integer");
@@ -212,13 +212,13 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("DataAgendamento")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -317,10 +317,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("AgendadoPara")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("AtualizadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Canal")
                         .HasColumnType("integer");
@@ -345,7 +345,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(12000)");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DestinoResolvido")
                         .IsRequired()
@@ -353,7 +353,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(300)");
 
                     b.Property<DateTime?>("EntregueEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Erro")
                         .HasMaxLength(1000)
@@ -364,14 +364,14 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(60)");
 
                     b.Property<DateTime?>("LidoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("MidiaUrl")
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
                     b.Property<DateTime?>("ProcessadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ProviderMessageId")
                         .HasMaxLength(150)
@@ -423,10 +423,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("OrigemConsentimento")
                         .HasMaxLength(60)
@@ -458,10 +458,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Descricao")
                         .HasMaxLength(300)
@@ -520,10 +520,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(12000)");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -570,7 +570,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("DiasAposVisita")
                         .HasColumnType("integer");
@@ -631,16 +631,16 @@ namespace WhatsFlow.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("AtualizadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DataOptIn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DataOptOut")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Documento")
                         .HasMaxLength(30)
@@ -752,7 +752,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("RecebidoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("TenantId")
                         .HasColumnType("integer");
@@ -776,7 +776,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("GatewayPaymentId")
                         .HasMaxLength(120)
@@ -787,7 +787,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<DateTime?>("PagaEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("PixCopiaECola")
                         .HasMaxLength(2000)
@@ -803,7 +803,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Vencimento")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -831,16 +831,16 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DataAgendamento")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataEnvio")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DataProcessamento")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LogErro")
                         .HasMaxLength(500)
@@ -882,7 +882,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Detalhe")
                         .HasMaxLength(1000)
@@ -918,10 +918,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DataLeitura")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Link")
                         .HasMaxLength(300)
@@ -962,7 +962,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Descricao")
                         .HasMaxLength(300)
@@ -1034,7 +1034,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Descricao")
                         .HasMaxLength(500)
@@ -1124,7 +1124,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(9)");
 
                     b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -1162,10 +1162,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Documento")
                         .HasMaxLength(30)
@@ -1293,13 +1293,13 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("BloqueadoAte")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DataNascimento")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(150)
@@ -1340,7 +1340,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("UltimoAcesso")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("WhatsApp")
                         .HasMaxLength(20)
@@ -1367,13 +1367,13 @@ namespace WhatsFlow.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("ConfirmadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("ExpiraEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("integer");
@@ -1403,7 +1403,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Erro")
                         .HasMaxLength(1000)
@@ -1414,7 +1414,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(60)");
 
                     b.Property<DateTime?>("ProcessadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Provider")
                         .HasColumnType("integer");
@@ -1460,7 +1460,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("character varying(2000)");
 
                     b.Property<DateTime?>("AtualizadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("BusinessAccountId")
                         .HasMaxLength(120)
@@ -1470,7 +1470,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Nome")
                         .IsRequired()

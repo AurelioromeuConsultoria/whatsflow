@@ -27,8 +27,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                     FiltrosJson = table.Column<string>(type: "text", nullable: true),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
                     Padrao = table.Column<bool>(type: "boolean", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,8 +53,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                     VariaveisPermitidas = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     ProviderTemplateId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
                     Versao = table.Column<int>(type: "integer", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,7 +74,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     TenantId = table.Column<int>(type: "integer", nullable: true),
                     Processado = table.Column<bool>(type: "boolean", nullable: false),
                     Observacao = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    RecebidoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RecebidoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     PayloadJson = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -97,7 +97,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     MaxMembros = table.Column<int>(type: "integer", nullable: true),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
                     Ordem = table.Column<int>(type: "integer", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,9 +113,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                     TenantId = table.Column<int>(type: "integer", nullable: false),
                     UsuarioId = table.Column<int>(type: "integer", nullable: false),
                     Token = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    ExpiraEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ConfirmadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    ExpiraEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ConfirmadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,7 +136,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     TemplateId = table.Column<int>(type: "integer", nullable: true),
                     DelayMinutos = table.Column<int>(type: "integer", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -172,8 +172,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                     FusoHorario = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     IsRootTenant = table.Column<bool>(type: "boolean", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -197,17 +197,17 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Ciclo = table.Column<int>(type: "integer", nullable: false),
                     Valor = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     MetodoPagamento = table.Column<int>(type: "integer", nullable: true),
-                    TrialFim = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    TrialAvisoEnviadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    VigenciaInicio = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ProximaCobranca = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    InadimplenteDesde = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    SuspensaEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CanceladaEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    TrialFim = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    TrialAvisoEnviadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    VigenciaInicio = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    ProximaCobranca = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    InadimplenteDesde = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    SuspensaEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    CanceladaEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     GatewayCustomerId = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
                     GatewaySubscriptionId = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,7 +240,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     UserEmail = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     IpAddress = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ChangesJson = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -266,7 +266,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     DiasAposVisita = table.Column<int>(type: "integer", nullable: false),
                     HorarioEnvio = table.Column<TimeSpan>(type: "interval", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -295,10 +295,10 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Origem = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     OptIn = table.Column<bool>(type: "boolean", nullable: false),
-                    DataOptIn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DataOptOut = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    DataOptIn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DataOptOut = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -320,7 +320,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     TenantId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descricao = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -342,7 +342,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     TenantId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
                     Cor = table.Column<string>(type: "character varying(9)", maxLength: 9, nullable: true),
-                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CriadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -392,8 +392,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                     WebhookSecret = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     ConfiguracoesJson = table.Column<string>(type: "text", nullable: true),
-                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    CriadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -416,12 +416,12 @@ namespace WhatsFlow.Infrastructure.Migrations
                     AssinaturaId = table.Column<int>(type: "integer", nullable: false),
                     Valor = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
-                    Vencimento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PagaEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Vencimento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PagaEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     GatewayPaymentId = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
                     LinkPagamento = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     PixCopiaECola = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -451,8 +451,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Canal = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     OrigemConsentimento = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -474,13 +474,13 @@ namespace WhatsFlow.Infrastructure.Migrations
                     TenantId = table.Column<int>(type: "integer", nullable: false),
                     ContatoId = table.Column<int>(type: "integer", nullable: false),
                     ConfiguracaoMensagemId = table.Column<int>(type: "integer", nullable: false),
-                    DataAgendamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataEnvio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DataAgendamento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataEnvio = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     TextoFinal = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    DataProcessamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataProcessamento = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LogErro = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -546,17 +546,17 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
                     Telefone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     WhatsApp = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    DataNascimento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataNascimento = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     EmailLogin = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     SenhaHash = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     TipoUsuario = table.Column<int>(type: "integer", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
                     IsPlatformAdmin = table.Column<bool>(type: "boolean", nullable: false),
                     PerfilAcessoId = table.Column<int>(type: "integer", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UltimoAcesso = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UltimoAcesso = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     TentativasLoginFalhas = table.Column<int>(type: "integer", nullable: false),
-                    BloqueadoAte = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    BloqueadoAte = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -616,8 +616,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                     RawPayload = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     Erro = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
-                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ProcessadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    CriadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ProcessadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -644,9 +644,9 @@ namespace WhatsFlow.Infrastructure.Migrations
                     SegmentoId = table.Column<int>(type: "integer", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     Origem = table.Column<int>(type: "integer", nullable: false),
-                    DataAgendamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataAgendamento = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     CriadoPorUsuarioId = table.Column<int>(type: "integer", nullable: true),
                     TotalDestinatarios = table.Column<int>(type: "integer", nullable: false),
                     TotalEnviadas = table.Column<int>(type: "integer", nullable: false),
@@ -689,8 +689,8 @@ namespace WhatsFlow.Infrastructure.Migrations
                     Titulo = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Mensagem = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     Link = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataLeitura = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataLeitura = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -754,12 +754,12 @@ namespace WhatsFlow.Infrastructure.Migrations
                     ErrorCode = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
                     Erro = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     ChaveDedupe = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    AgendadoPara = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ProcessadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    EntregueEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LidoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    AgendadoPara = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    ProcessadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    EntregueEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LidoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -796,7 +796,7 @@ namespace WhatsFlow.Infrastructure.Migrations
                     ProviderMessageId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
                     ErrorCode = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
                     Detalhe = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
-                    CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CriadoEm = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {

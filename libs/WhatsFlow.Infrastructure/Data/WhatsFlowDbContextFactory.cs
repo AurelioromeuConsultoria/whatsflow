@@ -13,6 +13,10 @@ public sealed class WhatsFlowDbContextFactory : IDesignTimeDbContextFactory<What
 {
     public WhatsFlowDbContext CreateDbContext(string[] args)
     {
+        // Alinha o mapeamento de DateTime ao runtime da API/Worker (que liga este switch),
+        // para o snapshot da migration não divergir (timestamp vs timestamptz).
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         var connectionString =
             Environment.GetEnvironmentVariable("WHATSFLOW_DESIGN_CONNECTION")
             ?? "Host=localhost;Port=5432;Database=whatsflow;Username=whatsflow;Password=whatsflow";
