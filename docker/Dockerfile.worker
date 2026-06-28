@@ -1,0 +1,14 @@
+# WhatsFlow Worker — contexto de build = raiz do repositório.
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY . .
+
+RUN dotnet restore "apps/worker/WhatsFlow.Worker/WhatsFlow.Worker.csproj"
+RUN dotnet publish "apps/worker/WhatsFlow.Worker/WhatsFlow.Worker.csproj" -c Release -o /out --no-restore
+
+FROM mcr.microsoft.com/dotnet/runtime:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /out .
+
+ENTRYPOINT ["dotnet", "WhatsFlow.Worker.dll"]

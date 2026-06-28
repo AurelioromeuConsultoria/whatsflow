@@ -1,0 +1,18 @@
+# WhatsFlow API — contexto de build = raiz do repositório.
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copia a solução inteira (a API referencia libs/*).
+COPY . .
+
+RUN dotnet restore "apps/api/WhatsFlow.Api/WhatsFlow.Api.csproj"
+RUN dotnet publish "apps/api/WhatsFlow.Api/WhatsFlow.Api.csproj" -c Release -o /out --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /out .
+
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "WhatsFlow.Api.dll"]

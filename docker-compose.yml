@@ -1,0 +1,69 @@
+# WhatsFlow — stack local/Coolify: Postgres + API + Worker + Admin.
+# Subir: docker compose up -d --build   |   Login demo: admin@whatsflow.app / Whatsflow@2026
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-whatsflow}
+      POSTGRES_USER: ${POSTGRES_USER:-whatsflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-whatsflow}
+    volumes:
+      - whatsflow_pgdata:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-whatsflow} -d ${POSTGRES_DB:-whatsflow}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-whatsflow};Username=${POSTGRES_USER:-whatsflow};Password=${POSTGRES_PASSWORD:-whatsflow}"
+      Database__Provider: PostgreSQL
+      Database__RunMigrations: "true"
+      Jwt__Key: ${JWT_KEY:-dev-only-change-me-0123456789-0123456789-0123456789}
+      Jwt__Issuer: WhatsFlow
+      Jwt__Audience: WhatsFlow
+      Seed__DemoData: "true"
+    ports:
+      - "${API_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.worker
+    environment:
+      DOTNET_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-whatsflow};Username=${POSTGRES_USER:-whatsflow};Password=${POSTGRES_PASSWORD:-whatsflow}"
+      Database__Provider: PostgreSQL
+      Database__RunMigrations: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_started
+    restart: unless-stopped
+
+  admin:
+    build:
+      context: ./apps/admin
+      dockerfile: ../../docker/Dockerfile.admin
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8080}
+    ports:
+      - "${ADMIN_PORT:-5173}:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  whatsflow_pgdata:
