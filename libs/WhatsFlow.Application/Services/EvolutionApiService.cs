@@ -239,6 +239,13 @@ public class EvolutionApiService : IEvolutionApiService
 
     public async Task<bool> ValidarInstanciaAsync(CancellationToken cancellationToken = default)
     {
+        // Evolution não configurada (sem BaseUrl): não é erro — o envio real é feito por WhatsAppAccount/provider.
+        if (_httpClient.BaseAddress is null)
+        {
+            _logger.LogInformation("Evolution API não configurada (BaseUrl vazio) — validação de instância pulada.");
+            return false;
+        }
+
         try
         {
             var endpoint = "instance/fetchInstances";
