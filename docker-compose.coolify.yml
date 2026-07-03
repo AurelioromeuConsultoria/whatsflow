@@ -1,0 +1,46 @@
+# WhatsFlow no Coolify — usa o PostgreSQL GERENCIADO do Coolify (NÃO sobe postgres aqui).
+# Defina as variáveis no painel do Coolify: DB_CONNECTION, JWT_KEY, VITE_API_URL (e SEED_DEMO).
+# A API e o Worker precisam estar na MESMA rede do Postgres: ative "Connect to Predefined Network".
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: ${DB_CONNECTION}
+      Database__Provider: PostgreSQL
+      Database__RunMigrations: "true"
+      Jwt__Key: ${JWT_KEY}
+      Jwt__Issuer: WhatsFlow
+      Jwt__Audience: WhatsFlow
+      Seed__DemoData: ${SEED_DEMO:-true}
+    expose:
+      - "8080"
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.worker
+    environment:
+      DOTNET_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: ${DB_CONNECTION}
+      Database__Provider: PostgreSQL
+      Database__RunMigrations: "false"
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  admin:
+    build:
+      context: ./apps/admin
+      dockerfile: ../../docker/Dockerfile.admin
+      args:
+        # URL PÚBLICA da API, embutida no bundle em build-time.
+        VITE_API_URL: ${VITE_API_URL}
+    expose:
+      - "80"
+    restart: unless-stopped
+    depends_on:
+      - api
