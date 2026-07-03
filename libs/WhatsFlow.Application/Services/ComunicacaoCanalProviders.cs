@@ -64,7 +64,11 @@ public class ComunicacaoWhatsAppCanalProvider : IComunicacaoCanalProvider
         var conta = await ObterContaAtivaAsync();
         if (conta != null)
         {
-            return new ComunicacaoCanalDiagnostico { Configurado = true };
+            return new ComunicacaoCanalDiagnostico
+            {
+                Configurado = true,
+                Mensagem = $"Conta ativa: {conta.Nome} ({conta.Provider})."
+            };
         }
 
         const string mensagem = "Nenhuma conta WhatsApp ativa configurada para este tenant.";

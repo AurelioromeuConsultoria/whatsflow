@@ -50,6 +50,15 @@ public class ComunicacaoCampanhaCanalDto
     public int? TemplateId { get; set; }
     public string? NomeTemplate { get; set; }
     public int Prioridade { get; set; }
+
+    /// <summary>Nome do provedor ativo do canal (ex.: "WhatsApp"). Preenchido no detalhe da campanha.</summary>
+    public string? NomeProvedor { get; set; }
+
+    /// <summary>Prontidão do canal segundo o IComunicacaoCanalProvider (conta ativa/config válida).</summary>
+    public bool Configurado { get; set; } = true;
+
+    /// <summary>Mensagem de diagnóstico do canal quando não configurado.</summary>
+    public string? Diagnostico { get; set; }
 }
 
 public class ComunicacaoEntregaResumoDto

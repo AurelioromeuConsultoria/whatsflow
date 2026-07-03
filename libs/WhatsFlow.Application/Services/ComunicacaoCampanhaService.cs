@@ -37,6 +37,7 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
     private readonly IPlanLimitService _planLimitService;
     private readonly ICurrentUserContext _currentUser;
     private readonly IAuditLogService _auditLogService;
+    private readonly IReadOnlyDictionary<CanalComunicacao, IComunicacaoCanalProvider> _canalProviders;
     private readonly ILogger<ComunicacaoCampanhaService> _logger;
 
     public ComunicacaoCampanhaService(
@@ -49,6 +50,7 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         IPlanLimitService planLimitService,
         ICurrentUserContext currentUser,
         IAuditLogService auditLogService,
+        IEnumerable<IComunicacaoCanalProvider> canalProviders,
         ILogger<ComunicacaoCampanhaService> logger)
     {
         _repository = repository;
@@ -60,6 +62,7 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
         _planLimitService = planLimitService;
         _currentUser = currentUser;
         _auditLogService = auditLogService;
+        _canalProviders = canalProviders.ToDictionary(p => p.Canal);
         _logger = logger;
     }
 
@@ -86,7 +89,34 @@ public class ComunicacaoCampanhaService : IComunicacaoCampanhaService
     public async Task<ComunicacaoCampanhaDetalheDto?> GetByIdAsync(int id)
     {
         var entity = await _repository.GetByIdAsync(id);
-        return entity == null ? null : MapDetalhe(entity);
+        if (entity == null)
+        {
+            return null;
+        }
+
+        var detalhe = MapDetalhe(entity);
+        await EnriquecerDiagnosticoCanaisAsync(detalhe.Canais);
+        return detalhe;
+    }
+
+    /// <summary>
+    /// Preenche prontidão/diagnóstico de cada canal a partir do IComunicacaoCanalProvider
+    /// (fonte de verdade: conta WhatsApp ativa, SMTP configurado, etc.), e não do health check legado.
+    /// </summary>
+    private async Task EnriquecerDiagnosticoCanaisAsync(IReadOnlyList<ComunicacaoCampanhaCanalDto> canais)
+    {
+        foreach (var canal in canais)
+        {
+            if (!_canalProviders.TryGetValue(canal.Canal, out var provider))
+            {
+                continue;
+            }
+
+            canal.NomeProvedor = provider.Nome;
+            var diagnostico = await provider.ValidarConfiguracaoAsync();
+            canal.Configurado = diagnostico.Configurado;
+            canal.Diagnostico = diagnostico.Mensagem;
+        }
     }
 
     public async Task<ComunicacaoCampanhaDetalheDto> CreateAsync(CriarComunicacaoCampanhaDto dto)

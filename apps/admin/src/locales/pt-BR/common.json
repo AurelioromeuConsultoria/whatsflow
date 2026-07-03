@@ -1736,7 +1736,10 @@
       "summary": "{{success}} com sucesso • {{failures}} falhas",
       "priority": "Prioridade {{priority}}",
       "deliveries": "{{count}} entregas",
-      "configurationPending": "Configuração pendente"
+      "configurationPending": "Configuração pendente",
+      "ready": "Canal pronto para envio.",
+      "templateUpdated": "Template do canal atualizado.",
+      "templateUpdateError": "Erro ao atualizar o template do canal."
     },
     "recentFailures": {
       "title": "Falhas recentes por canal",

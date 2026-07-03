@@ -1737,7 +1737,10 @@
       "summary": "{{success}} successful • {{failures}} failures",
       "priority": "Priority {{priority}}",
       "deliveries": "{{count}} deliveries",
-      "configurationPending": "Pending configuration"
+      "configurationPending": "Pending configuration",
+      "ready": "Channel ready to send.",
+      "templateUpdated": "Channel template updated.",
+      "templateUpdateError": "Failed to update the channel template."
     },
     "recentFailures": {
       "title": "Recent failures by channel",

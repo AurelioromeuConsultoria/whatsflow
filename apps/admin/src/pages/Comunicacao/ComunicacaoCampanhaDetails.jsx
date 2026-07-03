@@ -9,7 +9,7 @@ import { LoadingPage } from '@/components/ui/loading';
 import { ErrorPage } from '@/components/ui/error-message';
 import { PageRefreshButton } from '@/components/ui/page-state';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { comunicacaoCampanhasApi, comunicacaoDiagnosticoApi, comunicacaoEntregasApi } from '@/lib/api';
+import { comunicacaoCampanhasApi, comunicacaoEntregasApi, comunicacaoTemplatesApi } from '@/lib/api';
 import { getApiErrorMessage } from '@/lib/apiError';
 import { formatDateTime } from '@/lib/formatters';
 import { toast } from 'sonner';
@@ -62,7 +62,8 @@ export default function ComunicacaoCampanhaDetails() {
   const { id } = useParams();
   const [campanha, setCampanha] = useState(null);
   const [entregas, setEntregas] = useState([]);
-  const [healthChecks, setHealthChecks] = useState({});
+  const [templates, setTemplates] = useState([]);
+  const [savingTemplateCanal, setSavingTemplateCanal] = useState(null);
   const [statusFilter, setStatusFilter] = useState('todos');
   const [canalFilter, setCanalFilter] = useState('todos');
   const [loading, setLoading] = useState(true);
@@ -111,10 +112,10 @@ export default function ComunicacaoCampanhaDetails() {
       setEntregas(entregasResponse.data || []);
 
       try {
-        const healthResponse = await comunicacaoDiagnosticoApi.getHealth();
-        setHealthChecks(healthResponse.data?.checks || {});
+        const templatesResponse = await comunicacaoTemplatesApi.getAll();
+        setTemplates(templatesResponse.data || []);
       } catch {
-        setHealthChecks({});
+        setTemplates([]);
       }
     } catch (err) {
       setError(getApiErrorMessage(err, t('communicationCampaignDetails.errorLoad')));
@@ -214,6 +215,36 @@ export default function ComunicacaoCampanhaDetails() {
     }
   };
 
+  const alterarTemplateCanal = async (canalNumero, templateIdRaw) => {
+    if (!campanha) return;
+
+    const templateId = templateIdRaw ? Number(templateIdRaw) : null;
+    const canaisAtualizados = (campanha.canais || []).map((canal) => ({
+      canal: canal.canal,
+      templateId: Number(canal.canal) === Number(canalNumero) ? templateId : canal.templateId,
+      prioridade: canal.prioridade,
+    }));
+
+    try {
+      setSavingTemplateCanal(canalNumero);
+      const response = await comunicacaoCampanhasApi.update(campanha.id, {
+        nome: campanha.nome,
+        objetivo: campanha.objetivo,
+        publicoAlvo: campanha.publicoAlvo,
+        dataAgendamento: campanha.dataAgendamento,
+        status: campanha.status,
+        canais: canaisAtualizados,
+      });
+      setCampanha(response.data || campanha);
+      toast.success(t('communicationCampaignDetails.channelsCard.templateUpdated'));
+      await load({ silent: true });
+    } catch (err) {
+      toast.error(getApiErrorMessage(err, t('communicationCampaignDetails.channelsCard.templateUpdateError')));
+    } finally {
+      setSavingTemplateCanal(null);
+    }
+  };
+
   if (loading) return <LoadingPage text={t('communicationCampaignDetails.loading')} />;
   if (error) return <ErrorPage message={error} onRetry={load} />;
   if (!campanha) return <ErrorPage message={t('communicationCampaignDetails.notFound')} onRetry={load} />;
@@ -230,22 +261,15 @@ export default function ComunicacaoCampanhaDetails() {
     const doCanal = entregas.filter((item) => Number(item.canal) === Number(canal.canal));
     const falhasCanal = doCanal.filter((item) => Number(item.status) === 5).length;
     const sucessosCanal = doCanal.filter((item) => [3, 4].includes(Number(item.status))).length;
-    const healthKey = Number(canal.canal) === 1
-      ? 'evolution_api_configuration'
-      : Number(canal.canal) === 2
-        ? 'email_configuration'
-        : Number(canal.canal) === 3
-          ? 'push_configuration'
-          : null;
-    const health = healthKey ? healthChecks[healthKey] : null;
 
     return {
       ...canal,
       total: doCanal.length,
       falhas: falhasCanal,
       sucessos: sucessosCanal,
-      diagnostico: health?.description || null,
-      configOk: !health || health.status === 'Healthy',
+      // Fonte de verdade: diagnóstico do IComunicacaoCanalProvider (conta ativa), vindo no DTO.
+      diagnostico: canal.diagnostico || null,
+      configOk: canal.configurado !== false,
     };
   });
 
@@ -336,16 +360,31 @@ export default function ComunicacaoCampanhaDetails() {
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {resumoPorCanal.map((canal) => (
-            <div key={`${canal.canal}-${canal.prioridade}`} className="rounded-lg border border-border p-4 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
+            <div key={`${canal.canal}-${canal.prioridade}`} className="rounded-lg border border-border p-4 flex items-start justify-between gap-3">
+              <div className="flex items-start gap-2 flex-1 min-w-0">
                 {getCanalIcon(canal.canal)}
-                <div>
+                <div className="flex-1 min-w-0 space-y-1">
                   <div className="font-medium">{getCanalLabel(canal.canal, t)}</div>
-                  <div className="text-sm text-muted-foreground">{canal.nomeTemplate || t('communicationCampaignDetails.channelsCard.noLinkedTemplate')}</div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {canal.diagnostico || t('communicationCampaignDetails.channelsCard.noDetailedDiagnosis')}
+                  <select
+                    value={canal.templateId ?? ''}
+                    disabled={savingTemplateCanal !== null}
+                    onChange={(event) => alterarTemplateCanal(canal.canal, event.target.value)}
+                    className="w-full rounded-md border border-input bg-background px-2 py-1 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60"
+                  >
+                    <option value="">{t('communicationCampaignDetails.channelsCard.noLinkedTemplate')}</option>
+                    {templates
+                      .filter((template) => Number(template.canal) === Number(canal.canal))
+                      .map((template) => (
+                        <option key={template.id} value={template.id}>{template.nome}</option>
+                      ))}
+                  </select>
+                  <div className="text-xs text-muted-foreground">
+                    {canal.diagnostico
+                      || (canal.configOk
+                        ? t('communicationCampaignDetails.channelsCard.ready')
+                        : t('communicationCampaignDetails.channelsCard.noDetailedDiagnosis'))}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-2">
+                  <div className="text-xs text-muted-foreground">
                     {t('communicationCampaignDetails.channelsCard.summary', { success: canal.sucessos, failures: canal.falhas })}
                   </div>
                 </div>
